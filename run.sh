@@ -23,4 +23,4 @@ docker run \
     --volume laravel:/data/laravel \
     --volume portainer:/data/portainer \
     --volume pgadmin:/data/pgadmin \
-    rekgrpth/nginx nginx -c /data/nginx/nginxd.conf
+    rekgrpth/nginx
