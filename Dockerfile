@@ -7,9 +7,9 @@ RUN apk add --no-cache \
     shadow \
     tzdata
 
-ENV HOME /data/nginx
-ENV LANG ru_RU.UTF-8
-ENV TZ   Asia/Yekaterinburg
+ENV HOME /data/nginx \
+    LANG ru_RU.UTF-8 \
+    TZ   Asia/Yekaterinburg
 
 ADD entrypoint.sh /
 RUN chmod +x /entrypoint.sh
