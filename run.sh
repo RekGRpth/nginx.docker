@@ -22,5 +22,6 @@ docker run \
     --volume nginx:/data/nginx \
     --volume pgadmin:/data/pgadmin \
     --volume portainer:/data/portainer \
+    --volume prest:/data/prest \
     --volume web2py:/data/web2py \
     rekgrpth/nginx
