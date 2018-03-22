@@ -9,15 +9,15 @@ RUN apk add --no-cache \
 
 ENV HOME=/data/nginx \
     LANG=ru_RU.UTF-8 \
-    TZ=Asia/Yekaterinburg
+    TZ=Asia/Yekaterinburg \
+    USER=nginx \
+    GROUP=nginx
 
 ADD entrypoint.sh /
-RUN chmod +x /entrypoint.sh
+RUN chmod +x /entrypoint.sh && usermod --home ${HOME} ${USER}
 ENTRYPOINT ["/entrypoint.sh"]
 
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf
-
-VOLUME  /data/nginx
-WORKDIR /data/nginx
+VOLUME  ${HOME}
+WORKDIR ${HOME}
 
 CMD [ "nginx" ]
