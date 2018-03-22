@@ -16,7 +16,7 @@ ENV HOME=/data/nginx \
 ADD entrypoint.sh /
 
 RUN chmod +x /entrypoint.sh \
-    && usermod --home ${HOME} ${USER} \
+    && usermod --home "${HOME}" "${USER}" \
     && rm -f /etc/nginx/conf.d/*.conf \
     && echo "daemon off;" >> /etc/nginx/nginx.conf
 
