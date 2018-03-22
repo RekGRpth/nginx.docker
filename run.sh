@@ -17,11 +17,10 @@ docker run \
     --publish 80:80 \
     --volume /etc/certs/t72.crt:/etc/nginx/ssl/t72.crt:ro \
     --volume /etc/certs/t72.key:/etc/nginx/ssl/t72.key:ro \
-    --volume django:/data/django \
-    --volume laravel:/data/laravel \
     --volume nginx:/data/nginx \
-    --volume pgadmin:/data/pgadmin \
-    --volume portainer:/data/portainer \
-    --volume prest:/data/prest \
-    --volume web2py:/data/web2py \
+    $(find /var/lib/docker/volumes -maxdepth 1 -mindepth 1 -type d | while read VOLUME; do
+        test -f "$VOLUME/_data/nginx.conf" && echo "--volume $VOLUME/_data/nginx.conf:/etc/nginx/conf.d/$(basename "$VOLUME").conf:ro"
+        test -d "$VOLUME/_data/app" && echo "--volume $VOLUME/_data/app:/data/$(basename "$VOLUME"):ro"
+        test -d "$VOLUME/_data/log" && echo "--volume $VOLUME/_data/log:/var/log/nginx/$(basename "$VOLUME")"
+    done) \
     rekgrpth/nginx
