@@ -15,7 +15,7 @@ fi
 #sed -i "/^\tinclude \/etc\/nginx\/conf\.d\/\*\.conf/cinclude \/data\/\*\/nginx\.conf;" "/etc/nginx/nginx.conf"
 #sed -i "/^\taccess_log/caccess_log \/data\/nginx\/log\/access\.log main;" "/etc/nginx/nginx.conf"
 #sed -i "/^error_log/cerror_log \/data\/nginx\/log\/error\.log warn;" "/etc/nginx/nginx.conf"
-sed -i "/^worker_processes/cworker_processes 4;" "/etc/nginx/nginx.conf"
+sed -i "/^worker_processes/cworker_processes 2;" "/etc/nginx/nginx.conf"
 
 mkdir -p /run/nginx
 
