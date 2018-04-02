@@ -1,11 +1,11 @@
 #!/bin/sh
 
-#docker build --tag rekgrpth/nginx . && \
-#docker push rekgrpth/nginx && \
+#docker build --tag rekgrpth/nginx . || exit $?
+#docker push rekgrpth/nginx || exit $?
 docker stop nginx
 docker rm nginx
-docker pull rekgrpth/nginx && \
-docker volume create nginx && \
+docker pull rekgrpth/nginx || exit $?
+docker volume create nginx || exit $?
 docker run \
     --add-host `hostname -f`:`ip -4 addr show docker0 | grep -oP 'inet \K[\d.]+'` \
     --detach \
