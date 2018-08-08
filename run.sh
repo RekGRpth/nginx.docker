@@ -15,6 +15,7 @@ docker run \
     --name nginx \
     --publish 443:443 \
     --publish 80:80 \
+    --restart always \
     --volume /etc/certs/t72.crt:/etc/nginx/ssl/t72.crt:ro \
     --volume /etc/certs/t72.key:/etc/nginx/ssl/t72.key:ro \
     --volume nginx:/data/nginx \
