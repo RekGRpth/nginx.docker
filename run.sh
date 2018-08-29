@@ -12,14 +12,7 @@ docker run \
     --env GROUP_ID=$(id -g) \
     --env USER_ID=$(id -u) \
     --hostname nginx \
-    --link c2h5oh \
-    --link cherry \
-    --link django \
-    --link lk-django \
-    --link pgadmin \
-    --link portainer \
-    --link prest \
-    --link web2py \
+    $(docker ps --format "{{.Names}}" | while read -r NAME; do echo "--link $NAME"; done) \
     --name nginx \
     --publish 443:443 \
     --publish 80:80 \
