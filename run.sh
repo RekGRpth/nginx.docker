@@ -18,6 +18,8 @@ docker run \
     --link lk-django \
     --link pgadmin \
     --link portainer \
+    --link prest \
+    --link web2py \
     --name nginx \
     --publish 443:443 \
     --publish 80:80 \
