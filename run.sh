@@ -17,6 +17,7 @@ docker run \
     --link django \
     --link lk-django \
     --link pgadmin \
+    --link portainer \
     --name nginx \
     --publish 443:443 \
     --publish 80:80 \
