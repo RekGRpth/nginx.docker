@@ -13,6 +13,7 @@ docker run \
     --env USER_ID=$(id -u) \
     --hostname nginx \
     --link c2h5oh \
+    --link cherry \
     --name nginx \
     --publish 443:443 \
     --publish 80:80 \
