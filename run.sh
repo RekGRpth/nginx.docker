@@ -14,6 +14,9 @@ docker run \
     --hostname nginx \
     --link c2h5oh \
     --link cherry \
+    --link django \
+    --link lk-django \
+    --link pgadmin \
     --name nginx \
     --publish 443:443 \
     --publish 80:80 \
