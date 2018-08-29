@@ -12,12 +12,13 @@ docker run \
     --env GROUP_ID=$(id -g) \
     --env USER_ID=$(id -u) \
     --hostname nginx \
+    --link c2h5oh \
     --name nginx \
     --publish 443:443 \
     --publish 80:80 \
     --restart always \
-    --volume /etc/certs/t72.crt:/etc/nginx/ssl/t72.crt:ro \
-    --volume /etc/certs/t72.key:/etc/nginx/ssl/t72.key:ro \
+    --volume /etc/certs/`hostname -d`.crt:/etc/nginx/ssl/`hostname -d`.crt:ro \
+    --volume /etc/certs/`hostname -d`.key:/etc/nginx/ssl/`hostname -d`.key:ro \
     --volume nginx:/data/nginx \
     $(find /var/lib/docker/volumes -maxdepth 1 -mindepth 1 -type d | while read VOLUME; do
         test -f "$VOLUME/_data/nginx.conf" && echo "--volume $VOLUME/_data/nginx.conf:/etc/nginx/conf.d/$(basename "$VOLUME").conf:ro"
