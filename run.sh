@@ -8,6 +8,7 @@ docker pull rekgrpth/nginx || exit $?
 docker volume create nginx || exit $?
 docker run \
     --add-host `hostname -f`:`ip -4 addr show docker0 | grep -oP 'inet \K[\d.]+'` \
+    --add-host web2py-`hostname -f`:`ip -4 addr show docker0 | grep -oP 'inet \K[\d.]+'` \
     --detach \
     --env GROUP_ID=$(id -g) \
     --env USER_ID=$(id -u) \
