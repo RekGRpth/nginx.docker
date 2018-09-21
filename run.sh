@@ -28,6 +28,7 @@ docker run \
             test -d "$VOLUME/_data/log" && echo "--volume $VOLUME/_data/log:/var/log/nginx/$(basename "$VOLUME")"
         fi
     done) \
+    --volume /var/lib/docker/volumes/nginx/_data/module.conf:/etc/nginx/modules/nginx.conf:ro \
     --volume /var/lib/docker/volumes/nginx/_data/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro \
     --volume /var/lib/docker/volumes/nginx/_data/log:/var/log/nginx/nginx \
     rekgrpth/nginx
