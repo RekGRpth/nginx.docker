@@ -22,6 +22,7 @@ RUN addgroup -S nginx \
         postgresql-dev \
         zlib-dev \
     && mkdir -p /usr/src \
+    && git clone --progress https://github.com/kaltura/nginx-json-var-module.git /usr/src/json \
     && git clone --progress https://github.com/nginx/nginx.git /usr/src/nginx \
     && git clone --progress https://github.com/openresty/echo-nginx-module.git /usr/src/echo \
     && git clone --progress https://github.com/RekGRpth/ngx_postgres.git /usr/src/postgres \
@@ -29,6 +30,7 @@ RUN addgroup -S nginx \
     && cd /usr/src/nginx \
     && auto/configure \
         --add-dynamic-module=/usr/src/echo \
+        --add-dynamic-module=/usr/src/json \
         --add-dynamic-module=/usr/src/nchan \
         --add-dynamic-module=/usr/src/postgres \
         --conf-path=/etc/nginx/nginx.conf \
