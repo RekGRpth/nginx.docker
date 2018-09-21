@@ -11,31 +11,32 @@ ENV GROUP=nginx \
     USER=nginx
 
 RUN CONFIG=" \
-		--prefix=/etc/nginx \
-		--sbin-path=/usr/sbin/nginx \
-		--modules-path=/usr/lib/nginx/modules \
 		--conf-path=/etc/nginx/nginx.conf \
 		--error-log-path=/var/log/nginx/error.log \
 		--http-log-path=/var/log/nginx/access.log \
-		--pid-path=/var/run/nginx.pid \
 		--lock-path=/var/run/nginx.lock \
+		--modules-path=/usr/lib/nginx/modules \
+		--pid-path=/var/run/nginx.pid \
+		--prefix=/etc/nginx \
+		--sbin-path=/usr/sbin/nginx \
 		--http-client-body-temp-path=/var/cache/nginx/client_temp \
-		--http-proxy-temp-path=/var/cache/nginx/proxy_temp \
 		--http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \
-		--http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
+		--http-proxy-temp-path=/var/cache/nginx/proxy_temp \
 		--http-scgi-temp-path=/var/cache/nginx/scgi_temp \
+		--http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
 		--user=nginx \
 		--group=nginx \
-		--with-http_ssl_module \
-		--with-threads \
-		--with-stream \
-		--with-stream_ssl_module \
 		--with-compat \
 		--with-file-aio \
+		--with-http_gzip_static_module \
+		--with-http_ssl_module \
 		--with-http_v2_module \
+		--with-stream \
+		--with-stream_ssl_module \
+		--with-threads \
+		--add-dynamic-module=/usr/src/echo \
 		--add-dynamic-module=/usr/src/nchan \
 		--add-dynamic-module=/usr/src/postgres \
-		--add-dynamic-module=/usr/src/echo \
 	" \
 	&& addgroup -S nginx \
 	&& adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx \
