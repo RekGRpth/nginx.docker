@@ -10,34 +10,7 @@ ENV GROUP=nginx \
     TZ=Asia/Yekaterinburg \
     USER=nginx
 
-RUN CONFIG=" \
-        --conf-path=/etc/nginx/nginx.conf \
-        --error-log-path=/var/log/nginx/error.log \
-        --http-log-path=/var/log/nginx/access.log \
-        --lock-path=/var/run/nginx.lock \
-        --modules-path=/usr/lib/nginx/modules \
-        --pid-path=/var/run/nginx.pid \
-        --prefix=/etc/nginx \
-        --sbin-path=/usr/sbin/nginx \
-        --http-client-body-temp-path=/var/cache/nginx/client_temp \
-        --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \
-        --http-proxy-temp-path=/var/cache/nginx/proxy_temp \
-        --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
-        --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
-        --user=nginx \
-        --group=nginx \
-        --with-compat \
-        --with-file-aio \
-        --with-http_gzip_static_module \
-        --with-http_ssl_module \
-        --with-http_v2_module \
-        --with-stream \
-        --with-stream_ssl_module \
-        --with-threads \
-        --add-dynamic-module=/usr/src/echo \
-        --add-dynamic-module=/usr/src/nchan \
-        --add-dynamic-module=/usr/src/postgres \
-    " \
+RUN \
     && addgroup -S nginx \
     && adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx \
     && apk add --no-cache --virtual .build-deps \
@@ -51,12 +24,38 @@ RUN CONFIG=" \
         zlib-dev \
     && mkdir -p /usr/src \
     && git clone --progress https://github.com/nginx/nginx.git /usr/src/nginx \
-    && git clone --progress https://github.com/slact/nchan.git /usr/src/nchan \
-    && git clone --progress https://github.com/RekGRpth/ngx_postgres.git /usr/src/postgres \
     && git clone --progress https://github.com/openresty/echo-nginx-module.git /usr/src/echo \
+    && git clone --progress https://github.com/RekGRpth/ngx_postgres.git /usr/src/postgres \
+    && git clone --progress https://github.com/slact/nchan.git /usr/src/nchan \
     && cd /usr/src/nginx \
-    && auto/configure $CONFIG \
-    && make -j$(getconf _NPROCESSORS_ONLN) \
+    && auto/configure \
+        --add-dynamic-module=/usr/src/echo \
+        --add-dynamic-module=/usr/src/nchan \
+        --add-dynamic-module=/usr/src/postgres \
+        --conf-path=/etc/nginx/nginx.conf \
+        --error-log-path=/var/log/nginx/error.log \
+        --group=nginx \
+        --http-client-body-temp-path=/var/cache/nginx/client_temp \
+        --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \
+        --http-log-path=/var/log/nginx/access.log \
+        --http-proxy-temp-path=/var/cache/nginx/proxy_temp \
+        --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
+        --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
+        --lock-path=/var/run/nginx.lock \
+        --modules-path=/usr/lib/nginx/modules \
+        --pid-path=/var/run/nginx.pid \
+        --prefix=/etc/nginx \
+        --sbin-path=/usr/sbin/nginx \
+        --user=nginx \
+        --with-compat \
+        --with-file-aio \
+        --with-http_gzip_static_module \
+        --with-http_ssl_module \
+        --with-http_v2_module \
+        --with-stream \
+        --with-stream_ssl_module \
+        --with-threads \
+    && make -j$(nproc) \
     && make install \
     && rm -rf /etc/nginx/html/ \
     && mkdir /etc/nginx/conf.d/ \
