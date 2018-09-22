@@ -10,8 +10,8 @@ ENV GROUP=nginx \
     TZ=Asia/Yekaterinburg \
     USER=nginx
 
-RUN addgroup -S nginx \
-    && adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx \
+RUN addgroup -S "${GROUP}" \
+    && adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" ${USER} \
     && apk add --no-cache --virtual .build-deps \
         gcc \
         git \
@@ -83,7 +83,7 @@ RUN addgroup -S nginx \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
     && chmod +x /entrypoint.sh \
-    && usermod --home "${HOME}" "${USER}" \
+#    && usermod --home "${HOME}" "${USER}" \
     && rm -f /etc/nginx/conf.d/*.conf
 
 COPY nginx.conf /etc/nginx/nginx.conf
