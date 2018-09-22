@@ -61,6 +61,7 @@ RUN addgroup -S "${GROUP}" \
     && rm -rf /etc/nginx/html/ \
     && mkdir /etc/nginx/conf.d/ \
     && mkdir -p /usr/share/nginx/html/ \
+    && mkdir -p /var/cache/nginx/ \
     && install -m644 docs/html/index.html /usr/share/nginx/html/ \
     && install -m644 docs/html/50x.html /usr/share/nginx/html/ \
     && ln -s ../../usr/lib/nginx/modules /etc/nginx/modules \
