@@ -13,7 +13,6 @@ docker run \
     --env GROUP_ID=$(id -g) \
     --env USER_ID=$(id -u) \
     --hostname nginx \
-    $(docker ps --format "{{.Names}}" | while read -r NAME; do echo "--link $NAME"; done) \
     --name nginx \
     --publish 443:443 \
     --publish 80:80 \
@@ -23,6 +22,7 @@ docker run \
     --volume nginx:/data/nginx \
     $(find /var/lib/docker/volumes -maxdepth 1 -mindepth 1 -type d | while read VOLUME; do
         if test -n "$(docker ps --filter "name=$(basename "$VOLUME")" --filter "status=running" --format "{{.Names}}")"; then
+            test -f "$VOLUME/_data/nginx.conf" && echo "--link $(basename "$VOLUME")"
             test -f "$VOLUME/_data/nginx.conf" && echo "--volume $VOLUME/_data/nginx.conf:/etc/nginx/conf.d/$(basename "$VOLUME").conf:ro"
             test -d "$VOLUME/_data/app" && echo "--volume $VOLUME/_data/app:/data/$(basename "$VOLUME"):ro"
             test -d "$VOLUME/_data/log" && echo "--volume $VOLUME/_data/log:/var/log/nginx/$(basename "$VOLUME")"
