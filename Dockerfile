@@ -22,11 +22,11 @@ RUN addgroup -S "${GROUP}" \
         postgresql-dev \
         zlib-dev \
     && mkdir -p /usr/src \
-    && git clone --progress https://github.com/kaltura/nginx-json-var-module.git /usr/src/json \
-    && git clone --progress https://github.com/nginx/nginx.git /usr/src/nginx \
-    && git clone --progress https://github.com/openresty/echo-nginx-module.git /usr/src/echo \
-    && git clone --progress https://github.com/RekGRpth/ngx_postgres.git /usr/src/postgres \
-    && git clone --progress https://github.com/slact/nchan.git /usr/src/nchan \
+    && git clone --progress --recursive https://github.com/kaltura/nginx-json-var-module.git /usr/src/json \
+    && git clone --progress --recursive https://github.com/nginx/nginx.git /usr/src/nginx \
+    && git clone --progress --recursive https://github.com/openresty/echo-nginx-module.git /usr/src/echo \
+    && git clone --progress --recursive https://github.com/RekGRpth/ngx_postgres.git /usr/src/postgres \
+    && git clone --progress --recursive https://github.com/slact/nchan.git /usr/src/nchan \
     && cd /usr/src/nginx \
     && auto/configure \
         --add-dynamic-module=/usr/src/echo \
