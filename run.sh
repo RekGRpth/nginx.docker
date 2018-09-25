@@ -6,6 +6,7 @@ docker stop nginx
 docker rm nginx
 docker pull rekgrpth/nginx || exit $?
 docker volume create nginx || exit $?
+docker network create my
 docker run \
     --add-host `hostname -f`:`ip -4 addr show docker0 | grep -oP 'inet \K[\d.]+'` \
     --add-host web2py-`hostname -f`:`ip -4 addr show docker0 | grep -oP 'inet \K[\d.]+'` \
@@ -13,8 +14,8 @@ docker run \
     --env GROUP_ID=$(id -g) \
     --env USER_ID=$(id -u) \
     --hostname nginx \
-    $(docker ps --format "{{.Names}}" | while read -r NAME; do echo "--link $NAME"; done) \
     --name nginx \
+    --network my \
     --publish 443:443 \
     --publish 80:80 \
     --restart always \
