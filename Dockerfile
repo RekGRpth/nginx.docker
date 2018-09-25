@@ -22,11 +22,11 @@ RUN addgroup -S "${GROUP}" \
         postgresql-dev \
         zlib-dev \
     && mkdir -p /usr/src \
-    && git clone --progress --recursive https://github.com/kaltura/nginx-json-var-module.git /usr/src/json \
-    && git clone --progress --recursive https://github.com/nginx/nginx.git /usr/src/nginx \
-    && git clone --progress --recursive https://github.com/openresty/echo-nginx-module.git /usr/src/echo \
+    && git clone --progress --recursive https://github.com/RekGRpth/nginx-json-var-module.git /usr/src/json \
+    && git clone --progress --recursive https://github.com/RekGRpth/nginx.git /usr/src/nginx \
+    && git clone --progress --recursive https://github.com/RekGRpth/echo-nginx-module.git /usr/src/echo \
     && git clone --progress --recursive https://github.com/RekGRpth/ngx_postgres.git /usr/src/postgres \
-    && git clone --progress --recursive https://github.com/slact/nchan.git /usr/src/nchan \
+    && git clone --progress --recursive https://github.com/RekGRpth/nchan.git /usr/src/nchan \
     && cd /usr/src/nginx \
     && auto/configure \
         --add-dynamic-module=/usr/src/echo \
@@ -84,7 +84,6 @@ RUN addgroup -S "${GROUP}" \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
     && chmod +x /entrypoint.sh \
-#    && usermod --home "${HOME}" "${USER}" \
     && rm -f /etc/nginx/conf.d/*.conf
 
 COPY nginx.conf /etc/nginx/nginx.conf
