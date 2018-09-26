@@ -8,8 +8,6 @@ docker pull rekgrpth/nginx || exit $?
 docker volume create nginx || exit $?
 docker network create my
 docker run \
-    --add-host `hostname -f`:`ip -4 addr show docker0 | grep -oP 'inet \K[\d.]+'` \
-    --add-host web2py-`hostname -f`:`ip -4 addr show docker0 | grep -oP 'inet \K[\d.]+'` \
     --detach \
     --env GROUP_ID=$(id -g) \
     --env USER_ID=$(id -u) \
@@ -19,8 +17,8 @@ docker run \
     --publish 443:443 \
     --publish 80:80 \
     --restart always \
-    --volume /etc/certs/`hostname -d`.crt:/etc/nginx/ssl/`hostname -d`.crt \
-    --volume /etc/certs/`hostname -d`.key:/etc/nginx/ssl/`hostname -d`.key \
+    --volume /etc/certs/$(hostname -d).crt:/etc/nginx/ssl/$(hostname -d).crt \
+    --volume /etc/certs/$(hostname -d).key:/etc/nginx/ssl/$(hostname -d).key \
     --volume nginx:/data/nginx \
     $(find /var/lib/docker/volumes -maxdepth 1 -mindepth 1 -type d | while read VOLUME; do
         if test -n "$(docker ps --filter "name=$(basename "$VOLUME")" --filter "status=running" --format "{{.Names}}")"; then
