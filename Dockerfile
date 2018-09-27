@@ -22,14 +22,16 @@ RUN addgroup -S "${GROUP}" \
         postgresql-dev \
         zlib-dev \
     && mkdir -p /usr/src \
-    && git clone --progress --recursive https://github.com/RekGRpth/nginx-json-var-module.git /usr/src/json \
-    && git clone --progress --recursive https://github.com/RekGRpth/nginx.git /usr/src/nginx \
     && git clone --progress --recursive https://github.com/RekGRpth/echo-nginx-module.git /usr/src/echo \
-    && git clone --progress --recursive https://github.com/RekGRpth/ngx_postgres.git /usr/src/postgres \
+    && git clone --progress --recursive https://github.com/RekGRpth/headers-more-nginx-module.git /usr/src/headers \
     && git clone --progress --recursive https://github.com/RekGRpth/nchan.git /usr/src/nchan \
+    && git clone --progress --recursive https://github.com/RekGRpth/nginx.git /usr/src/nginx \
+    && git clone --progress --recursive https://github.com/RekGRpth/nginx-json-var-module.git /usr/src/json \
+    && git clone --progress --recursive https://github.com/RekGRpth/ngx_postgres.git /usr/src/postgres \
     && cd /usr/src/nginx \
     && auto/configure \
         --add-dynamic-module=/usr/src/echo \
+        --add-dynamic-module=/usr/src/headers \
         --add-dynamic-module=/usr/src/json \
         --add-dynamic-module=/usr/src/nchan \
         --add-dynamic-module=/usr/src/postgres \
