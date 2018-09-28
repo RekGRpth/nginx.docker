@@ -10,8 +10,9 @@ ENV GROUP=nginx \
     TZ=Asia/Yekaterinburg \
     USER=nginx
 
-RUN addgroup -S "${GROUP}" \
-    && adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" ${USER} \
+RUN mkdir -p "${HOME}" \
+    && addgroup -S "${GROUP}" \
+    && adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" "${USER}" \
     && apk add --no-cache --virtual .build-deps \
         gcc \
         git \
@@ -22,22 +23,34 @@ RUN addgroup -S "${GROUP}" \
         postgresql-dev \
         zlib-dev \
     && mkdir -p /usr/src \
+    && git clone --progress --recursive https://github.com/RekGRpth/array-var-nginx-module.git /usr/src/array \
     && git clone --progress --recursive https://github.com/RekGRpth/echo-nginx-module.git /usr/src/echo \
+    && git clone --progress --recursive https://github.com/RekGRpth/encrypted-session-nginx-module.git /usr/src/session \
+    && git clone --progress --recursive https://github.com/RekGRpth/form-input-nginx-module.git /usr/src/form \
     && git clone --progress --recursive https://github.com/RekGRpth/headers-more-nginx-module.git /usr/src/headers \
+    && git clone --progress --recursive https://github.com/RekGRpth/iconv-nginx-module.git /usr/src/iconv \
     && git clone --progress --recursive https://github.com/RekGRpth/nchan.git /usr/src/nchan \
     && git clone --progress --recursive https://github.com/RekGRpth/nginx.git /usr/src/nginx \
     && git clone --progress --recursive https://github.com/RekGRpth/nginx-json-var-module.git /usr/src/json \
+    && git clone --progress --recursive https://github.com/RekGRpth/ngx_devel_kit.git /usr/src/0devel \
     && git clone --progress --recursive https://github.com/RekGRpth/ngx_postgres.git /usr/src/postgres \
+    && git clone --progress --recursive https://github.com/RekGRpth/set-misc-nginx-module.git /usr/src/misc \
     && cd /usr/src/nginx \
     && auto/configure \
+        --add-dynamic-module=/usr/src/0devel \
+        --add-dynamic-module=/usr/src/array \
         --add-dynamic-module=/usr/src/echo \
+        --add-dynamic-module=/usr/src/form \
         --add-dynamic-module=/usr/src/headers \
+        --add-dynamic-module=/usr/src/iconv \
         --add-dynamic-module=/usr/src/json \
+        --add-dynamic-module=/usr/src/misc \
         --add-dynamic-module=/usr/src/nchan \
         --add-dynamic-module=/usr/src/postgres \
+        --add-dynamic-module=/usr/src/session \
         --conf-path=/etc/nginx/nginx.conf \
         --error-log-path=/var/log/nginx/error.log \
-        --group=nginx \
+        --group="${GROUP}" \
         --http-client-body-temp-path=/var/cache/nginx/client_temp \
         --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \
         --http-log-path=/var/log/nginx/access.log \
@@ -49,7 +62,7 @@ RUN addgroup -S "${GROUP}" \
         --pid-path=/var/run/nginx.pid \
         --prefix=/etc/nginx \
         --sbin-path=/usr/sbin/nginx \
-        --user=nginx \
+        --user="${USER}" \
         --with-compat \
         --with-file-aio \
         --with-http_gzip_static_module \
