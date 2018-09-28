@@ -30,6 +30,8 @@ RUN mkdir -p "${HOME}" \
     && git clone --progress --recursive https://github.com/RekGRpth/headers-more-nginx-module.git /usr/src/headers \
     && git clone --progress --recursive https://github.com/RekGRpth/iconv-nginx-module.git /usr/src/iconv \
     && git clone --progress --recursive https://github.com/RekGRpth/nchan.git /usr/src/nchan \
+    && git clone --progress --recursive https://github.com/RekGRpth/nginx-eval-module.git /usr/src/eval \
+    && git clone --progress --recursive https://github.com/RekGRpth/NginxExecute.git /usr/src/exec \
     && git clone --progress --recursive https://github.com/RekGRpth/nginx.git /usr/src/nginx \
     && git clone --progress --recursive https://github.com/RekGRpth/nginx-json-var-module.git /usr/src/json \
     && git clone --progress --recursive https://github.com/RekGRpth/ngx_devel_kit.git /usr/src/0devel \
@@ -37,9 +39,11 @@ RUN mkdir -p "${HOME}" \
     && git clone --progress --recursive https://github.com/RekGRpth/set-misc-nginx-module.git /usr/src/misc \
     && cd /usr/src/nginx \
     && auto/configure \
+        --add-dynamic-module=/usr/src/exec \
         --add-dynamic-module=/usr/src/0devel \
         --add-dynamic-module=/usr/src/array \
         --add-dynamic-module=/usr/src/echo \
+        --add-dynamic-module=/usr/src/eval \
         --add-dynamic-module=/usr/src/form \
         --add-dynamic-module=/usr/src/headers \
         --add-dynamic-module=/usr/src/iconv \
