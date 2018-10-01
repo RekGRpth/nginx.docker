@@ -1,10 +1,10 @@
 #!/bin/sh
 
-#docker build --tag rekgrpth/nginx . || exit $?
-#docker push rekgrpth/nginx || exit $?
+#docker build --tag rekgrpth/nginx:debug . || exit $?
+#docker push rekgrpth/nginx:debug || exit $?
 docker stop nginx
 docker rm nginx
-docker pull rekgrpth/nginx || exit $?
+docker pull rekgrpth/nginx:debug || exit $?
 docker volume create nginx || exit $?
 docker network create my
 docker run \
@@ -31,4 +31,4 @@ docker run \
     --volume /var/lib/docker/volumes/nginx/_data/log:/var/log/nginx/nginx \
     --volume /var/lib/docker/volumes/nginx/_data/module.conf:/etc/nginx/modules/nginx.conf \
     --volume /var/lib/docker/volumes/nginx/_data/nginx.conf:/etc/nginx/conf.d/nginx.conf \
-    rekgrpth/nginx
+    rekgrpth/nginx:debug
