@@ -72,6 +72,7 @@ RUN mkdir -p "${HOME}" \
         --sbin-path=/usr/sbin/nginx \
         --user="${USER}" \
         --with-compat \
+        --with-debug \
         --with-file-aio \
         --with-http_gzip_static_module \
         --with-http_ssl_module \
