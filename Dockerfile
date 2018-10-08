@@ -45,9 +45,7 @@ RUN mkdir -p "${HOME}" \
     && cd /usr/src/nginx \
     && auto/configure \
         --add-dynamic-module=../ngx_devel_kit \
-        $(find .. -maxdepth 1 -mindepth 1 -type d ! -name "nginx" ! -name "ngx_devel_kit" | while read -r NAME; do
-            echo "--add-dynamic-module=$NAME"
-        done) \
+        $(find .. -maxdepth 1 -mindepth 1 -type d ! -name "nginx" ! -name "ngx_devel_kit" | while read -r NAME; do echo "--add-dynamic-module=$NAME"; done) \
         --conf-path=/etc/nginx/nginx.conf \
         --error-log-path=/var/log/nginx/error.log \
         --group="${GROUP}" \
