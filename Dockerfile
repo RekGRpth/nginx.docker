@@ -24,41 +24,30 @@ RUN mkdir -p "${HOME}" \
         postgresql-dev \
         zlib-dev \
     && mkdir -p /usr/src \
-    && git clone --progress --recursive https://github.com/RekGRpth/array-var-nginx-module.git /usr/src/array \
-    && git clone --progress --recursive https://github.com/RekGRpth/echo-nginx-module.git /usr/src/echo \
-    && git clone --progress --recursive https://github.com/RekGRpth/encrypted-session-nginx-module.git /usr/src/session \
-    && git clone --progress --recursive https://github.com/RekGRpth/form-input-nginx-module.git /usr/src/form \
-    && git clone --progress --recursive https://github.com/RekGRpth/headers-more-nginx-module.git /usr/src/headers \
-    && git clone --progress --recursive https://github.com/RekGRpth/iconv-nginx-module.git /usr/src/iconv \
-    && git clone --progress --recursive https://github.com/RekGRpth/nchan.git /usr/src/nchan \
-    && git clone --progress --recursive https://github.com/RekGRpth/nginx-eval-module.git /usr/src/eval \
-    && git clone --progress --recursive https://github.com/RekGRpth/NginxExecute.git /usr/src/exec \
-    && git clone --progress --recursive https://github.com/RekGRpth/nginx.git /usr/src/nginx \
-    && git clone --progress --recursive https://github.com/RekGRpth/nginx-json-var-module.git /usr/src/var \
-    && git clone --progress --recursive https://github.com/RekGRpth/nginx-push-stream-module.git /usr/src/push \
-    && git clone --progress --recursive https://github.com/RekGRpth/ngx_devel_kit.git /usr/src/0devel \
-    && git clone --progress --recursive https://github.com/RekGRpth/ngx_postgres.git /usr/src/postgres \
-    && git clone --progress --recursive https://github.com/RekGRpth/rds-csv-nginx-module.git /usr/src/csv \
-    && git clone --progress --recursive https://github.com/RekGRpth/rds-json-nginx-module.git /usr/src/json \
-    && git clone --progress --recursive https://github.com/RekGRpth/set-misc-nginx-module.git /usr/src/misc \
+    && cd /usr/src \
+    && git clone --progress --recursive https://github.com/RekGRpth/array-var-nginx-module.git \
+    && git clone --progress --recursive https://github.com/RekGRpth/echo-nginx-module.git \
+    && git clone --progress --recursive https://github.com/RekGRpth/encrypted-session-nginx-module.git \
+    && git clone --progress --recursive https://github.com/RekGRpth/form-input-nginx-module.git \
+    && git clone --progress --recursive https://github.com/RekGRpth/headers-more-nginx-module.git \
+    && git clone --progress --recursive https://github.com/RekGRpth/iconv-nginx-module.git \
+    && git clone --progress --recursive https://github.com/RekGRpth/nchan.git \
+    && git clone --progress --recursive https://github.com/RekGRpth/nginx-eval-module.git \
+    && git clone --progress --recursive https://github.com/RekGRpth/NginxExecute.git \
+    && git clone --progress --recursive https://github.com/RekGRpth/nginx.git \
+    && git clone --progress --recursive https://github.com/RekGRpth/nginx-json-var-module.git \
+    && git clone --progress --recursive https://github.com/RekGRpth/nginx-push-stream-module.git \
+    && git clone --progress --recursive https://github.com/RekGRpth/ngx_devel_kit.git \
+    && git clone --progress --recursive https://github.com/RekGRpth/ngx_postgres.git \
+    && git clone --progress --recursive https://github.com/RekGRpth/rds-csv-nginx-module.git \
+    && git clone --progress --recursive https://github.com/RekGRpth/rds-json-nginx-module.git \
+    && git clone --progress --recursive https://github.com/RekGRpth/set-misc-nginx-module.git \
     && cd /usr/src/nginx \
     && auto/configure \
-        --add-dynamic-module=/usr/src/0devel \
-        --add-dynamic-module=/usr/src/array \
-        --add-dynamic-module=/usr/src/csv \
-        --add-dynamic-module=/usr/src/echo \
-        --add-dynamic-module=/usr/src/eval \
-        --add-dynamic-module=/usr/src/exec \
-        --add-dynamic-module=/usr/src/form \
-        --add-dynamic-module=/usr/src/headers \
-        --add-dynamic-module=/usr/src/iconv \
-        --add-dynamic-module=/usr/src/json \
-        --add-dynamic-module=/usr/src/misc \
-        --add-dynamic-module=/usr/src/nchan \
-        --add-dynamic-module=/usr/src/postgres \
-        --add-dynamic-module=/usr/src/push \
-        --add-dynamic-module=/usr/src/session \
-        --add-dynamic-module=/usr/src/var \
+        --add-dynamic-module=../ngx_devel_kit \
+        $(find .. -maxdepth 1 -mindepth 1 -type d ! -name "nginx" ! -name "ngx_devel_kit" | while read -r NAME; do
+            echo "--add-dynamic-module=$NAME"
+        done) \
         --conf-path=/etc/nginx/nginx.conf \
         --error-log-path=/var/log/nginx/error.log \
         --group="${GROUP}" \
@@ -86,12 +75,12 @@ RUN mkdir -p "${HOME}" \
     && make -j$(nproc) \
     && make install \
     && rm -rf /etc/nginx/html/ \
-    && mkdir /etc/nginx/conf.d/ \
+    && mkdir -p /etc/nginx/conf.d/ \
     && mkdir -p /usr/share/nginx/html/ \
     && mkdir -p /var/cache/nginx/ \
     && install -m644 docs/html/index.html /usr/share/nginx/html/ \
     && install -m644 docs/html/50x.html /usr/share/nginx/html/ \
-    && ln -s ../../usr/lib/nginx/modules /etc/nginx/modules \
+    && ln -sf ../../usr/lib/nginx/modules /etc/nginx/modules \
     && strip /usr/sbin/nginx* \
     && strip /usr/lib/nginx/modules/*.so \
     && rm -rf /usr/src \
