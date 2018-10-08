@@ -35,6 +35,7 @@ RUN mkdir -p "${HOME}" \
     && git clone --progress --recursive https://github.com/RekGRpth/NginxExecute.git /usr/src/exec \
     && git clone --progress --recursive https://github.com/RekGRpth/nginx.git /usr/src/nginx \
     && git clone --progress --recursive https://github.com/RekGRpth/nginx-json-var-module.git /usr/src/var \
+    && git clone --progress --recursive https://github.com/RekGRpth/nginx-push-stream-module.git /usr/src/push \
     && git clone --progress --recursive https://github.com/RekGRpth/ngx_devel_kit.git /usr/src/0devel \
     && git clone --progress --recursive https://github.com/RekGRpth/ngx_postgres.git /usr/src/postgres \
     && git clone --progress --recursive https://github.com/RekGRpth/rds-csv-nginx-module.git /usr/src/csv \
@@ -55,6 +56,7 @@ RUN mkdir -p "${HOME}" \
         --add-dynamic-module=/usr/src/misc \
         --add-dynamic-module=/usr/src/nchan \
         --add-dynamic-module=/usr/src/postgres \
+        --add-dynamic-module=/usr/src/push \
         --add-dynamic-module=/usr/src/session \
         --add-dynamic-module=/usr/src/var \
         --conf-path=/etc/nginx/nginx.conf \
@@ -73,6 +75,7 @@ RUN mkdir -p "${HOME}" \
         --sbin-path=/usr/sbin/nginx \
         --user="${USER}" \
         --with-compat \
+        --with-debug \
         --with-file-aio \
         --with-http_gzip_static_module \
         --with-http_ssl_module \
