@@ -14,7 +14,7 @@ RUN mkdir -p "${HOME}" \
     && addgroup -S "${GROUP}" \
     && adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" "${USER}" \
     && apk add --no-cache --virtual .build-deps \
-        curl-dev \
+#        curl-dev \
         gcc \
         git \
         libc-dev \
@@ -31,7 +31,7 @@ RUN mkdir -p "${HOME}" \
     && git clone --progress --recursive https://github.com/RekGRpth/form-input-nginx-module.git \
     && git clone --progress --recursive https://github.com/RekGRpth/headers-more-nginx-module.git \
     && git clone --progress --recursive https://github.com/RekGRpth/iconv-nginx-module.git \
-    && git clone --progress --recursive https://github.com/RekGRpth/nchan.git \
+#    && git clone --progress --recursive https://github.com/RekGRpth/nchan.git \
     && git clone --progress --recursive https://github.com/RekGRpth/nginx-eval-module.git \
     && git clone --progress --recursive https://github.com/RekGRpth/NginxExecute.git \
     && git clone --progress --recursive https://github.com/RekGRpth/nginx.git \
