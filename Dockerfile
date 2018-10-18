@@ -14,7 +14,6 @@ RUN mkdir -p "${HOME}" \
     && addgroup -S "${GROUP}" \
     && adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" "${USER}" \
     && apk add --no-cache --virtual .build-deps \
-#        curl-dev \
         gcc \
         git \
         libc-dev \
@@ -65,9 +64,10 @@ RUN mkdir -p "${HOME}" \
         --with-debug \
         --with-file-aio \
         --with-http_gzip_static_module \
-        --with-http_ssl_module \
-        --with-http_v2_module \
         --with-http_realip_module \
+        --with-http_ssl_module \
+        --with-http_sub_module \
+        --with-http_v2_module \
         --with-stream \
         --with-stream_ssl_module \
         --with-threads \
