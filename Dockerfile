@@ -36,6 +36,7 @@ RUN mkdir -p "${HOME}" \
     && git clone --progress --recursive https://github.com/RekGRpth/nginx.git \
     && git clone --progress --recursive https://github.com/RekGRpth/nginx-json-var-module.git \
     && git clone --progress --recursive https://github.com/RekGRpth/nginx-push-stream-module.git \
+    && git clone --progress --recursive https://github.com/RekGRpth/nginx-upload-module.git \
     && git clone --progress --recursive https://github.com/RekGRpth/ngx_devel_kit.git \
     && git clone --progress --recursive https://github.com/RekGRpth/ngx_postgres.git \
     && git clone --progress --recursive https://github.com/RekGRpth/rds-csv-nginx-module.git \
