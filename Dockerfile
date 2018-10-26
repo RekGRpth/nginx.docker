@@ -65,7 +65,7 @@ RUN mkdir -p "${HOME}" \
         --lock-path=/var/run/nginx.lock \
         --modules-path=/usr/lib/nginx/modules \
         --pid-path=/var/run/nginx.pid \
-        --prefix=/etc/nginx \
+        --prefix="${HOME}" \
         --sbin-path=/usr/sbin/nginx \
         --user="${USER}" \
         --with-compat \
@@ -81,13 +81,11 @@ RUN mkdir -p "${HOME}" \
         --with-threads \
     && make -j$(nproc) \
     && make install \
-    && rm -rf /etc/nginx/html/ \
     && mkdir -p /etc/nginx/conf.d/ \
     && mkdir -p /usr/share/nginx/html/ \
     && mkdir -p /var/cache/nginx/ \
-    && install -m644 docs/html/index.html /usr/share/nginx/html/ \
-    && install -m644 docs/html/50x.html /usr/share/nginx/html/ \
-    && ln -sf ../../usr/lib/nginx/modules /etc/nginx/modules \
+    && ln -sf /usr/lib/nginx/modules /etc/nginx/modules \
+    && ln -sf /usr/lib/nginx/modules "${HOME}"/modules \
     && strip /usr/sbin/nginx* \
     && strip /usr/lib/nginx/modules/*.so \
     && rm -rf /usr/src \
@@ -97,6 +95,7 @@ RUN mkdir -p "${HOME}" \
         scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /usr/lib/nginx/modules/*.so /tmp/envsubst \
             | tr ',' '\n' \
             | sort -u \
+            | grep -v libctpp2 \
             | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
     )" \
     && apk add --no-cache --virtual .nginx-rundeps $runDeps \
