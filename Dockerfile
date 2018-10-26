@@ -14,6 +14,7 @@ RUN mkdir -p "${HOME}" \
     && addgroup -S "${GROUP}" \
     && adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" "${USER}" \
     && apk add --no-cache --virtual .build-deps \
+        cmake \
         gcc \
         g++ \
         gettext-dev \
