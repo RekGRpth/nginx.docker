@@ -65,7 +65,7 @@ RUN mkdir -p "${HOME}" \
         --lock-path=/var/run/nginx.lock \
         --modules-path=/usr/lib/nginx/modules \
         --pid-path=/var/run/nginx.pid \
-        --prefix="${HOME}" \
+        --prefix=/etc/nginx \
         --sbin-path=/usr/sbin/nginx \
         --user="${USER}" \
         --with-compat \
@@ -85,7 +85,7 @@ RUN mkdir -p "${HOME}" \
     && mkdir -p /usr/share/nginx/html/ \
     && mkdir -p /var/cache/nginx/ \
     && ln -sf /usr/lib/nginx/modules /etc/nginx/modules \
-    && ln -sf /usr/lib/nginx/modules "${HOME}"/modules \
+    && ln -sf "${HOME}"/html /etc/nginx/html \
     && strip /usr/sbin/nginx* \
     && strip /usr/lib/nginx/modules/*.so \
     && rm -rf /usr/src \
