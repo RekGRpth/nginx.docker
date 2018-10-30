@@ -81,6 +81,7 @@ RUN mkdir -p "${HOME}" \
         --with-threads \
     && make -j$(nproc) \
     && make install \
+    && rm -rf /etc/nginx/html \
     && mkdir -p /etc/nginx/conf.d/ \
     && mkdir -p /usr/share/nginx/html/ \
     && mkdir -p /var/cache/nginx/ \
