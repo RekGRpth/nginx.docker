@@ -71,6 +71,7 @@ RUN mkdir -p "${HOME}" \
         --with-compat \
         --with-debug \
         --with-file-aio \
+        --with-http_auth_request_module \
         --with-http_gzip_static_module \
         --with-http_realip_module \
         --with-http_ssl_module \
