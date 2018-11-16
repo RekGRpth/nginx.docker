@@ -22,6 +22,7 @@ RUN mkdir -p "${HOME}" \
         libc-dev \
         linux-headers \
         make \
+        openldap-dev \
         pcre-dev \
         postgresql-dev \
         zlib-dev \
@@ -35,6 +36,7 @@ RUN mkdir -p "${HOME}" \
     && git clone --recursive https://github.com/RekGRpth/headers-more-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/iconv-nginx-module.git \
 #    && git clone --recursive https://github.com/RekGRpth/nchan.git \
+    && git clone --recursive https://github.com/RekGRpth/nginx-auth-ldap.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-eval-module.git \
     && git clone --recursive https://github.com/RekGRpth/NginxExecute.git \
     && git clone --recursive https://github.com/RekGRpth/nginx.git \
