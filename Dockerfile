@@ -110,7 +110,7 @@ RUN mkdir -p "${HOME}" \
     && apk add --no-cache --virtual .gettext gettext \
     && mv /usr/bin/envsubst /tmp/ \
     && runDeps="$( \
-        scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /usr/lib/nginx/modules/*.so /tmp/envsubst \
+        scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /usr/lib/nginx/modules/*.so /usr/local/lib/*.so /tmp/envsubst \
             | tr ',' '\n' \
             | sort -u \
             | grep -v libctpp2 \
@@ -121,7 +121,7 @@ RUN mkdir -p "${HOME}" \
     && apk del .build-deps \
     && apk del .gettext \
     && mv /tmp/envsubst /usr/local/bin/ \
-    && apk add --no-cache apache2-utils jansson shadow tzdata \
+    && apk add --no-cache apache2-utils shadow tzdata \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
     && chmod +x /entrypoint.sh \
