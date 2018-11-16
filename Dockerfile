@@ -38,6 +38,7 @@ RUN mkdir -p "${HOME}" \
     && git clone --recursive https://github.com/RekGRpth/nginx-eval-module.git \
     && git clone --recursive https://github.com/RekGRpth/NginxExecute.git \
     && git clone --recursive https://github.com/RekGRpth/nginx.git \
+    && git clone --recursive https://github.com/RekGRpth/nginx-http-auth-digest.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-json-var-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-push-stream-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-upload-module.git \
@@ -105,7 +106,7 @@ RUN mkdir -p "${HOME}" \
     && apk del .build-deps \
     && apk del .gettext \
     && mv /tmp/envsubst /usr/local/bin/ \
-    && apk add --no-cache shadow tzdata \
+    && apk add --no-cache apache2-utils shadow tzdata \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
     && chmod +x /entrypoint.sh \

@@ -12,7 +12,6 @@ docker run \
     --env GROUP_ID=$(id -g) \
     --env USER_ID=$(id -u) \
     --hostname nginx \
-    --link nginx:$(hostname -f) \
     --name nginx \
     --network my \
     --publish 443:443 \
