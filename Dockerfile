@@ -15,10 +15,11 @@ RUN mkdir -p "${HOME}" \
     && adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" "${USER}" \
     && apk add --no-cache --virtual .build-deps \
         cmake \
-        gcc \
         g++ \
+        gcc \
         gettext-dev \
         git \
+        jansson-dev \
         libc-dev \
         linux-headers \
         make \
@@ -35,6 +36,7 @@ RUN mkdir -p "${HOME}" \
     && git clone --recursive https://github.com/RekGRpth/form-input-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/headers-more-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/iconv-nginx-module.git \
+    && git clone --recursive https://github.com/RekGRpth/libjwt.git \
 #    && git clone --recursive https://github.com/RekGRpth/nchan.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-auth-ldap.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-eval-module.git \
@@ -42,21 +44,25 @@ RUN mkdir -p "${HOME}" \
     && git clone --recursive https://github.com/RekGRpth/nginx.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-http-auth-digest.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-json-var-module.git \
+    && git clone --recursive https://github.com/RekGRpth/nginx-jwt-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-push-stream-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-upload-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-uuid4-module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_ctpp2.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_devel_kit.git \
+#    && git clone --recursive https://github.com/RekGRpth/ngx-http-auth-jwt-module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_postgres.git \
     && git clone --recursive https://github.com/RekGRpth/rds-csv-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/rds-json-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/set-misc-nginx-module.git \
+    && cd /usr/src/libjwt \
+    && cmake . -DENABLE_PIC=true && make -j$(nproc) && make install \
     && cd /usr/src/ctpp2 \
     && cmake . -DCMAKE_INSTALL_PREFIX=/usr && make -j$(nproc) && make install \
     && cd /usr/src/nginx \
     && auto/configure \
         --add-dynamic-module=../ngx_devel_kit \
-        $(find .. -maxdepth 1 -mindepth 1 -type d ! -name "nginx" ! -name "ctpp2" ! -name "ngx_devel_kit" | while read -r NAME; do echo "--add-dynamic-module=$NAME"; done) \
+        $(find .. -maxdepth 1 -mindepth 1 -type d ! -name "nginx" ! -name "ctpp2" ! -name "ngx_devel_kit" ! -name "libjwt" | while read -r NAME; do echo "--add-dynamic-module=$NAME"; done) \
         --conf-path=/etc/nginx/nginx.conf \
         --error-log-path=/var/log/nginx/error.log \
         --group="${GROUP}" \
@@ -103,6 +109,7 @@ RUN mkdir -p "${HOME}" \
             | tr ',' '\n' \
             | sort -u \
             | grep -v libctpp2 \
+            | grep -v libjwt \
             | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
     )" \
     && apk add --no-cache --virtual .nginx-rundeps $runDeps \
