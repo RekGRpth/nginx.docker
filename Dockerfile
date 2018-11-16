@@ -56,7 +56,7 @@ RUN mkdir -p "${HOME}" \
     && git clone --recursive https://github.com/RekGRpth/rds-json-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/set-misc-nginx-module.git \
     && cd /usr/src/libjwt \
-    && cmake . -DENABLE_PIC=true && make -j$(nproc) && make install \
+    && cmake . -DBUILD_SHARED_LIBS=true && make -j$(nproc) && make install \
     && cd /usr/src/ctpp2 \
     && cmake . -DCMAKE_INSTALL_PREFIX=/usr && make -j$(nproc) && make install \
     && cd /usr/src/nginx \
