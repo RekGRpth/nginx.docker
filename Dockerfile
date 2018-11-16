@@ -121,7 +121,7 @@ RUN mkdir -p "${HOME}" \
     && apk del .build-deps \
     && apk del .gettext \
     && mv /tmp/envsubst /usr/local/bin/ \
-    && apk add --no-cache apache2-utils shadow tzdata \
+    && apk add --no-cache apache2-utils jansson shadow tzdata \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
     && chmod +x /entrypoint.sh \
