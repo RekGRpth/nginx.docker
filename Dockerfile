@@ -62,7 +62,7 @@ RUN mkdir -p "${HOME}" \
     && cd /usr/src/libjwt \
     && cmake . -DBUILD_SHARED_LIBS=true && make -j$(nproc) && make install \
     && cd /usr/src/ctpp2 \
-    && cmake . -DCMAKE_INSTALL_PREFIX=/usr && make -j$(nproc) && make install \
+    && cmake . -DCMAKE_INSTALL_PREFIX=/usr/local && make -j$(nproc) && make install \
     && cd /usr/src/nginx \
     && auto/configure \
         --add-dynamic-module=../ngx_devel_kit \
