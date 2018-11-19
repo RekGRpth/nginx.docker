@@ -19,7 +19,7 @@ RUN mkdir -p "${HOME}" \
         gcc \
         gettext-dev \
         git \
-        imagemagick6-dev \
+#        imagemagick6-dev \
         jansson-dev \
         krb5-dev \
         libc-dev \
@@ -58,7 +58,7 @@ RUN mkdir -p "${HOME}" \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_jwt_module.git \
 #    && git clone --recursive https://github.com/RekGRpth/ngx-http-auth-jwt-module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_pam_module.git \
-    && git clone --recursive https://github.com/RekGRpth/ngx_http_captcha.git \
+#    && git clone --recursive https://github.com/RekGRpth/ngx_http_captcha.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_kerberos_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_postgres.git \
     && git clone --recursive https://github.com/RekGRpth/rds-csv-nginx-module.git \
