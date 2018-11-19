@@ -19,7 +19,6 @@ RUN mkdir -p "${HOME}" \
         gcc \
         gettext-dev \
         git \
-#        imagemagick6-dev \
         jansson-dev \
         krb5-dev \
         libc-dev \
@@ -43,6 +42,7 @@ RUN mkdir -p "${HOME}" \
 #    && git clone --recursive https://github.com/RekGRpth/nchan.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-auth-ldap.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-client-module.git \
+    && git clone --recursive https://github.com/RekGRpth/nginx_csrf_prevent.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-eval-module.git \
     && git clone --recursive https://github.com/RekGRpth/NginxExecute.git \
     && git clone --recursive https://github.com/RekGRpth/nginx.git \
