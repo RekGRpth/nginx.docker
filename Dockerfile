@@ -17,6 +17,7 @@ RUN mkdir -p "${HOME}" \
         cmake \
         g++ \
         gcc \
+        gd-dev \
         gettext-dev \
         git \
         jansson-dev \
@@ -59,6 +60,7 @@ RUN mkdir -p "${HOME}" \
 #    && git clone --recursive https://github.com/RekGRpth/ngx-http-auth-jwt-module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_pam_module.git \
 #    && git clone --recursive https://github.com/RekGRpth/ngx_http_captcha.git \
+    && git clone --recursive https://github.com/RekGRpth/ngx_http_captcha_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_kerberos_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_postgres.git \
     && git clone --recursive https://github.com/RekGRpth/rds-csv-nginx-module.git \
@@ -126,7 +128,7 @@ RUN mkdir -p "${HOME}" \
     && apk del .build-deps \
     && apk del .gettext \
     && mv /tmp/envsubst /usr/local/bin/ \
-    && apk add --no-cache apache2-utils shadow tzdata \
+    && apk add --no-cache apache2-utils shadow ttf-dejavu tzdata \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
     && chmod +x /entrypoint.sh \
