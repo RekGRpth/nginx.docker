@@ -85,7 +85,7 @@ RUN mkdir -p "${HOME}" \
         --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
         --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
         --lock-path=/var/run/nginx.lock \
-        --modules-path=/usr/lib/nginx/modules \
+        --modules-path=/etc/nginx/modules \
         --pid-path=/var/run/nginx.pid \
         --prefix=/etc/nginx \
         --sbin-path=/usr/sbin/nginx \
@@ -109,15 +109,14 @@ RUN mkdir -p "${HOME}" \
     && mkdir -p /etc/nginx/conf.d/ \
     && mkdir -p /usr/share/nginx/html/ \
     && mkdir -p /var/cache/nginx/ \
-    && ln -sf /usr/lib/nginx/modules /etc/nginx/modules \
     && ln -sf "${HOME}"/html /etc/nginx/html \
     && strip /usr/sbin/nginx* \
-    && strip /usr/lib/nginx/modules/*.so \
+    && strip /etc/nginx/modules/*.so \
     && rm -rf /usr/src \
     && apk add --no-cache --virtual .gettext gettext \
     && mv /usr/bin/envsubst /tmp/ \
     && runDeps="$( \
-        scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /usr/lib/nginx/modules/*.so /usr/local/lib/*.so /tmp/envsubst \
+        scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /etc/nginx/modules/*.so /usr/local/lib/*.so /tmp/envsubst \
             | tr ',' '\n' \
             | sort -u \
             | grep -v libctpp2 \
