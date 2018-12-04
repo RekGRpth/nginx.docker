@@ -13,6 +13,8 @@ ENV GROUP=nginx \
 RUN mkdir -p "${HOME}" \
     && addgroup -S "${GROUP}" \
     && adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" "${USER}" \
+    && apk add --no-cache --virtual .build-deps \
+        expat \
     && echo http://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories \
     && echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories \
     && apk update \
