@@ -13,10 +13,10 @@ ENV GROUP=nginx \
 RUN mkdir -p "${HOME}" \
     && addgroup -S "${GROUP}" \
     && adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" "${USER}" \
-    && apk add --no-cache --virtual .build-deps \
-        expat \
     && echo http://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories \
     && echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories \
+    && apk update --no-cache \
+    && apk upgrade --no-cache \
     && apk add --no-cache --virtual .build-deps \
         cmake \
         g++ \
@@ -105,14 +105,12 @@ RUN mkdir -p "${HOME}" \
         --with-threads \
     && make -j$(nproc) \
     && make install \
-    && rm -rf /etc/nginx/html \
+    && rm -rf /etc/nginx/html /usr/local/include /usr/src \
     && mkdir -p /etc/nginx/conf.d/ \
     && mkdir -p /usr/share/nginx/html/ \
     && mkdir -p /var/cache/nginx/ \
     && ln -sf "${HOME}"/html /etc/nginx/html \
-    && strip /usr/sbin/nginx* \
-    && strip /etc/nginx/modules/*.so \
-    && rm -rf /usr/src \
+    && strip /usr/sbin/nginx* /etc/nginx/modules/*.so \
     && apk add --no-cache --virtual .gettext gettext \
     && mv /usr/bin/envsubst /tmp/ \
     && runDeps="$( \
@@ -123,11 +121,15 @@ RUN mkdir -p "${HOME}" \
             | grep -v libjwt \
             | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
     )" \
-    && apk add --no-cache --virtual .nginx-rundeps $runDeps \
-    && apk del .build-deps \
-    && apk del .gettext \
+    && apk add --no-cache --virtual .nginx-rundeps \
+        $runDeps \
+        apache2-utils \
+        shadow \
+        ttf-liberation \
+        tzdata \
+    && apk del --no-cache .build-deps \
+    && apk del --no-cache .gettext \
     && mv /tmp/envsubst /usr/local/bin/ \
-    && apk add --no-cache apache2-utils shadow ttf-liberation tzdata \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
     && chmod +x /entrypoint.sh \
