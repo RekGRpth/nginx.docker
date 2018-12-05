@@ -27,9 +27,11 @@ RUN mkdir -p "${HOME}" \
         jansson-dev \
         krb5-dev \
         libc-dev \
+        libressl-dev \
         linux-headers \
         linux-pam-dev \
         make \
+        musl-dev \
         openldap-dev \
         pcre-dev \
         postgresql-dev \
