@@ -17,7 +17,6 @@ RUN mkdir -p "${HOME}" \
         expat \
     && echo http://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories \
     && echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories \
-    && apk update \
     && apk add --no-cache --virtual .build-deps \
         cmake \
         g++ \
@@ -45,7 +44,6 @@ RUN mkdir -p "${HOME}" \
     && git clone --recursive https://github.com/RekGRpth/headers-more-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/iconv-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/libjwt.git \
-#    && git clone --recursive https://github.com/RekGRpth/nchan.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-auth-ldap.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-client-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx_csrf_prevent.git \
@@ -54,7 +52,6 @@ RUN mkdir -p "${HOME}" \
     && git clone --recursive https://github.com/RekGRpth/nginx.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-http-auth-digest.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-json-var-module.git \
-#    && git clone --recursive https://github.com/RekGRpth/nginx-jwt-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-push-stream-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-toolkit-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-upload-module.git \
@@ -62,9 +59,7 @@ RUN mkdir -p "${HOME}" \
     && git clone --recursive https://github.com/RekGRpth/ngx_ctpp2.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_devel_kit.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_jwt_module.git \
-#    && git clone --recursive https://github.com/RekGRpth/ngx-http-auth-jwt-module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_pam_module.git \
-#    && git clone --recursive https://github.com/RekGRpth/ngx_http_captcha.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_captcha_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_kerberos_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_postgres.git \
