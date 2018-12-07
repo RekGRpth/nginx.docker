@@ -140,6 +140,6 @@ VOLUME "${HOME}"
 
 WORKDIR "${HOME}"
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT [ "/entrypoint.sh" ]
 
 CMD [ "nginx" ]
