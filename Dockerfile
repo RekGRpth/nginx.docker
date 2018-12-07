@@ -68,14 +68,14 @@ RUN mkdir -p "${HOME}" \
     && git clone --recursive https://github.com/RekGRpth/rds-json-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/set-misc-nginx-module.git \
     && cd /usr/src/libjwt \
-    && cmake . -DBUILD_SHARED_LIBS=true && make -j$(nproc) && make install \
+    && cmake . -DBUILD_SHARED_LIBS=true && make -j"$(nproc)" && make -j"$(nproc)" install \
     && cd /usr/src/ctpp2 \
-    && cmake . -DCMAKE_INSTALL_PREFIX=/usr/local && make -j$(nproc) && make install \
+    && cmake . -DCMAKE_INSTALL_PREFIX=/usr/local && make -j"$(nproc)" && make -j"$(nproc)" install \
     && cd /usr/src/nginx \
     && auto/configure \
         --add-dynamic-module=../ngx_devel_kit \
         --add-dynamic-module=../nginx-toolkit-module \
-        $(find .. -maxdepth 1 -mindepth 1 -type d ! -name "nginx" ! -name "ctpp2" ! -name "ngx_devel_kit" ! -name "nginx-toolkit-module" ! -name "libjwt" | while read -r NAME; do echo "--add-dynamic-module=$NAME"; done) \
+        "$(find .. -maxdepth 1 -mindepth 1 -type d ! -name "nginx" ! -name "ctpp2" ! -name "ngx_devel_kit" ! -name "nginx-toolkit-module" ! -name "libjwt" | while read -r NAME; do echo "--add-dynamic-module=$NAME"; done)" \
         --conf-path=/etc/nginx/nginx.conf \
         --error-log-path=/var/log/nginx/error.log \
         --group="${GROUP}" \
@@ -104,8 +104,8 @@ RUN mkdir -p "${HOME}" \
         --with-stream \
         --with-stream_ssl_module \
         --with-threads \
-    && make -j$(nproc) \
-    && make install \
+    && make -j"$(nproc)" \
+    && make -j"$(nproc)" install \
     && rm -rf /etc/nginx/html /usr/local/include /usr/src \
     && mkdir -p /etc/nginx/conf.d/ \
     && mkdir -p /usr/share/nginx/html/ \
@@ -114,16 +114,14 @@ RUN mkdir -p "${HOME}" \
     && strip /usr/sbin/nginx* /etc/nginx/modules/*.so \
     && apk add --no-cache --virtual .gettext gettext \
     && mv /usr/bin/envsubst /tmp/ \
-    && runDeps="$( \
-        scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /etc/nginx/modules/*.so /usr/local/lib/*.so /tmp/envsubst \
+    && apk add --no-cache --virtual .nginx-rundeps \
+        "$( scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /etc/nginx/modules/*.so /usr/local/lib/*.so /tmp/envsubst \
             | tr ',' '\n' \
             | sort -u \
             | grep -v libctpp2 \
             | grep -v libjwt \
             | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
-    )" \
-    && apk add --no-cache --virtual .nginx-rundeps \
-        $runDeps \
+        )" \
         apache2-utils \
         shadow \
         ttf-liberation \
@@ -138,9 +136,9 @@ RUN mkdir -p "${HOME}" \
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-VOLUME  ${HOME}
+VOLUME "${HOME}"
 
-WORKDIR ${HOME}
+WORKDIR "${HOME}"
 
 ENTRYPOINT ["/entrypoint.sh"]
 
