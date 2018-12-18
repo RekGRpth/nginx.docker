@@ -54,7 +54,7 @@ RUN mkdir -p "${HOME}" \
     && git clone --recursive https://github.com/RekGRpth/nginx-http-auth-digest.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-json-var-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-push-stream-module.git \
-    && git clone --recursive https://github.com/RekGRpth/nginx-toolkit-module.git \
+#    && git clone --recursive https://github.com/RekGRpth/nginx-toolkit-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-upload-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-uuid4-module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_ctpp2.git \
@@ -74,7 +74,7 @@ RUN mkdir -p "${HOME}" \
     && cd /usr/src/nginx \
     && auto/configure \
         --add-dynamic-module=../ngx_devel_kit \
-        --add-dynamic-module=../nginx-toolkit-module \
+#        --add-dynamic-module=../nginx-toolkit-module \
         "$(find .. -maxdepth 1 -mindepth 1 -type d ! -name "nginx" ! -name "ctpp2" ! -name "ngx_devel_kit" ! -name "nginx-toolkit-module" ! -name "libjwt" | while read -r NAME; do echo "--add-dynamic-module=$NAME"; done)" \
         --conf-path=/etc/nginx/nginx.conf \
         --error-log-path=/var/log/nginx/error.log \
