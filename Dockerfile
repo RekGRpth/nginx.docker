@@ -58,7 +58,7 @@ RUN mkdir -p "${HOME}" \
     && git clone --recursive https://github.com/RekGRpth/nginx-upload-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-uuid4-module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_ctpp2.git \
-    && git clone --recursive https://github.com/RekGRpth/ngx_devel_kit.git \
+#    && git clone --recursive https://github.com/RekGRpth/ngx_devel_kit.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_jwt_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_pam_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_captcha_module.git \
@@ -73,7 +73,7 @@ RUN mkdir -p "${HOME}" \
     && cmake . -DCMAKE_INSTALL_PREFIX=/usr/local && make -j"$(nproc)" && make -j"$(nproc)" install \
     && cd /usr/src/nginx \
     && auto/configure \
-        --add-dynamic-module=../ngx_devel_kit \
+#        --add-dynamic-module=../ngx_devel_kit \
 #        --add-dynamic-module=../nginx-toolkit-module \
         "$(find .. -maxdepth 1 -mindepth 1 -type d ! -name "nginx" ! -name "ctpp2" ! -name "ngx_devel_kit" ! -name "nginx-toolkit-module" ! -name "libjwt" | while read -r NAME; do echo "--add-dynamic-module=$NAME"; done)" \
         --conf-path=/etc/nginx/nginx.conf \
