@@ -1,4 +1,4 @@
-FROM alpine
+FROM rekgrpth/gost
 
 MAINTAINER RekGRpth
 
@@ -10,14 +10,11 @@ ENV GROUP=nginx \
     TZ=Asia/Yekaterinburg \
     USER=nginx
 
-RUN mkdir -p "${HOME}" \
+RUN apk update --no-cache \
+    && apk upgrade --no-cache \
+    && mkdir -p "${HOME}" \
     && addgroup -S "${GROUP}" \
     && adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" "${USER}" \
-    && echo http://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories \
-    && echo http://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories \
-    && echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories \
-    && apk update --no-cache \
-    && apk upgrade --no-cache \
     && apk add --no-cache --virtual .build-deps \
         cmake \
         g++ \
