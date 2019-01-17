@@ -120,9 +120,9 @@ RUN apk update --no-cache \
             | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
         ) \
         apache2-utils \
-        shadow \
+#        shadow \
         ttf-liberation \
-        tzdata \
+#        tzdata \
     && apk del --no-cache .build-deps \
     && apk del --no-cache .gettext \
     && mv /tmp/envsubst /usr/local/bin/ \
