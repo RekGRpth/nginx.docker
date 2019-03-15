@@ -16,6 +16,7 @@ RUN apk update --no-cache \
     && addgroup -S "${GROUP}" \
     && adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" "${USER}" \
     && apk add --no-cache --virtual .build-deps \
+        bison \
         cmake \
         g++ \
         gcc \
@@ -63,7 +64,12 @@ RUN apk update --no-cache \
     && git clone --recursive https://github.com/RekGRpth/ngx_postgres.git \
     && git clone --recursive https://github.com/RekGRpth/rds-csv-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/rds-json-nginx-module.git \
+    && git clone --recursive https://github.com/RekGRpth/replace-filter-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/set-misc-nginx-module.git \
+    && git clone --recursive https://github.com/RekGRpth/sregex.git \
+    && cd /usr/src/sregex \
+    && make -j"$(nproc)" \
+    && make -j"$(nproc)" install \
     && cd /usr/src/libjwt \
     && cmake . -DBUILD_SHARED_LIBS=true && make -j"$(nproc)" && make -j"$(nproc)" install \
     && cd /usr/src/ctpp2 \
@@ -72,7 +78,7 @@ RUN apk update --no-cache \
     && auto/configure \
 #        --add-dynamic-module=../ngx_devel_kit \
 #        --add-dynamic-module=../nginx-toolkit-module \
-        "$(find .. -maxdepth 1 -mindepth 1 -type d ! -name "nginx" ! -name "ctpp2" ! -name "ngx_devel_kit" ! -name "nginx-toolkit-module" ! -name "libjwt" | while read -r NAME; do echo "--add-dynamic-module=$NAME"; done)" \
+        "$(find .. -maxdepth 1 -mindepth 1 -type d ! -name "nginx" ! -name "ctpp2" ! -name "sregex" ! -name "ngx_devel_kit" ! -name "nginx-toolkit-module" ! -name "libjwt" | while read -r NAME; do echo "--add-dynamic-module=$NAME"; done)" \
         --conf-path=/etc/nginx/nginx.conf \
         --error-log-path=/var/log/nginx/error.log \
         --group="${GROUP}" \
@@ -115,8 +121,8 @@ RUN apk update --no-cache \
         $( scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /etc/nginx/modules/*.so /usr/local/lib/*.so /tmp/envsubst \
             | tr ',' '\n' \
             | sort -u \
-            | grep -v libctpp2 \
-            | grep -v libjwt \
+#            | grep -v libctpp2 \
+#            | grep -v libjwt \
             | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
         ) \
         apache2-utils \
