@@ -67,6 +67,7 @@ RUN apk update --no-cache \
     && git clone --recursive https://github.com/RekGRpth/replace-filter-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/set-misc-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/sregex.git \
+    && git clone --recursive https://github.com/RekGRpth/xss-nginx-module.git \
     && cd /usr/src/sregex \
     && make -j"$(nproc)" \
     && make -j"$(nproc)" install \
