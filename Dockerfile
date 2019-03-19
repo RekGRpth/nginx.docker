@@ -43,6 +43,7 @@ RUN apk update --no-cache \
     && git clone --recursive https://github.com/RekGRpth/headers-more-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/iconv-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/libjwt.git \
+    && git clone --recursive https://github.com/RekGRpth/nginx-access-plus.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-auth-ldap.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-client-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx_csrf_prevent.git \
