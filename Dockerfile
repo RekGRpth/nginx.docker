@@ -51,11 +51,12 @@ RUN apk update --no-cache \
     && git clone --recursive https://github.com/RekGRpth/nginx.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-http-auth-digest.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-json-var-module.git \
+    && git clone --recursive https://github.com/RekGRpth/nginx-jwt-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-push-stream-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-upload-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-uuid4-module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_ctpp2.git \
-    && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_jwt_module.git \
+#    && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_jwt_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_pam_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_captcha_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_kerberos_module.git \
