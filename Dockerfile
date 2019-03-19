@@ -102,6 +102,7 @@ RUN apk update --no-cache \
         --with-http_ssl_module \
         --with-http_sub_module \
         --with-http_v2_module \
+        --with-http_image_filter_module \
         --with-stream \
         --with-stream_ssl_module \
         --with-threads \
