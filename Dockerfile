@@ -52,11 +52,9 @@ RUN apk update --no-cache \
     && git clone --recursive https://github.com/RekGRpth/nginx-http-auth-digest.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-json-var-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-push-stream-module.git \
-#    && git clone --recursive https://github.com/RekGRpth/nginx-toolkit-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-upload-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-uuid4-module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_ctpp2.git \
-#    && git clone --recursive https://github.com/RekGRpth/ngx_devel_kit.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_jwt_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_pam_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_captcha_module.git \
@@ -77,9 +75,7 @@ RUN apk update --no-cache \
     && cmake . -DCMAKE_INSTALL_PREFIX=/usr/local && make -j"$(nproc)" && make -j"$(nproc)" install \
     && cd /usr/src/nginx \
     && auto/configure \
-#        --add-dynamic-module=../ngx_devel_kit \
-#        --add-dynamic-module=../nginx-toolkit-module \
-        "$(find .. -maxdepth 1 -mindepth 1 -type d ! -name "nginx" ! -name "ctpp2" ! -name "sregex" ! -name "ngx_devel_kit" ! -name "nginx-toolkit-module" ! -name "libjwt" | while read -r NAME; do echo "--add-dynamic-module=$NAME"; done)" \
+        "$(find .. -maxdepth 1 -mindepth 1 -type d ! -name "nginx" ! -name "ctpp2" ! -name "sregex" ! -name "libjwt" | while read -r NAME; do echo "--add-dynamic-module=$NAME"; done)" \
         --conf-path=/etc/nginx/nginx.conf \
         --error-log-path=/var/log/nginx/error.log \
         --group="${GROUP}" \
@@ -122,14 +118,10 @@ RUN apk update --no-cache \
         $( scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /etc/nginx/modules/*.so /usr/local/lib/*.so /tmp/envsubst \
             | tr ',' '\n' \
             | sort -u \
-#            | grep -v libctpp2 \
-#            | grep -v libjwt \
             | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
         ) \
         apache2-utils \
-#        shadow \
         ttf-liberation \
-#        tzdata \
     && apk del --no-cache .build-deps \
     && apk del --no-cache .gettext \
     && mv /tmp/envsubst /usr/local/bin/ \
