@@ -32,6 +32,7 @@ RUN apk update --no-cache \
         openldap-dev \
         pcre-dev \
         postgresql-dev \
+        sqlite-dev \
         zlib-dev \
     && mkdir -p /usr/src \
     && cd /usr/src \
@@ -63,6 +64,7 @@ RUN apk update --no-cache \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_kerberos_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_response_body_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_postgres.git \
+    && git clone --recursive https://github.com/RekGRpth/ngx_sqlite.git \
     && git clone --recursive https://github.com/RekGRpth/rds-csv-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/rds-json-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/replace-filter-nginx-module.git \
