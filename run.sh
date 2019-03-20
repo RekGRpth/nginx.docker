@@ -31,4 +31,5 @@ docker run \
     --volume /var/lib/docker/volumes/nginx/_data/log:/var/log/nginx/nginx \
     --volume /var/lib/docker/volumes/nginx/_data/module.conf:/etc/nginx/modules/nginx.conf \
     --volume /var/lib/docker/volumes/nginx/_data/nginx.conf:/etc/nginx/conf.d/nginx.conf \
+    --volume /var/lib/docker/volumes/nginx/_data/common.conf:/etc/nginx/conf.d/___common.conf \
     rekgrpth/nginx
