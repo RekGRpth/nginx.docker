@@ -18,6 +18,7 @@ RUN apk update --no-cache \
     && apk add --no-cache --virtual .build-deps \
         bison \
         cmake \
+        expat-dev \
         g++ \
         gcc \
         gd-dev \
@@ -58,13 +59,13 @@ RUN apk update --no-cache \
     && git clone --recursive https://github.com/RekGRpth/nginx-upload-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-uuid4-module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_ctpp2.git \
-#    && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_jwt_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_pam_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_captcha_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_kerberos_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_response_body_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_postgres.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_sqlite.git \
+    && git clone --recursive https://github.com/RekGRpth/njs.git \
     && git clone --recursive https://github.com/RekGRpth/rds-csv-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/rds-json-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/replace-filter-nginx-module.git \
@@ -80,7 +81,7 @@ RUN apk update --no-cache \
     && cmake . -DCMAKE_INSTALL_PREFIX=/usr/local && make -j"$(nproc)" && make -j"$(nproc)" install \
     && cd /usr/src/nginx \
     && auto/configure \
-        "$(find .. -maxdepth 1 -mindepth 1 -type d ! -name "nginx" ! -name "ctpp2" ! -name "sregex" ! -name "libjwt" | while read -r NAME; do echo "--add-dynamic-module=$NAME"; done)" \
+        "$(find .. -type f -name "config" | grep -v "\.git" | grep -v "\/t\/" | while read -r NAME; do echo "--add-dynamic-module=$(dirname "$NAME")"; done)" \
         --conf-path=/etc/nginx/nginx.conf \
         --error-log-path=/var/log/nginx/error.log \
         --group="${GROUP}" \
