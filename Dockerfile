@@ -101,15 +101,18 @@ RUN apk update --no-cache \
         --with-compat \
         --with-debug \
         --with-file-aio \
+        --with-http_addition_module \
         --with-http_auth_request_module \
+        --with-http_gunzip_module \
         --with-http_gzip_static_module \
         --with-http_realip_module \
         --with-http_secure_link_module \
         --with-http_ssl_module \
         --with-http_sub_module \
         --with-http_v2_module \
-        --with-http_image_filter_module \
-        --with-stream \
+        --with-http_image_filter_module=dynamic \
+        --with-stream=dynamic \
+        --with-stream_realip_module \
         --with-stream_ssl_module \
         --with-threads \
     && make -j"$(nproc)" \
