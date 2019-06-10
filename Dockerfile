@@ -46,7 +46,6 @@ RUN apk update --no-cache \
     && git clone --recursive https://github.com/RekGRpth/iconv-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/libjwt.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-access-plus.git \
-    && git clone --recursive https://github.com/RekGRpth/nginx-auth-ldap.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-client-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx_csrf_prevent.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-eval-module.git \
@@ -59,6 +58,7 @@ RUN apk update --no-cache \
     && git clone --recursive https://github.com/RekGRpth/nginx-upload-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-uuid4-module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_ctpp2.git \
+    && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_basic_ldap_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_pam_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_captcha_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_kerberos_module.git \
