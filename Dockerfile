@@ -52,6 +52,7 @@ RUN apk update --no-cache \
     && git clone --recursive https://github.com/RekGRpth/NginxExecute.git \
     && git clone --recursive https://github.com/RekGRpth/nginx.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-http-auth-digest.git \
+    && git clone --recursive https://github.com/RekGRpth/nginx_http_response_body_module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-json-var-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-jwt-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-push-stream-module.git \
@@ -62,7 +63,6 @@ RUN apk update --no-cache \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_pam_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_captcha_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_kerberos_module.git \
-    && git clone --recursive https://github.com/RekGRpth/ngx_http_response_body_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_sign_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_postgres.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_sqlite.git \
