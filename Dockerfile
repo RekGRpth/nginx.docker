@@ -19,6 +19,7 @@ RUN apk update --no-cache \
         bison \
         cmake \
         expat-dev \
+        expect-dev \
         g++ \
         gcc \
         gd-dev \
@@ -33,6 +34,7 @@ RUN apk update --no-cache \
         openldap-dev \
         pcre-dev \
         postgresql-dev \
+        readline-dev \
         sqlite-dev \
         zlib-dev \
     && mkdir -p /usr/src \
