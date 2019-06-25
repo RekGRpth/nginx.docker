@@ -63,6 +63,7 @@ RUN apk update --no-cache \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_basic_ldap_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_pam_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_captcha_module.git \
+    && git clone --recursive https://github.com/RekGRpth/ngx_http_json_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_kerberos_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_response_body_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_sign_module.git \
