@@ -54,7 +54,6 @@ RUN apk update --no-cache \
     && git clone --recursive https://github.com/RekGRpth/NginxExecute.git \
     && git clone --recursive https://github.com/RekGRpth/nginx.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-http-auth-digest.git \
-    && git clone --recursive https://github.com/RekGRpth/nginx-json-var-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-jwt-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-push-stream-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-upload-module.git \
