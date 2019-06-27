@@ -76,8 +76,7 @@ RUN apk update --no-cache \
     && git clone --recursive https://github.com/RekGRpth/sregex.git \
     && git clone --recursive https://github.com/RekGRpth/xss-nginx-module.git \
     && cd /usr/src/sregex \
-    && make -j"$(nproc)" \
-    && make -j"$(nproc)" install \
+    && make -j"$(nproc)" && make -j"$(nproc)" install \
     && cd /usr/src/libjwt \
     && cmake . -DBUILD_SHARED_LIBS=true && make -j"$(nproc)" && make -j"$(nproc)" install \
     && cd /usr/src/ctpp2 \
@@ -125,10 +124,8 @@ RUN apk update --no-cache \
     && mkdir -p /var/cache/nginx/ \
     && ln -sf "${HOME}"/html /etc/nginx/html \
     && strip /usr/sbin/nginx* /etc/nginx/modules/*.so \
-    && apk add --no-cache --virtual .gettext gettext \
-    && mv /usr/bin/envsubst /tmp/ \
     && apk add --no-cache --virtual .nginx-rundeps \
-        $( scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /etc/nginx/modules/*.so /usr/local/lib/*.so /tmp/envsubst \
+        $( scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /etc/nginx/modules/*.so /usr/local/lib/*.so \
             | tr ',' '\n' \
             | sort -u \
             | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
@@ -136,8 +133,6 @@ RUN apk update --no-cache \
         apache2-utils \
         ttf-liberation \
     && apk del --no-cache .build-deps \
-    && apk del --no-cache .gettext \
-    && mv /tmp/envsubst /usr/local/bin/ \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
     && chmod +x /entrypoint.sh \
