@@ -26,10 +26,10 @@ RUN apk update --no-cache \
         gettext-dev \
         git \
         jansson-dev \
-        krb5-dev \
+#        krb5-dev \
         libc-dev \
         linux-headers \
-        linux-pam-dev \
+#        linux-pam-dev \
         make \
         openldap-dev \
         pcre-dev \
@@ -60,10 +60,10 @@ RUN apk update --no-cache \
     && git clone --recursive https://github.com/RekGRpth/nginx-uuid4-module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_ctpp2.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_basic_ldap_module.git \
-    && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_pam_module.git \
+#    && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_pam_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_captcha_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_json_module.git \
-    && git clone --recursive https://github.com/RekGRpth/ngx_http_kerberos_module.git \
+#    && git clone --recursive https://github.com/RekGRpth/ngx_http_kerberos_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_response_body_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_sign_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_postgres.git \

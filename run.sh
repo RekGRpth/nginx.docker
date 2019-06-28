@@ -7,6 +7,10 @@ docker rm nginx
 docker pull rekgrpth/nginx || exit $?
 docker volume create nginx || exit $?
 docker network create my
+mkdir -p /var/lib/docker/volumes/nginx/_data/log
+touch /var/lib/docker/volumes/nginx/_data/module.conf
+touch /var/lib/docker/volumes/nginx/_data/nginx.conf
+touch /var/lib/docker/volumes/nginx/_data/common.conf
 docker run \
     --detach \
     --env GROUP_ID=$(id -g) \
