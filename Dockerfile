@@ -137,10 +137,7 @@ RUN apk update --no-cache \
             | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
         ) \
         apache2-utils \
-        encodings \
-        libfontenc \
-        mkfontscale \
-        ttf-liberation \
+        ttf-dejavu \
     && apk del --no-cache .build-deps \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
