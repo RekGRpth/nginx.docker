@@ -129,7 +129,7 @@ RUN apk update --no-cache \
     && mkdir -p /usr/share/nginx/html/ \
     && mkdir -p /var/cache/nginx/ \
     && ln -sf "${HOME}"/html /etc/nginx/html \
-    && strip /usr/sbin/nginx* /etc/nginx/modules/*.so \
+    && (strip /usr/sbin/nginx* /etc/nginx/modules/*.so /usr/local/bin/* /usr/local/lib/*.so /usr/local/lib/perl5/site_perl/auto/nginx/*.so || true) \
     && apk add --no-cache --virtual .nginx-rundeps \
         $( scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /etc/nginx/modules/*.so /usr/local/lib/*.so \
             | tr ',' '\n' \
@@ -137,7 +137,9 @@ RUN apk update --no-cache \
             | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
         ) \
         apache2-utils \
-        ttf-dejavu \
+        encodings \
+        libfontenc \
+        mkfontscale \
         ttf-liberation \
     && apk del --no-cache .build-deps \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
