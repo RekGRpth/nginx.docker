@@ -37,6 +37,7 @@ RUN apk update --no-cache \
         postgresql-dev \
         readline-dev \
         sqlite-dev \
+        wkhtmltopdf-dev \
         wt-dev \
         zlib-dev \
     && mkdir -p /usr/src \
@@ -69,6 +70,7 @@ RUN apk update --no-cache \
 #    && git clone --recursive https://github.com/RekGRpth/ngx_http_kerberos_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_response_body_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_sign_module.git \
+    && git clone --recursive https://github.com/RekGRpth/ngx_http_wkhtmltopdf_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_postgres.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_sqlite.git \
     && git clone --recursive https://github.com/RekGRpth/njs.git \
