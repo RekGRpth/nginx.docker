@@ -1,4 +1,4 @@
-FROM rekgrpth/gost
+FROM rekgrpth/pdf
 ENV GROUP=nginx \
     HOME=/data/nginx \
     USER=nginx
@@ -26,6 +26,7 @@ RUN apk update --no-cache \
         jansson-dev \
 #        krb5-dev \
         libc-dev \
+        libharu-dev \
         linux-headers \
 #        linux-pam-dev \
         make \
@@ -35,8 +36,8 @@ RUN apk update --no-cache \
         postgresql-dev \
         readline-dev \
         sqlite-dev \
-        wkhtmltopdf-dev \
-        wt-dev \
+#        wkhtmltopdf-dev \
+#        wt-dev \
         zlib-dev \
     && mkdir -p /usr/src \
     && cd /usr/src \
