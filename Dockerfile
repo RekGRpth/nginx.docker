@@ -1,15 +1,13 @@
 FROM rekgrpth/gost
-
-MAINTAINER RekGRpth
-
-ADD entrypoint.sh /
-
 ENV GROUP=nginx \
     HOME=/data/nginx \
-    LANG=ru_RU.UTF-8 \
-    TZ=Asia/Yekaterinburg \
     USER=nginx
-
+COPY nginx.conf /etc/nginx/nginx.conf
+VOLUME "${HOME}"
+WORKDIR "${HOME}"
+ADD entrypoint.sh /
+ENTRYPOINT [ "/entrypoint.sh" ]
+CMD [ "nginx" ]
 RUN apk update --no-cache \
     && apk upgrade --no-cache \
     && mkdir -p "${HOME}" \
@@ -145,13 +143,3 @@ RUN apk update --no-cache \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
     && chmod +x /entrypoint.sh \
     && rm -f /etc/nginx/conf.d/*.conf
-
-COPY nginx.conf /etc/nginx/nginx.conf
-
-VOLUME "${HOME}"
-
-WORKDIR "${HOME}"
-
-ENTRYPOINT [ "/entrypoint.sh" ]
-
-CMD [ "nginx" ]
