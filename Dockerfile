@@ -1,4 +1,4 @@
-FROM rekgrpth/pdf
+FROM rekgrpth/gost
 ENV GROUP=nginx \
     HOME=/data/nginx \
     USER=nginx
@@ -24,11 +24,9 @@ RUN apk update --no-cache \
         gettext-dev \
         git \
         jansson-dev \
-#        krb5-dev \
         libc-dev \
         libharu-dev \
         linux-headers \
-#        linux-pam-dev \
         make \
         openldap-dev \
         pcre-dev \
@@ -36,8 +34,8 @@ RUN apk update --no-cache \
         postgresql-dev \
         readline-dev \
         sqlite-dev \
-#        wkhtmltopdf-dev \
-#        wt-dev \
+        wkhtmltopdf-dev \
+        wt-dev \
         zlib-dev \
     && mkdir -p /usr/src \
     && cd /usr/src \
@@ -62,11 +60,9 @@ RUN apk update --no-cache \
     && git clone --recursive https://github.com/RekGRpth/nginx-uuid4-module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_ctpp2.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_basic_ldap_module.git \
-#    && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_pam_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_captcha_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_html2pdf_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_json_module.git \
-#    && git clone --recursive https://github.com/RekGRpth/ngx_http_kerberos_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_response_body_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_sign_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_wkhtmltopdf_module.git \
