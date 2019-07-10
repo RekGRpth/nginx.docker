@@ -25,7 +25,7 @@ docker run \
     --restart always \
     --volume /etc/certs/$(hostname -d).crt:/etc/nginx/ssl/$(hostname -d).crt \
     --volume /etc/certs/$(hostname -d).key:/etc/nginx/ssl/$(hostname -d).key \
-    --volume nginx:/data/nginx \
+    --volume nginx:/data \
     $(find /var/lib/docker/volumes -maxdepth 1 -mindepth 1 -type d | while read VOLUME; do
         if test -n "$(docker ps --filter "name=$(basename "$VOLUME")" --filter "status=running" --format "{{.Names}}")"; then
             test -d "$VOLUME/_data/app" && echo "--volume $VOLUME/_data/app:/data/$(basename "$VOLUME")"

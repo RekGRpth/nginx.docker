@@ -1,10 +1,8 @@
 FROM rekgrpth/gost
 ENV GROUP=nginx \
-    HOME=/data/nginx \
     USER=nginx
 COPY nginx.conf /etc/nginx/nginx.conf
-VOLUME "${HOME}"
-WORKDIR "${HOME}"
+WORKDIR "${HOME}/nginx"
 ADD entrypoint.sh /
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "nginx" ]
