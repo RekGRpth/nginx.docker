@@ -121,7 +121,7 @@ RUN apk update --no-cache \
     && mkdir -p /var/cache/nginx/ \
     && ln -sf "${HOME}"/html /etc/nginx/html \
     && apk add --no-cache --virtual .nginx-rundeps \
-        "$(scanelf --needed --nobanner --format '%n#p' --recursive /usr/sbin/nginx /etc/nginx/modules /usr/local | tr ',' '\n' | sort -u | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }')" \
+        $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/sbin/nginx /etc/nginx/modules /usr/local | tr ',' '\n' | sort -u | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }') \
         apache2-utils \
         ttf-liberation \
     && apk del --no-cache .build-deps \
