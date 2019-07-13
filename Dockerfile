@@ -101,7 +101,7 @@ RUN apk update --no-cache \
         --with-http_gunzip_module \
         --with-http_gzip_static_module \
         --with-http_image_filter_module=dynamic \
-        --with-http_perl_module=dynamic \
+#        --with-http_perl_module=dynamic \
         --with-http_realip_module \
         --with-http_secure_link_module \
         --with-http_ssl_module \
@@ -120,7 +120,6 @@ RUN apk update --no-cache \
     && mkdir -p /usr/share/nginx/html/ \
     && mkdir -p /var/cache/nginx/ \
     && ln -sf "${HOME}"/html /etc/nginx/html \
-    && (strip /usr/sbin/nginx* /etc/nginx/modules/*.so /usr/local/bin/* /usr/local/lib/*.so /usr/local/lib/perl5/site_perl/auto/nginx/*.so || true) \
     && apk add --no-cache --virtual .nginx-rundeps \
         $( scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /etc/nginx/modules/*.so /usr/local/lib/*.so \
             | tr ',' '\n' \
