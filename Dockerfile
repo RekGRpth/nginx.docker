@@ -1,10 +1,8 @@
 FROM rekgrpth/gost
+CMD [ "nginx" ]
 ENV GROUP=nginx \
     USER=nginx
-COPY nginx.conf /etc/nginx/nginx.conf
-ADD entrypoint.sh /
-ENTRYPOINT [ "/entrypoint.sh" ]
-CMD [ "nginx" ]
+VOLUME "${HOME}"
 RUN apk update --no-cache \
     && apk upgrade --no-cache \
     && mkdir -p "${HOME}" \
@@ -101,7 +99,6 @@ RUN apk update --no-cache \
         --with-http_gunzip_module \
         --with-http_gzip_static_module \
         --with-http_image_filter_module=dynamic \
-#        --with-http_perl_module=dynamic \
         --with-http_realip_module \
         --with-http_secure_link_module \
         --with-http_ssl_module \
@@ -113,19 +110,12 @@ RUN apk update --no-cache \
         --with-stream_realip_module \
         --with-stream_ssl_module \
         --with-threads \
-    && make -j"$(nproc)" \
-    && make -j"$(nproc)" install \
-    && rm -rf /etc/nginx/html /usr/local/include /usr/src \
-    && mkdir -p /etc/nginx/conf.d/ \
-    && mkdir -p /usr/share/nginx/html/ \
-    && mkdir -p /var/cache/nginx/ \
-    && ln -sf "${HOME}"/html /etc/nginx/html \
+    && make -j"$(nproc)" && make -j"$(nproc)" install \
+    && rm -rf /usr/local/include /usr/src \
+    && mkdir -p /etc/nginx/conf.d /usr/share/nginx/html /var/cache/nginx \
     && apk add --no-cache --virtual .nginx-rundeps \
-        $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/sbin/nginx /etc/nginx/modules /usr/local | tr ',' '\n' | sort -u | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }') \
         apache2-utils \
-        ttf-liberation \
+        $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/sbin/nginx /etc/nginx/modules /usr/local | tr ',' '\n' | sort -u | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }') \
     && apk del --no-cache .build-deps \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stderr /var/log/nginx/error.log \
-    && chmod +x /entrypoint.sh \
-    && rm -f /etc/nginx/conf.d/*.conf
+    && ln -sf /dev/stderr /var/log/nginx/error.log
