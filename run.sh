@@ -13,6 +13,7 @@ touch /var/lib/docker/volumes/nginx/_data/main.conf
 touch /var/lib/docker/volumes/nginx/_data/module.conf
 touch /var/lib/docker/volumes/nginx/_data/nginx.conf
 docker run \
+    -it \
     --detach \
     --env GROUP_ID=$(id -g) \
     --env USER_ID=$(id -u) \
@@ -25,18 +26,20 @@ docker run \
     --restart always \
     --volume /etc/certs/$(hostname -d).crt:/etc/nginx/ssl/$(hostname -d).crt \
     --volume /etc/certs/$(hostname -d).key:/etc/nginx/ssl/$(hostname -d).key \
-    --volume nginx:/data \
+    --volume nginx:/home \
     $(find /var/lib/docker/volumes -maxdepth 1 -mindepth 1 -type d | while read VOLUME; do
         if test -n "$(docker ps --filter "name=$(basename "$VOLUME")" --filter "status=running" --format "{{.Names}}")"; then
-            test -d "$VOLUME/_data/app" && echo "--volume $VOLUME/_data/app:/data/$(basename "$VOLUME")"
+            test -d "$VOLUME/_data/nginx" && echo "--volume $VOLUME/_data/nginx:/home/$(basename "$VOLUME")"
             test -d "$VOLUME/_data/log" && echo "--volume $VOLUME/_data/log:/var/log/nginx/$(basename "$VOLUME")"
             test -f "$VOLUME/_data/nginx.conf" && echo "--link nginx:$(basename "$VOLUME")-$(hostname -f)"
             test -f "$VOLUME/_data/nginx.conf" && echo "--volume $VOLUME/_data/nginx.conf:/etc/nginx/conf.d/$(basename "$VOLUME").conf"
         fi
     done) \
-    --volume /var/lib/docker/volumes/nginx/_data/http.conf:/etc/nginx/conf.d/___common.conf \
+    --volume /var/lib/docker/volumes/nginx/_data/html:/etc/nginx/html \
+    --volume /var/lib/docker/volumes/nginx/_data/http.conf:/etc/nginx/http.conf \
     --volume /var/lib/docker/volumes/nginx/_data/log:/var/log/nginx/nginx \
-    --volume /var/lib/docker/volumes/nginx/_data/main.conf:/etc/nginx/modules/___common.conf \
-    --volume /var/lib/docker/volumes/nginx/_data/module.conf:/etc/nginx/modules/nginx.conf \
+    --volume /var/lib/docker/volumes/nginx/_data/main.conf:/etc/nginx/nginx.conf \
+    --volume /var/lib/docker/volumes/nginx/_data/module.conf:/etc/nginx/module.conf \
     --volume /var/lib/docker/volumes/nginx/_data/nginx.conf:/etc/nginx/conf.d/nginx.conf \
+    --volume /var/lib/docker/volumes/nginx/_data/templates:/etc/nginx/templates \
     rekgrpth/nginx
