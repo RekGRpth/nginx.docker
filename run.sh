@@ -13,7 +13,6 @@ touch /var/lib/docker/volumes/nginx/_data/main.conf
 touch /var/lib/docker/volumes/nginx/_data/module.conf
 touch /var/lib/docker/volumes/nginx/_data/nginx.conf
 docker run \
-    -it \
     --detach \
     --env GROUP_ID=$(id -g) \
     --env USER_ID=$(id -u) \
