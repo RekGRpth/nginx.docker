@@ -116,7 +116,7 @@ RUN apk update --no-cache \
         --with-stream_ssl_module \
         --with-threads \
     && make -j"$(nproc)" install \
-    && rm -rf /usr/local/include /usr/src \
+    && rm -rf /usr/src \
     && mkdir -p /etc/nginx/conf.d /usr/share/nginx/html /var/cache/nginx \
     && apk add --no-cache --virtual .nginx-rundeps \
         apache2-utils \
