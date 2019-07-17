@@ -11,24 +11,31 @@ RUN apk update --no-cache \
     && apk add --no-cache --virtual .build-deps \
         bison \
         cmake \
+        curl-dev \
         expat-dev \
         expect-dev \
+        freeglut-dev \
+        freetype-dev \
         g++ \
         gcc \
         gd-dev \
         gettext-dev \
         git \
+        harfbuzz-dev \
         jansson-dev \
+        jbig2dec-dev \
+        jpeg-dev \
         libc-dev \
         linux-headers \
         make \
+        openjpeg-dev \
         openldap-dev \
         pcre-dev \
         perl-dev \
         postgresql-dev \
         readline-dev \
         sqlite-dev \
-        wkhtmltopdf-dev \
+        ttf-liberation \
         zlib-dev \
     && mkdir -p /usr/src \
     && cd /usr/src \
@@ -40,6 +47,7 @@ RUN apk update --no-cache \
     && git clone --recursive https://github.com/RekGRpth/headers-more-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/iconv-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/libjwt.git \
+    && git clone --recursive https://github.com/RekGRpth/mupdf.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-access-plus.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-client-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx_csrf_prevent.git \
@@ -55,9 +63,9 @@ RUN apk update --no-cache \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_basic_ldap_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_captcha_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_json_module.git \
+    && git clone --recursive https://github.com/RekGRpth/ngx_http_mupdf_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_response_body_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_sign_module.git \
-    && git clone --recursive https://github.com/RekGRpth/ngx_http_wkhtmltopdf_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_postgres.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_sqlite.git \
     && git clone --recursive https://github.com/RekGRpth/njs.git \
@@ -68,11 +76,17 @@ RUN apk update --no-cache \
     && git clone --recursive https://github.com/RekGRpth/sregex.git \
     && git clone --recursive https://github.com/RekGRpth/xss-nginx-module.git \
     && cd /usr/src/sregex \
-    && make -j"$(nproc)" && make -j"$(nproc)" install \
+    && make -j"$(nproc)" install \
     && cd /usr/src/libjwt \
-    && cmake . -DBUILD_SHARED_LIBS=true && make -j"$(nproc)" && make -j"$(nproc)" install \
+    && cmake . -DBUILD_SHARED_LIBS=true && make -j"$(nproc)" install \
     && cd /usr/src/ctpp2 \
-    && cmake . -DCMAKE_INSTALL_PREFIX=/usr/local && make -j"$(nproc)" && make -j"$(nproc)" install \
+    && cmake . -DCMAKE_INSTALL_PREFIX=/usr/local && make -j"$(nproc)" install \
+    && cd /usr/src/mupdf \
+    && make -j"$(nproc)" USE_SYSTEM_LIBS=yes prefix=/usr/local CURL_LIBS='-lcurl -lpthread' build=release install \
+    && ln -fs libmupdf.so.0 /usr/local/lib/libmupdf.so \
+    && ln -fs libmupdfthird.so.0 /usr/local/lib/libmupdfthird.so \
+    && ln -fs libmupdf-threads.so.0 /usr/local/lib/libmupdf-threads.so \
+    && ln -fs libmupdf-pkcs7.so.0 /usr/local/lib/libmupdf-pkcs7.so \
     && cd /usr/src/nginx \
     && auto/configure \
         "$(find .. -type f -name "config" | grep -v "\.git" | grep -v "\/t\/" | while read -r NAME; do echo "--add-dynamic-module=$(dirname "$NAME")"; done)" \
@@ -110,7 +124,7 @@ RUN apk update --no-cache \
         --with-stream_realip_module \
         --with-stream_ssl_module \
         --with-threads \
-    && make -j"$(nproc)" && make -j"$(nproc)" install \
+    && make -j"$(nproc)" install \
     && rm -rf /usr/local/include /usr/src \
     && mkdir -p /etc/nginx/conf.d /usr/share/nginx/html /var/cache/nginx \
     && apk add --no-cache --virtual .nginx-rundeps \
