@@ -1,4 +1,4 @@
-FROM rekgrpth/gost
+FROM rekgrpth/pdf
 CMD [ "nginx" ]
 ENV GROUP=nginx \
     USER=nginx
@@ -11,7 +11,7 @@ RUN apk update --no-cache \
     && apk add --no-cache --virtual .build-deps \
         bison \
         cmake \
-        curl-dev \
+#        curl-dev \
         expat-dev \
         expect-dev \
         freeglut-dev \
@@ -35,7 +35,7 @@ RUN apk update --no-cache \
         postgresql-dev \
         readline-dev \
         sqlite-dev \
-        ttf-liberation \
+#        ttf-liberation \
         zlib-dev \
     && mkdir -p /usr/src \
     && cd /usr/src \
@@ -47,7 +47,7 @@ RUN apk update --no-cache \
     && git clone --recursive https://github.com/RekGRpth/headers-more-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/iconv-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/libjwt.git \
-    && git clone --recursive https://github.com/RekGRpth/mupdf.git \
+#    && git clone --recursive https://github.com/RekGRpth/mupdf.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-access-plus.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-client-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx_csrf_prevent.git \
@@ -81,12 +81,12 @@ RUN apk update --no-cache \
     && cmake . -DBUILD_SHARED_LIBS=true && make -j"$(nproc)" install \
     && cd /usr/src/ctpp2 \
     && cmake . -DCMAKE_INSTALL_PREFIX=/usr/local && make -j"$(nproc)" install \
-    && cd /usr/src/mupdf \
-    && make -j"$(nproc)" USE_SYSTEM_LIBS=yes prefix=/usr/local CURL_LIBS='-lcurl -lpthread' build=release install \
-    && ln -fs libmupdf.so.0 /usr/local/lib/libmupdf.so \
-    && ln -fs libmupdfthird.so.0 /usr/local/lib/libmupdfthird.so \
-    && ln -fs libmupdf-threads.so.0 /usr/local/lib/libmupdf-threads.so \
-    && ln -fs libmupdf-pkcs7.so.0 /usr/local/lib/libmupdf-pkcs7.so \
+#    && cd /usr/src/mupdf \
+#    && make -j"$(nproc)" USE_SYSTEM_LIBS=yes prefix=/usr/local CURL_LIBS='-lcurl -lpthread' build=release install \
+#    && ln -fs libmupdf.so.0 /usr/local/lib/libmupdf.so \
+#    && ln -fs libmupdfthird.so.0 /usr/local/lib/libmupdfthird.so \
+#    && ln -fs libmupdf-threads.so.0 /usr/local/lib/libmupdf-threads.so \
+#    && ln -fs libmupdf-pkcs7.so.0 /usr/local/lib/libmupdf-pkcs7.so \
     && cd /usr/src/nginx \
     && auto/configure \
         "$(find .. -type f -name "config" | grep -v "\.git" | grep -v "\/t\/" | while read -r NAME; do echo "--add-dynamic-module=$(dirname "$NAME")"; done)" \
