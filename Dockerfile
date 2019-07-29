@@ -3,7 +3,8 @@ CMD [ "nginx" ]
 ENV GROUP=nginx \
     USER=nginx
 VOLUME "${HOME}"
-RUN apk update --no-cache \
+RUN set -ex \
+    && apk update --no-cache \
     && apk upgrade --no-cache \
     && mkdir -p "${HOME}" \
     && addgroup -S "${GROUP}" \
