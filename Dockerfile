@@ -14,7 +14,7 @@ RUN set -ex \
         cmake \
         expat-dev \
         expect-dev \
-        freeglut-dev \
+#        freeglut-dev \
         freetype-dev \
         g++ \
         gcc \
