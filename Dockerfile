@@ -1,5 +1,6 @@
 FROM rekgrpth/pdf
 CMD [ "nginx" ]
+COPY NimbusSans-Regular.ttf /usr/local/share/fonts/
 ENV GROUP=nginx \
     USER=nginx
 VOLUME "${HOME}"
@@ -117,7 +118,6 @@ RUN set -ex \
     && mkdir -p /etc/nginx/conf.d /usr/share/nginx/html /var/cache/nginx \
     && apk add --no-cache --virtual .nginx-rundeps \
         apache2-utils \
-        ttf-liberation \
         $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/sbin/nginx /etc/nginx/modules /usr/local | tr ',' '\n' | sort -u | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }') \
     && apk del --no-cache .build-deps \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
