@@ -14,16 +14,12 @@ RUN set -ex \
         cmake \
         expat-dev \
         expect-dev \
-#        freeglut-dev \
-        freetype-dev \
         g++ \
         gcc \
         gd-dev \
         gettext-dev \
         git \
-        harfbuzz-dev \
         jansson-dev \
-        jbig2dec-dev \
         jpeg-dev \
         libc-dev \
         linux-headers \
@@ -60,13 +56,13 @@ RUN set -ex \
     && git clone --recursive https://github.com/RekGRpth/ngx_ctpp2.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_basic_ldap_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_captcha_module.git \
+    && git clone --recursive https://github.com/RekGRpth/ngx_http_htmldoc_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_json_module.git \
-    && git clone --recursive https://github.com/RekGRpth/ngx_http_mupdf_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_response_body_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_sign_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_postgres.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_sqlite.git \
-    && git clone --recursive https://github.com/RekGRpth/njs.git \
+#    && git clone --recursive https://github.com/RekGRpth/njs.git \
     && git clone --recursive https://github.com/RekGRpth/rds-csv-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/rds-json-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/replace-filter-nginx-module.git \
