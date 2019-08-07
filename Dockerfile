@@ -116,6 +116,7 @@ RUN set -ex \
     && make -j"$(nproc)" install \
     && rm -rf /usr/src \
     && mkdir -p /etc/nginx/conf.d /usr/share/nginx/html /var/cache/nginx \
+    && (strip /usr/local/bin/* /usr/local/lib/*.so || true) \
     && apk add --no-cache --virtual .nginx-rundeps \
         apache2-utils \
         $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/sbin/nginx /etc/nginx/modules /usr/local | tr ',' '\n' | sort -u | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }') \
