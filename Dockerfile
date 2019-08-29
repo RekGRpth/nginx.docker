@@ -5,8 +5,6 @@ ENV GROUP=nginx \
     USER=nginx
 VOLUME "${HOME}"
 RUN set -ex \
-    && apk update --no-cache \
-    && apk upgrade --no-cache \
     && mkdir -p "${HOME}" \
     && addgroup -S "${GROUP}" \
     && adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" "${USER}" \
