@@ -87,7 +87,7 @@ RUN set -ex \
         --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
         --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
         --lock-path=/var/run/nginx.lock \
-        --modules-path=/etc/nginx/modules \
+        --modules-path=/usr/local/modules \
         --pid-path=/var/run/nginx.pid \
         --prefix=/etc/nginx \
         --sbin-path=/usr/sbin/nginx \
@@ -113,11 +113,12 @@ RUN set -ex \
         --with-threads \
     && make -j"$(nproc)" install \
     && rm -rf /usr/src \
-    && mkdir -p /etc/nginx/conf.d /usr/share/nginx/html /var/cache/nginx \
-    && (strip /usr/local/bin/* /usr/local/lib/*.so /etc/nginx/modules/*.so /usr/sbin/nginx || true) \
+    && mkdir -p /var/cache/nginx \
+    && (strip /usr/local/bin/* /usr/local/lib/*.so /usr/local/modules/*.so /usr/sbin/nginx || true) \
     && apk add --no-cache --virtual .nginx-rundeps \
         apache2-utils \
-        $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/sbin/nginx /etc/nginx/modules /usr/local | tr ',' '\n' | sort -u | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }') \
+        $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/sbin/nginx /usr/local | tr ',' '\n' | sort -u | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }') \
     && apk del --no-cache .build-deps \
+    && ln -sf /usr/local/modules /etc/nginx/modules \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
