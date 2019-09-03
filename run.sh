@@ -39,6 +39,7 @@ docker run \
     --volume /var/lib/docker/volumes/nginx/_data/ctpp:/etc/nginx/ctpp/nginx \
     --volume /var/lib/docker/volumes/nginx/_data/html:/etc/nginx/html/nginx \
     --volume /var/lib/docker/volumes/nginx/_data/http.conf:/etc/nginx/http.conf \
+    --volume /var/lib/docker/volumes/nginx/_data/log:/var/log/nginx/nginx \
     --volume /var/lib/docker/volumes/nginx/_data/main.conf:/etc/nginx/nginx.conf \
     --volume /var/lib/docker/volumes/nginx/_data/module.conf:/etc/nginx/module.conf \
     --volume /var/lib/docker/volumes/nginx/_data/nginx.conf:/etc/nginx/conf.d/nginx.conf \
