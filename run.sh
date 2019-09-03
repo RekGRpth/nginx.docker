@@ -36,9 +36,10 @@ docker run \
             test -f "$VOLUME/_data/nginx.conf" && echo "--volume $VOLUME/_data/nginx.conf:/etc/nginx/conf.d/$(basename "$VOLUME").conf"
         fi
     done) \
-    --volume /var/lib/docker/volumes/nginx/_data/html:/etc/nginx/html/nginx \
     --volume /var/lib/docker/volumes/nginx/_data/ctpp:/etc/nginx/ctpp/nginx \
+    --volume /var/lib/docker/volumes/nginx/_data/html:/etc/nginx/html/nginx \
     --volume /var/lib/docker/volumes/nginx/_data/http.conf:/etc/nginx/http.conf \
     --volume /var/lib/docker/volumes/nginx/_data/main.conf:/etc/nginx/nginx.conf \
     --volume /var/lib/docker/volumes/nginx/_data/module.conf:/etc/nginx/module.conf \
+    --volume /var/lib/docker/volumes/nginx/_data/nginx.conf:/etc/nginx/conf.d/nginx.conf \
     rekgrpth/nginx
