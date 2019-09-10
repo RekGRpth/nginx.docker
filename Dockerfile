@@ -62,8 +62,8 @@ RUN set -ex \
     && git clone --recursive https://github.com/RekGRpth/ngx_postgres.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_sqlite.git \
 #    && git clone --recursive https://github.com/RekGRpth/njs.git \
-    && git clone --recursive https://github.com/RekGRpth/rds-csv-nginx-module.git \
-    && git clone --recursive https://github.com/RekGRpth/rds-json-nginx-module.git \
+#    && git clone --recursive https://github.com/RekGRpth/rds-csv-nginx-module.git \
+#    && git clone --recursive https://github.com/RekGRpth/rds-json-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/replace-filter-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/set-misc-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/sregex.git \
