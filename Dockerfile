@@ -13,6 +13,7 @@ RUN set -ex \
         cmake \
         expat-dev \
         expect-dev \
+        ffcall \
         g++ \
         gcc \
         gd-dev \
