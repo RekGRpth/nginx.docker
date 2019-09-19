@@ -22,6 +22,7 @@ RUN set -ex \
         jansson-dev \
         jpeg-dev \
         libc-dev \
+        libunwind-dev \
         linux-headers \
         make \
         openjpeg-dev \
@@ -43,6 +44,7 @@ RUN set -ex \
     && git clone --recursive https://github.com/RekGRpth/iconv-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/libjwt.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-access-plus.git \
+    && git clone --recursive https://github.com/RekGRpth/nginx-backtrace-ng.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-client-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx_csrf_prevent.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-eval-module.git \
