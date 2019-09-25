@@ -97,7 +97,6 @@ RUN set -ex \
         --sbin-path=/usr/sbin/nginx \
         --user="${USER}" \
         --with-compat \
-        --with-debug \
         --with-file-aio \
         --with-http_addition_module \
         --with-http_auth_request_module \
