@@ -63,6 +63,7 @@ RUN set -ex \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_json_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_response_body_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_sign_module.git \
+    && git clone --recursive https://github.com/RekGRpth/ngx_http_substitutions_filter_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_postgres.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_sqlite.git \
 #    && git clone --recursive https://github.com/RekGRpth/njs.git \
