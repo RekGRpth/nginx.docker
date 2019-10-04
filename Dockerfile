@@ -118,6 +118,7 @@ RUN set -ex \
         --with-threads \
     && make -j"$(nproc)" install \
     && rm -rf /usr/src \
+    && rm /etc/nginx/*.default \
     && mkdir -p /var/cache/nginx \
     && (strip /usr/local/bin/* /usr/local/lib/*.so /usr/local/modules/*.so /usr/sbin/nginx || true) \
     && apk add --no-cache --virtual .nginx-rundeps \
