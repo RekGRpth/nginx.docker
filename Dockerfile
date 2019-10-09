@@ -40,7 +40,7 @@ RUN set -ex \
     && git clone --recursive https://github.com/RekGRpth/echo-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/encrypted-session-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/form-input-nginx-module.git \
-    && git clone --recursive https://github.com/RekGRpth/headers-more-nginx-module.git \
+#    && git clone --recursive https://github.com/RekGRpth/headers-more-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/iconv-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/libjwt.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-access-plus.git \
