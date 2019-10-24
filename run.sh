@@ -6,7 +6,7 @@ docker stop nginx
 docker rm nginx
 docker pull rekgrpth/nginx || exit $?
 docker volume create nginx || exit $?
-docker network create my
+docker network create --opt com.docker.network.bridge.name=docker docker
 mkdir -p /var/lib/docker/volumes/nginx/_data/log
 touch /var/lib/docker/volumes/nginx/_data/http.conf
 touch /var/lib/docker/volumes/nginx/_data/main.conf
@@ -19,7 +19,7 @@ docker run \
     --hostname nginx \
     --link nginx:$(hostname -f) \
     --name nginx \
-    --network my \
+    --network docker \
     --publish 443:443 \
     --publish 80:80 \
     --restart always \
