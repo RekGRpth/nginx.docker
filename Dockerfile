@@ -71,12 +71,12 @@ RUN set -ex \
 #    && git clone --recursive https://github.com/RekGRpth/njs.git \
 #    && git clone --recursive https://github.com/RekGRpth/rds-csv-nginx-module.git \
 #    && git clone --recursive https://github.com/RekGRpth/rds-json-nginx-module.git \
-    && git clone --recursive https://github.com/RekGRpth/replace-filter-nginx-module.git \
+#    && git clone --recursive https://github.com/RekGRpth/replace-filter-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/set-misc-nginx-module.git \
-    && git clone --recursive https://github.com/RekGRpth/sregex.git \
+#    && git clone --recursive https://github.com/RekGRpth/sregex.git \
     && git clone --recursive https://github.com/RekGRpth/xss-nginx-module.git \
-    && cd /usr/src/sregex \
-    && make -j"$(nproc)" install \
+#    && cd /usr/src/sregex \
+#    && make -j"$(nproc)" install \
     && cd /usr/src/libjwt \
     && cmake . -DBUILD_SHARED_LIBS=true && make -j"$(nproc)" install \
     && cd /usr/src/ctpp2 \
