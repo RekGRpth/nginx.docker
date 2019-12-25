@@ -13,7 +13,6 @@ touch /var/lib/docker/volumes/nginx/_data/main.conf
 touch /var/lib/docker/volumes/nginx/_data/module.conf
 docker run \
     --detach \
-    -it \
     --env GROUP_ID=$(id -g) \
     --env USER_ID=$(id -u) \
     --hostname nginx \
@@ -26,12 +25,12 @@ docker run \
     --volume /etc/certs/$(hostname -d).crt:/etc/nginx/ssl/$(hostname -d).crt \
     --volume /etc/certs/$(hostname -d).key:/etc/nginx/ssl/$(hostname -d).key \
     --volume nginx:/home \
-    --volume nginx:/etc/nginx/nginx \
+    --volume /var/lib/docker/volumes/nginx/_data:/etc/nginx/nginx \
+    --volume /var/lib/docker/volumes/nginx/_data/main.conf:/etc/nginx/nginx.conf \
     $(find /var/lib/docker/volumes -maxdepth 1 -mindepth 1 -type d | while read VOLUME; do
         if test -n "$(docker ps --filter "name=$(basename "$VOLUME")" --filter "status=running" --format "{{.Names}}")"; then
-            test -f "$VOLUME/_data/nginx.conf" && echo "--link nginx:$(basename "$VOLUME")-$(hostname -f)"
-            test -f "$VOLUME/_data/nginx.conf" && echo "--volume $VOLUME/_data:/etc/nginx/$(basename "$VOLUME")"
+            echo "--link nginx:$(basename "$VOLUME")-$(hostname -f)"
+            echo "--volume $VOLUME/_data:/etc/nginx/$(basename "$VOLUME")"
         fi
     done) \
-    --volume /var/lib/docker/volumes/nginx/_data/main.conf:/etc/nginx/nginx.conf \
     rekgrpth/nginx
