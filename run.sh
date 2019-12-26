@@ -14,6 +14,8 @@ touch /var/lib/docker/volumes/nginx/_data/module.conf
 docker run \
     --detach \
     --env GROUP_ID=$(id -g) \
+    --env LANG=ru_RU.UTF-8 \
+    --env TZ=Asia/Yekaterinburg \
     --env USER_ID=$(id -u) \
     --hostname nginx \
     --link nginx:$(hostname -f) \
