@@ -4,7 +4,7 @@
 #docker push rekgrpth/nginx || exit $?
 docker pull rekgrpth/nginx || exit $?
 docker volume create nginx || exit $?
-docker network create --attachable --driver overlay docker || echo $?
+docker network create --attachable --opt com.docker.network.bridge.name=docker docker || echo $?
 mkdir -p /var/lib/docker/volumes/nginx/_data/log
 touch /var/lib/docker/volumes/nginx/_data/http.conf
 touch /var/lib/docker/volumes/nginx/_data/main.conf
