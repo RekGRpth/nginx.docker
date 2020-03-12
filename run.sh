@@ -26,6 +26,7 @@ docker run \
     --restart always \
     --volume /etc/certs:/etc/certs \
     --volume nginx:/home \
+    --volume /run/postgresql:/run/postgresql \
     --volume /var/lib/docker/volumes/nginx/_data:/etc/nginx/nginx \
     --volume /var/lib/docker/volumes/nginx/_data/main.conf:/etc/nginx/nginx.conf \
     $(find /var/lib/docker/volumes -maxdepth 1 -mindepth 1 -type d | while read VOLUME; do

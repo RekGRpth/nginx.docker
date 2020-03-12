@@ -19,6 +19,7 @@ docker service create \
     --mount type=bind,source=/var/lib/docker/volumes/nginx/_data,destination=/etc/nginx/nginx \
     --mount type=bind,source=/var/lib/docker/volumes/nginx/_data/main.conf,destination=/etc/nginx/nginx.conf \
     --mount type=volume,source=nginx,destination=/home \
+    --mount type=volume,source=/run/postgresql,destination=/run/postgresql \
     --name nginx \
     --network name=docker,alias=api-$(hostname -f),alias=django-$(hostname -f),alias=cherry-$(hostname -f),alias=cas-$(hostname -f),alias=web2py-$(hostname -f) \
     --publish target=443,published=443,mode=host \
