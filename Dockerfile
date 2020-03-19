@@ -35,21 +35,23 @@ RUN set -ex \
         zlib-dev \
     && mkdir -p /usr/src \
     && cd /usr/src \
-    && git clone --recursive https://github.com/RekGRpth/array-var-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/ctpp2.git \
+    && git clone --recursive https://github.com/RekGRpth/libjwt.git \
+    && git clone --recursive https://github.com/RekGRpth/nginx.git \
+    && mkdir -p /usr/src/nginx/modules \
+    && cd /usr/src/nginx/modules \
+    && git clone --recursive https://github.com/RekGRpth/array-var-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/echo-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/encrypted-session-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/form-input-nginx-module.git \
 #    && git clone --recursive https://github.com/RekGRpth/headers-more-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/iconv-nginx-module.git \
-    && git clone --recursive https://github.com/RekGRpth/libjwt.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-access-plus.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-backtrace-ng.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-client-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx_csrf_prevent.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-eval-module.git \
     && git clone --recursive https://github.com/RekGRpth/NginxExecute.git \
-    && git clone --recursive https://github.com/RekGRpth/nginx.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-http-auth-digest.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-jwt-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-push-stream-module.git \
@@ -83,7 +85,7 @@ RUN set -ex \
     && cmake . -DCMAKE_INSTALL_PREFIX=/usr/local && make -j"$(nproc)" install \
     && cd /usr/src/nginx \
     && auto/configure \
-        "$(find .. -type f -name "config" | grep -v "\.git" | grep -v "\/t\/" | while read -r NAME; do echo "--add-dynamic-module=$(dirname "$NAME")"; done)" \
+        "$(find modules -type f -name "config" | grep -v "\.git" | grep -v "\/t\/" | while read -r NAME; do echo "--add-dynamic-module=$(dirname "$NAME")"; done)" \
         --conf-path=/etc/nginx/nginx.conf \
         --error-log-path=/var/log/nginx/error.log \
         --group="${GROUP}" \
