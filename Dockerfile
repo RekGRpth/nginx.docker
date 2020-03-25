@@ -101,7 +101,7 @@ RUN set -ex \
         --prefix=/etc/nginx \
         --sbin-path=/usr/sbin/nginx \
         --user="${USER}" \
-        --with-compat \
+#        --with-compat \
         --with-file-aio \
         --with-http_addition_module \
         --with-http_auth_request_module \
