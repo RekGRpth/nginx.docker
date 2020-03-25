@@ -18,21 +18,17 @@ docker run \
     --env TZ=Asia/Yekaterinburg \
     --env USER_ID=$(id -u) \
     --hostname nginx \
-    --link nginx:$(hostname -f) \
     --name nginx \
-    --network name=docker,alias=api-$(hostname -f),alias=django-$(hostname -f),alias=cherry-$(hostname -f),alias=cas-$(hostname -f),alias=web2py-$(hostname -f) \
     --publish target=443,published=443,mode=host \
-    --publish target=80,published=80,mode=host \
     --restart always \
     --volume /etc/certs:/etc/certs \
     --volume nginx:/home \
     --volume /run/postgresql:/run/postgresql \
-    --volume /var/lib/docker/volumes/nginx/_data:/etc/nginx/nginx \
     --volume /var/lib/docker/volumes/nginx/_data/main.conf:/etc/nginx/nginx.conf \
+    --network name=docker,alias=$(hostname -f),alias=api-$(hostname -f),alias=cas-$(hostname -f)$(find /var/lib/docker/volumes -maxdepth 1 -mindepth 1 -type d | while read VOLUME; do
+        echo -n ",alias=$(basename "$VOLUME")-$(hostname -f)"
+    done) \
     $(find /var/lib/docker/volumes -maxdepth 1 -mindepth 1 -type d | while read VOLUME; do
-        if test -n "$(docker ps --filter "name=$(basename "$VOLUME")" --filter "status=running" --format "{{.Names}}")"; then
-            echo "--link nginx:$(basename "$VOLUME")-$(hostname -f)"
-            echo "--volume $VOLUME/_data:/etc/nginx/$(basename "$VOLUME")"
-        fi
+        echo "--volume $VOLUME/_data:/etc/nginx/$(basename "$VOLUME")"
     done) \
     rekgrpth/nginx
