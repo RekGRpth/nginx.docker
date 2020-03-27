@@ -17,6 +17,7 @@ docker service create \
     --hostname nginx \
     --mount type=bind,source=/etc/certs,destination=/etc/certs \
     --mount type=bind,source=/run/postgresql,destination=/run/postgresql \
+    --mount type=volume,source=/run/uwsgi,destination=/run/uwsgi \
     --mount type=bind,source=/var/lib/docker/volumes/nginx/_data/main.conf,destination=/etc/nginx/nginx.conf \
     --mount type=volume,source=nginx,destination=/home \
     --name nginx \

@@ -24,6 +24,7 @@ docker run \
     --volume /etc/certs:/etc/certs \
     --volume nginx:/home \
     --volume /run/postgresql:/run/postgresql \
+    --volume /run/uwsgi:/run/uwsgi \
     --volume /var/lib/docker/volumes/nginx/_data/main.conf:/etc/nginx/nginx.conf \
     --network name=docker,alias=$(hostname -f),alias=api-$(hostname -f),alias=cas-$(hostname -f)$(find /var/lib/docker/volumes -maxdepth 1 -mindepth 1 -type d | while read VOLUME; do
         echo -n ",alias=$(basename "$VOLUME")-$(hostname -f)"
