@@ -86,7 +86,7 @@ RUN set -ex \
     && cmake . -DCMAKE_INSTALL_PREFIX=/usr/local && make -j"$(nproc)" install \
     && cd /usr/src/nginx \
     && auto/configure \
-        "$(find modules -type f -name "config" | grep -v "\.git" | grep -v "\/t\/" | while read -r NAME; do echo "--add-dynamic-module=$(dirname "$NAME")"; done)" \
+        --add-dynamic-module="$(find modules -type f -name "config" | grep -v "\.git" | grep -v "\/t\/" | while read -r NAME; do echo -n "$(dirname "$NAME") "; done)" \
         --conf-path=/etc/nginx/nginx.conf \
         --error-log-path=/var/log/nginx/error.log \
         --group="${GROUP}" \
@@ -119,6 +119,7 @@ RUN set -ex \
         --with-stream=dynamic \
         --with-stream_realip_module \
         --with-stream_ssl_module \
+        --with-stream_ssl_preread_module \
         --with-threads \
     && make -j"$(nproc)" install \
     && rm -rf /usr/src \
