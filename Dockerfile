@@ -23,7 +23,6 @@ RUN set -ex \
         jansson-dev \
         jpeg-dev \
         libc-dev \
-        libunwind-dev \
         linux-headers \
         make \
         openjpeg-dev \
