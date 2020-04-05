@@ -70,7 +70,7 @@ RUN set -ex \
     && git clone --recursive https://github.com/RekGRpth/ngx_postgres.git \
 #    && git clone --recursive https://github.com/RekGRpth/ngx_sqlite.git \
     && git clone --recursive https://github.com/RekGRpth/set-misc-nginx-module.git \
-    && git clone --recursive https://github.com/RekGRpth/xss-nginx-module.git \
+#    && git clone --recursive https://github.com/RekGRpth/xss-nginx-module.git \
     && cd /usr/src/libjwt \
     && cmake . -DBUILD_SHARED_LIBS=true && make -j"$(nproc)" install \
     && cd /usr/src/ctpp2 \
