@@ -68,7 +68,7 @@ RUN set -ex \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_substitutions_filter_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_zip_var_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_postgres.git \
-    && git clone --recursive https://github.com/RekGRpth/ngx_sqlite.git \
+#    && git clone --recursive https://github.com/RekGRpth/ngx_sqlite.git \
     && git clone --recursive https://github.com/RekGRpth/set-misc-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/xss-nginx-module.git \
     && cd /usr/src/libjwt \
