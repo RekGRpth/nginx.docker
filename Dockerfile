@@ -50,7 +50,7 @@ RUN set -ex \
 #    && git clone --recursive https://github.com/RekGRpth/nginx-client-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx_csrf_prevent.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-eval-module.git \
-    && git clone --recursive https://github.com/RekGRpth/NginxExecute.git \
+#    && git clone --recursive https://github.com/RekGRpth/NginxExecute.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-http-auth-digest.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-jwt-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-push-stream-module.git \
