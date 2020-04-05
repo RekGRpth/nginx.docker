@@ -44,7 +44,6 @@ RUN set -ex \
     && git clone --recursive https://github.com/RekGRpth/echo-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/encrypted-session-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/form-input-nginx-module.git \
-#    && git clone --recursive https://github.com/RekGRpth/headers-more-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/iconv-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-access-plus.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-backtrace.git \
@@ -63,7 +62,6 @@ RUN set -ex \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_captcha_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_headers_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_htmldoc_module.git \
-#    && git clone --recursive https://github.com/RekGRpth/ngx_http_internal_redirect.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_json_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_response_body_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_sign_module.git \
@@ -71,15 +69,8 @@ RUN set -ex \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_zip_var_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_postgres.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_sqlite.git \
-#    && git clone --recursive https://github.com/RekGRpth/njs.git \
-#    && git clone --recursive https://github.com/RekGRpth/rds-csv-nginx-module.git \
-#    && git clone --recursive https://github.com/RekGRpth/rds-json-nginx-module.git \
-#    && git clone --recursive https://github.com/RekGRpth/replace-filter-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/set-misc-nginx-module.git \
-#    && git clone --recursive https://github.com/RekGRpth/sregex.git \
     && git clone --recursive https://github.com/RekGRpth/xss-nginx-module.git \
-#    && cd /usr/src/sregex \
-#    && make -j"$(nproc)" install \
     && cd /usr/src/libjwt \
     && cmake . -DBUILD_SHARED_LIBS=true && make -j"$(nproc)" install \
     && cd /usr/src/ctpp2 \
@@ -102,7 +93,6 @@ RUN set -ex \
         --prefix=/etc/nginx \
         --sbin-path=/usr/sbin/nginx \
         --user="${USER}" \
-#        --with-compat \
         --with-file-aio \
         --with-http_addition_module \
         --with-http_auth_request_module \
