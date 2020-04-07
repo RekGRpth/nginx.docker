@@ -26,10 +26,10 @@ docker run \
     --volume /run/postgresql:/run/postgresql \
     --volume /run/uwsgi:/run/uwsgi \
     --volume /var/lib/docker/volumes/nginx/_data/main.conf:/etc/nginx/nginx.conf \
-    --network name=docker,alias=$(hostname -f),alias=api-$(hostname -f),alias=cas-$(hostname -f)$(find /var/lib/docker/volumes -maxdepth 1 -mindepth 1 -type d | while read VOLUME; do
-        echo -n ",alias=$(basename "$VOLUME")-$(hostname -f)"
+    --network name=docker,alias=$(hostname -f),alias=api-$(hostname -f),alias=cas-$(hostname -f)$(docker volume ls --format "{{.Name}}" | while read VOLUME; do
+        echo -n ",alias=$VOLUME-$(hostname -f)"
     done) \
-    $(find /var/lib/docker/volumes -maxdepth 1 -mindepth 1 -type d | while read VOLUME; do
-        echo "--volume $VOLUME/_data:/etc/nginx/$(basename "$VOLUME")"
+    $(docker volume ls --format "{{.Name}}" | while read VOLUME; do
+        echo "--volume $VOLUME:/etc/nginx/$VOLUME"
     done) \
     rekgrpth/nginx
