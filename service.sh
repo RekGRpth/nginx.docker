@@ -15,6 +15,7 @@ docker service create \
     --env LANG=ru_RU.UTF-8 \
     --env TZ=Asia/Yekaterinburg \
     --env USER_ID=$(id -u) \
+    --hostname="{{.Service.Name}}-{{.Node.Hostname}}" \
     --mode global \
     --mount type=bind,source=/etc/certs,destination=/etc/certs \
     --mount type=bind,source=/run/nginx,destination=/run/nginx \
