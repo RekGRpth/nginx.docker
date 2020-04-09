@@ -10,7 +10,6 @@ touch /var/lib/docker/volumes/nginx/_data/http.conf
 touch /var/lib/docker/volumes/nginx/_data/main.conf
 touch /var/lib/docker/volumes/nginx/_data/module.conf
 docker service create \
-    --constraint node.platform.os==linux \
     --env GROUP_ID=$(id -g) \
     --env LANG=ru_RU.UTF-8 \
     --env TZ=Asia/Yekaterinburg \
