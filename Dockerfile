@@ -87,9 +87,9 @@ RUN set -ex \
         --http-proxy-temp-path=/var/cache/nginx/proxy_temp \
         --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
         --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
-        --lock-path=/var/run/nginx.lock \
+        --lock-path=/run/nginx/nginx.lock \
         --modules-path=/usr/local/modules \
-        --pid-path=/var/run/nginx.pid \
+        --pid-path=/run/nginx/nginx.pid \
         --prefix=/etc/nginx \
         --sbin-path=/usr/sbin/nginx \
         --user="${USER}" \

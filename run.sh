@@ -23,6 +23,7 @@ docker run \
     --restart always \
     --volume /etc/certs:/etc/certs \
     --volume nginx:/home \
+    --volume /run/nginx:/run/nginx \
     --volume /run/postgresql:/run/postgresql \
     --volume /run/uwsgi:/run/uwsgi \
     --volume /var/lib/docker/volumes/nginx/_data/main.conf:/etc/nginx/nginx.conf \

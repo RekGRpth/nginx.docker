@@ -3,12 +3,13 @@
 #docker build --tag rekgrpth/nginx . || exit $?
 #docker push rekgrpth/nginx || exit $?
 docker pull rekgrpth/nginx || exit $?
-docker volume create nginx || exit $?
+docker volume create nginx || echo $?
 docker network create --attachable --driver overlay docker || echo $?
-mkdir -p /var/lib/docker/volumes/nginx/_data/log
-touch /var/lib/docker/volumes/nginx/_data/http.conf
-touch /var/lib/docker/volumes/nginx/_data/main.conf
-touch /var/lib/docker/volumes/nginx/_data/module.conf
+mkdir -p /var/lib/docker/volumes/nginx/_data/log || exit $?
+touch /var/lib/docker/volumes/nginx/_data/http.conf || exit $?
+touch /var/lib/docker/volumes/nginx/_data/main.conf || exit $?
+touch /var/lib/docker/volumes/nginx/_data/module.conf || exit $?
+docker service rm nginx || echo $?
 docker service create \
     --env GROUP_ID=$(id -g) \
     --env LANG=ru_RU.UTF-8 \
@@ -16,6 +17,7 @@ docker service create \
     --env USER_ID=$(id -u) \
     --mode global \
     --mount type=bind,source=/etc/certs,destination=/etc/certs \
+    --mount type=bind,source=/run/nginx,destination=/run/nginx \
     --mount type=bind,source=/run/postgresql,destination=/run/postgresql \
     --mount type=bind,source=/run/uwsgi,destination=/run/uwsgi \
     --mount type=bind,source=/var/lib/docker/volumes/nginx/_data/main.conf,destination=/etc/nginx/nginx.conf \
