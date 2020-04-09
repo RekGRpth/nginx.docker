@@ -17,11 +17,12 @@ docker service create \
     --env USER_ID=$(id -u) \
     --hostname="{{.Service.Name}}-{{.Node.Hostname}}" \
     --mode global \
-    --mount type=bind,source=/etc/certs,destination=/etc/certs \
+    --mount type=bind,source=/etc/certs,destination=/etc/certs,readonly \
     --mount type=bind,source=/run/nginx,destination=/run/nginx \
     --mount type=bind,source=/run/postgresql,destination=/run/postgresql \
     --mount type=bind,source=/run/uwsgi,destination=/run/uwsgi \
-    --mount type=bind,source=/var/lib/docker/volumes/nginx/_data/main.conf,destination=/etc/nginx/nginx.conf \
+    --mount type=bind,source=/var/lib/docker/volumes/nginx/_data/main.conf,destination=/etc/nginx/nginx.conf,readonly \
+    --mount type=bind,source=/var/log/nginx,destination=/var/log/nginx \
     --mount type=volume,source=nginx,destination=/home \
     --name nginx \
     --publish target=443,published=443,mode=host \
@@ -29,6 +30,6 @@ docker service create \
         echo -n ",alias=$VOLUME-$(hostname -f)"
     done) \
     $(docker volume ls --format "{{.Name}}" | while read VOLUME; do
-        echo "--mount type=volume,source=$VOLUME,destination=/etc/nginx/$VOLUME"
+        echo "--mount type=volume,source=$VOLUME,destination=/etc/nginx/$VOLUME,readonly"
     done) \
     rekgrpth/nginx
