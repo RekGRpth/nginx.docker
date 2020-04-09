@@ -122,4 +122,5 @@ RUN set -ex \
     && apk del --no-cache .build-deps \
     && ln -sf /usr/local/modules /etc/nginx/modules \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stderr /var/log/nginx/error.log
+    && ln -sf /dev/stderr /var/log/nginx/error.log \
+    && mkdir -p /run/nginx/
