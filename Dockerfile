@@ -4,7 +4,7 @@ COPY NimbusSans-Regular.ttf /usr/local/share/fonts/
 ENV GROUP=nginx \
     USER=nginx
 VOLUME "${HOME}"
-RUN set -ex \
+RUN set -x \
     && mkdir -p "${HOME}" \
     && addgroup -S "${GROUP}" \
     && adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" "${USER}" \
