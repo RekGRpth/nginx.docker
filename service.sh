@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh -ex
 
 #docker build --tag rekgrpth/nginx . || exit $?
 #docker push rekgrpth/nginx || exit $?
