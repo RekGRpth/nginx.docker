@@ -10,6 +10,11 @@ RUN set -ex \
     && adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" "${USER}" \
     && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
         ffcall \
+    && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --virtual .edge-main-build-deps \
+        json-c \
+        json-c-dev \
+    && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing --virtual .edge-testing-build-deps \
+        mustach-dev \
     && apk add --no-cache --virtual .build-deps \
         bison \
         cmake \
@@ -63,6 +68,7 @@ RUN set -ex \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_headers_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_htmldoc_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_json_module.git \
+    && git clone --recursive https://github.com/RekGRpth/ngx_http_mustach_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_response_body_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_sign_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_substitutions_filter_module.git \
@@ -120,7 +126,10 @@ RUN set -ex \
         apache2-utils \
         $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/sbin/nginx /usr/local | tr ',' '\n' | sort -u | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }') \
     && apk del --no-cache .build-deps \
+    && apk del --no-cache .edge-main-build-deps \
+    && apk del --no-cache .edge-testing-build-deps \
     && ln -sf /usr/local/modules /etc/nginx/modules \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
-    && mkdir -p /run/nginx/
+    && mkdir -p /run/nginx/ \
+    && echo done
