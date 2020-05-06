@@ -40,7 +40,7 @@ RUN set -ex \
         zlib-dev \
     && mkdir -p /usr/src \
     && cd /usr/src \
-    && git clone --recursive https://github.com/RekGRpth/ctpp2.git \
+#    && git clone --recursive https://github.com/RekGRpth/ctpp2.git \
     && git clone --recursive https://github.com/RekGRpth/libjwt.git \
     && git clone --recursive https://github.com/RekGRpth/nginx.git \
     && mkdir -p /usr/src/nginx/modules \
@@ -61,7 +61,7 @@ RUN set -ex \
     && git clone --recursive https://github.com/RekGRpth/nginx-push-stream-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-upload-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-uuid4-module.git \
-    && git clone --recursive https://github.com/RekGRpth/ngx_ctpp2.git \
+#    && git clone --recursive https://github.com/RekGRpth/ngx_ctpp2.git \
 #    && git clone --recursive https://github.com/RekGRpth/ngx_dynamic_etag.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_basic_ldap_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_captcha_module.git \
@@ -79,8 +79,8 @@ RUN set -ex \
 #    && git clone --recursive https://github.com/RekGRpth/xss-nginx-module.git \
     && cd /usr/src/libjwt \
     && cmake . -DBUILD_SHARED_LIBS=true && make -j"$(nproc)" install \
-    && cd /usr/src/ctpp2 \
-    && cmake . -DCMAKE_INSTALL_PREFIX=/usr/local && make -j"$(nproc)" install \
+#    && cd /usr/src/ctpp2 \
+#    && cmake . -DCMAKE_INSTALL_PREFIX=/usr/local && make -j"$(nproc)" install \
     && cd /usr/src/nginx \
     && auto/configure \
         --add-dynamic-module="$(find modules -type f -name "config" | grep -v "\.git" | grep -v "\/t\/" | while read -r NAME; do echo -n "$(dirname "$NAME") "; done)" \
