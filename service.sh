@@ -26,8 +26,8 @@ docker service create \
     --mount type=volume,source=nginx,destination=/home \
     --name nginx \
     --publish target=443,published=443,mode=host \
-    --network name=docker,alias=$(hostname -f),alias=api-$(hostname -f),alias=cas-$(hostname -f)$(docker volume ls --format "{{.Name}}" | while read VOLUME; do
-        echo -n ",alias=$VOLUME-$(hostname -f)"
+    --network name=docker,alias=api-nginx,alias=cas-nginx$(docker volume ls --format "{{.Name}}" | while read VOLUME; do
+        echo -n ",alias=$VOLUME-nginx"
     done) \
     $(docker volume ls --format "{{.Name}}" | while read VOLUME; do
         echo "--mount type=volume,source=$VOLUME,destination=/etc/nginx/$VOLUME,readonly"
