@@ -1,14 +1,14 @@
 #!/bin/sh -ex
 
-#docker build --tag rekgrpth/nginx . || exit $?
-#docker push rekgrpth/nginx || exit $?
-docker pull rekgrpth/nginx || exit $?
+#docker build --tag rekgrpth/nginx .
+#docker push rekgrpth/nginx
+docker pull rekgrpth/nginx
 docker volume create nginx || echo $?
 docker network create --attachable --driver overlay docker || echo $?
-mkdir -p /var/lib/docker/volumes/nginx/_data/log || exit $?
-touch /var/lib/docker/volumes/nginx/_data/http.conf || exit $?
-touch /var/lib/docker/volumes/nginx/_data/main.conf || exit $?
-touch /var/lib/docker/volumes/nginx/_data/module.conf || exit $?
+mkdir -p /var/lib/docker/volumes/nginx/_data/log
+touch /var/lib/docker/volumes/nginx/_data/http.conf
+touch /var/lib/docker/volumes/nginx/_data/main.conf
+touch /var/lib/docker/volumes/nginx/_data/module.conf
 docker service rm nginx || echo $?
 docker service create \
     --env GROUP_ID=$(id -g) \

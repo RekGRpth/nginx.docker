@@ -1,9 +1,9 @@
 #!/bin/sh -ex
 
-#docker build --tag rekgrpth/nginx . || exit $?
-#docker push rekgrpth/nginx || exit $?
-docker pull rekgrpth/nginx || exit $?
-docker volume create nginx || exit $?
+#docker build --tag rekgrpth/nginx .
+#docker push rekgrpth/nginx
+docker pull rekgrpth/nginx
+docker volume create nginx
 docker network create --attachable --opt com.docker.network.bridge.name=docker docker || echo $?
 mkdir -p /var/lib/docker/volumes/nginx/_data/log
 touch /var/lib/docker/volumes/nginx/_data/http.conf
