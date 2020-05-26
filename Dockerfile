@@ -119,7 +119,6 @@ RUN exec 2>&1 \
         --with-stream_ssl_preread_module \
         --with-threads \
     && make -j"$(nproc)" install \
-    && rm -rf /usr/src \
     && rm /etc/nginx/*.default \
     && mkdir -p /var/cache/nginx \
     && (strip /usr/local/bin/* /usr/local/lib/*.so /usr/local/modules/*.so /usr/sbin/nginx || true) \
@@ -131,6 +130,7 @@ RUN exec 2>&1 \
     && apk del --no-cache .build-deps \
     && apk del --no-cache .edge-main-build-deps \
     && apk del --no-cache .edge-testing-build-deps \
+    && rm -rf /usr/src /usr/share/doc /usr/share/man /usr/local/share/doc /usr/local/share/man \
     && ln -sf /usr/local/modules /etc/nginx/modules \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
