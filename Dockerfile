@@ -10,10 +10,10 @@ RUN exec 2>&1 \
     && addgroup -S "${GROUP}" \
     && adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" "${USER}" \
     && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --virtual .edge-main-build-deps \
-        ffcall \
         json-c \
         json-c-dev \
     && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing --virtual .edge-testing-build-deps \
+        ffcall \
         mustach-dev \
     && apk add --no-cache --virtual .build-deps \
         bison \
@@ -123,6 +123,7 @@ RUN exec 2>&1 \
     && mkdir -p /var/cache/nginx \
     && (strip /usr/local/bin/* /usr/local/lib/*.so /usr/local/modules/*.so /usr/sbin/nginx || true) \
     && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing --virtual .mustach-rundeps \
+        ffcall \
         mustach-dev \
     && apk add --no-cache --virtual .nginx-rundeps \
         apache2-utils \
