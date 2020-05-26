@@ -8,9 +8,8 @@ RUN set -ex \
     && mkdir -p "${HOME}" \
     && addgroup -S "${GROUP}" \
     && adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" "${USER}" \
-    && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
-        ffcall \
     && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --virtual .edge-main-build-deps \
+        ffcall \
         json-c \
         json-c-dev \
     && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing --virtual .edge-testing-build-deps \
