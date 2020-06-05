@@ -9,9 +9,6 @@ RUN exec 2>&1 \
     && mkdir -p "${HOME}" \
     && addgroup -S "${GROUP}" \
     && adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" "${USER}" \
-    && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --virtual .edge-main-build-deps \
-        json-c \
-        json-c-dev \
     && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing --virtual .edge-testing-build-deps \
         ffcall \
         mustach-dev \
@@ -27,6 +24,7 @@ RUN exec 2>&1 \
         git \
         jansson-dev \
         jpeg-dev \
+        json-c-dev \
         libc-dev \
         libunwind-dev \
         linux-headers \
@@ -131,7 +129,6 @@ RUN exec 2>&1 \
         apache2-utils \
         $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/sbin/nginx /usr/local | tr ',' '\n' | sort -u | grep -v 'libmustach.so' | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }') \
     && apk del --no-cache .build-deps \
-    && apk del --no-cache .edge-main-build-deps \
     && apk del --no-cache .edge-testing-build-deps \
     && rm -rf /usr/src /usr/share/doc /usr/share/man /usr/local/share/doc /usr/local/share/man \
     && ln -sf /usr/local/modules /etc/nginx/modules \
