@@ -29,6 +29,7 @@ RUN exec 2>&1 \
         libunwind-dev \
         linux-headers \
         make \
+#        mandoc \
         openjpeg-dev \
         openldap-dev \
         pcre-dev \
