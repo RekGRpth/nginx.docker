@@ -28,7 +28,7 @@ docker run \
     --name nginx \
     --publish target=443,published=443,mode=host \
     --restart always \
-    --network name=docker,alias=$(hostname -f),alias=api-$(hostname -f),alias=cas-$(hostname -f)$(docker volume ls --format "{{.Name}}" | while read VOLUME; do
+    --network name=docker,alias=$(hostname -f),alias=libreoffice."$(hostname -d)",alias=api-$(hostname -f),alias=cas-$(hostname -f)$(docker volume ls --format "{{.Name}}" | while read VOLUME; do
         echo -n ",alias=$VOLUME-$(hostname -f)"
     done) \
     $(docker volume ls --format "{{.Name}}" | while read VOLUME; do

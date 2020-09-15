@@ -78,12 +78,15 @@ RUN exec 2>&1 \
     && git clone --recursive https://github.com/RekGRpth/ngx_postgres.git \
 #    && git clone --recursive https://github.com/RekGRpth/ngx_sqlite.git \
 #    && git clone --recursive https://github.com/RekGRpth/ngx_template_module.git \
+    && git clone --recursive https://github.com/RekGRpth/njs.git \
     && git clone --recursive https://github.com/RekGRpth/set-misc-nginx-module.git \
 #    && git clone --recursive https://github.com/RekGRpth/xss-nginx-module.git \
     && cd /usr/src/libjwt \
     && cmake . -DBUILD_SHARED_LIBS=true && make -j"$(nproc)" install \
 #    && cd /usr/src/ctpp2 \
 #    && cmake . -DCMAKE_INSTALL_PREFIX=/usr/local && make -j"$(nproc)" install \
+    && cd /usr/src/nginx/modules/njs \
+    && ./configure \
     && cd /usr/src/nginx \
     && auto/configure \
         --add-dynamic-module="$(find modules -type f -name "config" | grep -v "\.git" | grep -v "\/t\/" | while read -r NAME; do echo -n "$(dirname "$NAME") "; done)" \
