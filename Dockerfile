@@ -30,6 +30,7 @@ RUN exec 2>&1 \
         linux-headers \
         make \
 #        mandoc \
+        musl-dev \
         openjpeg-dev \
         openldap-dev \
         pcre-dev \
