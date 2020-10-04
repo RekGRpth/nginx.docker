@@ -16,6 +16,7 @@ RUN exec 2>&1 \
         bison \
         cmake \
         expat-dev \
+        expect \
         expect-dev \
         g++ \
         gcc \
@@ -24,6 +25,7 @@ RUN exec 2>&1 \
         git \
         jansson-dev \
         jpeg-dev \
+        jq-dev \
         json-c-dev \
         libc-dev \
         libunwind-dev \
