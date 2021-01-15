@@ -14,11 +14,14 @@ RUN exec 2>&1 \
     && apk add --no-cache --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing --virtual .edge-testing-build-deps \
         mustach-dev \
     && apk add --no-cache --virtual .build-deps \
+        autoconf \
+        automake \
         bison \
-        cmake \
+#        cmake \
         expat-dev \
         expect \
         expect-dev \
+        file \
         g++ \
         gcc \
         gd-dev \
@@ -29,6 +32,7 @@ RUN exec 2>&1 \
         jq-dev \
         json-c-dev \
         libc-dev \
+        libtool \
         libunwind-dev \
         linux-headers \
         make \
@@ -86,7 +90,8 @@ RUN exec 2>&1 \
     && git clone --recursive https://github.com/RekGRpth/set-misc-nginx-module.git \
 #    && git clone --recursive https://github.com/RekGRpth/xss-nginx-module.git \
     && cd /usr/src/libjwt \
-    && cmake . -DBUILD_SHARED_LIBS=true && make -j"$(nproc)" install \
+    && autoreconf -vif && ./configure && make -j"$(nproc)" install \
+#    && cmake . -DBUILD_SHARED_LIBS=true && make -j"$(nproc)" install \
 #    && cd /usr/src/ctpp2 \
 #    && cmake . -DCMAKE_INSTALL_PREFIX=/usr/local && make -j"$(nproc)" install \
     && cd /usr/src/nginx/modules/njs \
