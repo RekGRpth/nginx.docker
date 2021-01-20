@@ -9,11 +9,11 @@ RUN exec 2>&1 \
     && mkdir -p "${HOME}" \
     && addgroup -S "${GROUP}" \
     && adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" "${USER}" \
-    && echo https://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories \
     && apk add --no-cache --virtual .build-deps \
         autoconf \
         automake \
         bison \
+        check-dev \
         expat-dev \
         expect \
         expect-dev \
@@ -34,7 +34,6 @@ RUN exec 2>&1 \
         linux-headers \
         make \
         musl-dev \
-        mustach-dev \
         openjpeg-dev \
         openldap-dev \
         pcre-dev \
@@ -42,6 +41,7 @@ RUN exec 2>&1 \
         postgresql-dev \
         readline-dev \
         sqlite-dev \
+        valgrind \
         yaml-dev \
         zlib-dev \
     && mkdir -p /usr/src \
