@@ -9,18 +9,14 @@ RUN exec 2>&1 \
     && mkdir -p "${HOME}" \
     && addgroup -S "${GROUP}" \
     && adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" "${USER}" \
-    && apk add --no-cache --repository https://dl-cdn.alpinelinux.org/alpine/edge/community --virtual .edge-community-build-deps \
-        ffcall \
-    && apk add --no-cache --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing --virtual .edge-testing-build-deps \
-        mustach-dev \
     && apk add --no-cache --virtual .build-deps \
         autoconf \
         automake \
         bison \
-#        cmake \
         expat-dev \
         expect \
         expect-dev \
+        ffcall \
         file \
         g++ \
         gcc \
@@ -36,8 +32,8 @@ RUN exec 2>&1 \
         libunwind-dev \
         linux-headers \
         make \
-#        mandoc \
         musl-dev \
+        mustach-dev \
         openjpeg-dev \
         openldap-dev \
         pcre-dev \
@@ -49,29 +45,22 @@ RUN exec 2>&1 \
         zlib-dev \
     && mkdir -p /usr/src \
     && cd /usr/src \
-#    && git clone --recursive https://github.com/RekGRpth/ctpp2.git \
     && git clone --recursive https://github.com/RekGRpth/libjwt.git \
     && git clone --recursive https://github.com/RekGRpth/nginx.git \
     && mkdir -p /usr/src/nginx/modules \
     && cd /usr/src/nginx/modules \
-#    && git clone --recursive https://github.com/RekGRpth/array-var-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/echo-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/encrypted-session-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/form-input-nginx-module.git \
     && git clone --recursive https://github.com/RekGRpth/iconv-nginx-module.git \
-#    && git clone --recursive https://github.com/RekGRpth/nginx-access-plus.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-backtrace-ng.git \
-#    && git clone --recursive https://github.com/RekGRpth/nginx-client-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx_csrf_prevent.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-eval-module.git \
-#    && git clone --recursive https://github.com/RekGRpth/NginxExecute.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-http-auth-digest.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-jwt-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-push-stream-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-upload-module.git \
     && git clone --recursive https://github.com/RekGRpth/nginx-uuid4-module.git \
-#    && git clone --recursive https://github.com/RekGRpth/ngx_ctpp2.git \
-#    && git clone --recursive https://github.com/RekGRpth/ngx_dynamic_etag.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_auth_basic_ldap_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_captcha_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_headers_module.git \
@@ -84,16 +73,10 @@ RUN exec 2>&1 \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_upstream_session_sticky_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_http_zip_var_module.git \
     && git clone --recursive https://github.com/RekGRpth/ngx_postgres.git \
-#    && git clone --recursive https://github.com/RekGRpth/ngx_sqlite.git \
-#    && git clone --recursive https://github.com/RekGRpth/ngx_template_module.git \
     && git clone --recursive https://github.com/RekGRpth/njs.git \
     && git clone --recursive https://github.com/RekGRpth/set-misc-nginx-module.git \
-#    && git clone --recursive https://github.com/RekGRpth/xss-nginx-module.git \
     && cd /usr/src/libjwt \
     && autoreconf -vif && ./configure && make -j"$(nproc)" install \
-#    && cmake . -DBUILD_SHARED_LIBS=true && make -j"$(nproc)" install \
-#    && cd /usr/src/ctpp2 \
-#    && cmake . -DCMAKE_INSTALL_PREFIX=/usr/local && make -j"$(nproc)" install \
     && cd /usr/src/nginx/modules/njs \
     && ./configure \
     && cd /usr/src/nginx \
@@ -138,7 +121,7 @@ RUN exec 2>&1 \
     && (strip /usr/local/bin/* /usr/local/lib/*.so /usr/local/modules/*.so /usr/sbin/nginx || true) \
     && apk add --no-cache --virtual .nginx-rundeps \
         apache2-utils \
-        $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/sbin/nginx /usr/local | tr ',' '\n' | sort -u | grep -v 'libmustach.so' | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }') \
+        $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/sbin/nginx /usr/local | tr ',' '\n' | sort -u | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }') \
     && apk del --no-cache .build-deps \
     && rm -rf /usr/src /usr/share/doc /usr/share/man /usr/local/share/doc /usr/local/share/man \
     && ln -sf /usr/local/modules /etc/nginx/modules \
