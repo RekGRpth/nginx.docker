@@ -27,7 +27,6 @@ RUN exec 2>&1 \
         gettext-dev \
         git \
         jansson-dev \
-        jansson-dev \
         jpeg-dev \
         jq-dev \
         json-c-dev \
