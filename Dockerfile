@@ -82,7 +82,7 @@ RUN exec 2>&1 \
     && ./configure \
     && cd /usr/src/nginx \
     && auto/configure \
-        --add-dynamic-module="$(find modules -type f -name "config" | grep -v "\.git" | grep -v "\/t\/" | while read -r NAME; do echo -n "$(dirname "$NAME") "; done)" \
+        --add-dynamic-module="$(find modules -type f -name "config" | grep -v "\.git" | grep -v "\/t\/" | while read -r NAME; do echo -n "`dirname "$NAME`" "; done)" \
         --conf-path=/etc/nginx/nginx.conf \
         --error-log-path=/var/log/nginx/error.log \
         --group="${GROUP}" \
@@ -96,7 +96,7 @@ RUN exec 2>&1 \
         --modules-path=/usr/local/modules \
         --pid-path=/run/nginx/nginx.pid \
         --prefix=/etc/nginx \
-        --sbin-path=/usr/sbin/nginx \
+        --sbin-path=/usr/local/bin/nginx \
         --user="${USER}" \
         --with-file-aio \
         --with-http_addition_module \
@@ -119,10 +119,10 @@ RUN exec 2>&1 \
     && make -j"$(nproc)" install \
     && rm /etc/nginx/*.default \
     && mkdir -p /var/cache/nginx \
-    && (strip /usr/local/bin/* /usr/local/lib/*.so /usr/local/modules/*.so /usr/sbin/nginx || true) \
+    && (strip /usr/local/bin/* /usr/local/lib/*.so /usr/local/modules/*.so || true) \
     && apk add --no-cache --virtual .nginx-rundeps \
         apache2-utils \
-        $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/sbin/nginx /usr/local | tr ',' '\n' | sort -u | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }') \
+        $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/local | tr ',' '\n' | sort -u | while read -r lib; do test ! -e "/usr/local/lib/$lib" && echo "so:$lib"; done) \
     && apk del --no-cache .build-deps \
     && rm -rf /usr/src /usr/share/doc /usr/share/man /usr/local/share/doc /usr/local/share/man \
     && ln -sf /usr/local/modules /etc/nginx/modules \
