@@ -14,6 +14,8 @@ RUN exec 2>&1 \
         automake \
         bison \
         check-dev \
+        cjson-dev \
+        clang \
         expat-dev \
         expect \
         expect-dev \
@@ -24,6 +26,7 @@ RUN exec 2>&1 \
         gd-dev \
         gettext-dev \
         git \
+        jansson-dev \
         jansson-dev \
         jpeg-dev \
         jq-dev \
@@ -82,7 +85,7 @@ RUN exec 2>&1 \
     && ./configure \
     && cd /usr/src/nginx \
     && auto/configure \
-        --add-dynamic-module="$(find modules -type f -name "config" | grep -v "\.git" | grep -v "\/t\/" | while read -r NAME; do echo -n "`dirname "$NAME`" "; done)" \
+        --add-dynamic-module="$(find modules -type f -name "config" | grep -v "\.git" | grep -v "\/t\/" | while read -r NAME; do echo -n "`dirname "$NAME"` "; done)" \
         --conf-path=/etc/nginx/nginx.conf \
         --error-log-path=/var/log/nginx/error.log \
         --group="${GROUP}" \
