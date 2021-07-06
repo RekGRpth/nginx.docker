@@ -27,7 +27,6 @@ RUN set -eux; \
         gd-dev \
         gettext-dev \
         git \
-        hyperscan-dev \
         jansson-dev \
         jpeg-dev \
         jq-dev \
