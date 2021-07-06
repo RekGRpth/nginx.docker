@@ -52,7 +52,6 @@ RUN set -eux; \
     ; \
     mkdir -p /usr/src; \
     cd /usr/src; \
-    git clone https://github.com/RekGRpth/libinjection.git; \
     git clone https://github.com/RekGRpth/libjwt.git; \
     git clone https://github.com/RekGRpth/nginx.git; \
     mkdir -p /usr/src/nginx/modules; \
@@ -80,13 +79,11 @@ RUN set -eux; \
     git clone https://github.com/RekGRpth/ngx_http_sign_module.git; \
     git clone https://github.com/RekGRpth/ngx_http_substitutions_filter_module.git; \
     git clone https://github.com/RekGRpth/ngx_http_upstream_session_sticky_module.git; \
-    git clone https://github.com/RekGRpth/ngx_http_waf_module.git; \
     git clone https://github.com/RekGRpth/ngx_http_zip_var_module.git; \
     git clone https://github.com/RekGRpth/ngx_postgres.git; \
     git clone https://github.com/RekGRpth/njs.git; \
     git clone https://github.com/RekGRpth/set-misc-nginx-module.git; \
-    cd /usr/src/libinjection/src; \
-    make -j"$(nproc)" install; \
+    git clone --recursive https://github.com/RekGRpth/ngx_http_waf_module.git; \
     cd /usr/src/libjwt; \
     autoreconf -vif; \
     ./configure; \
@@ -142,6 +139,8 @@ RUN set -eux; \
     ; \
     apk del --no-cache .build-deps; \
     rm -rf /usr/src /usr/share/doc /usr/share/man /usr/local/share/doc /usr/local/share/man; \
+    find / -name "*.a" -delete; \
+    find / -name "*.la" -delete; \
     ln -sf /usr/local/lib/nginx /etc/nginx/modules; \
     ln -sf /dev/stdout /var/log/nginx/access.log; \
     ln -sf /dev/stderr /var/log/nginx/error.log; \
