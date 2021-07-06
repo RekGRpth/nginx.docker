@@ -21,7 +21,6 @@ RUN set -eux; \
         expect-dev \
         ffcall \
         file \
-        file-dev \
         g++ \
         gcc \
         gd-dev \
