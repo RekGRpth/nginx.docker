@@ -21,11 +21,13 @@ RUN set -eux; \
         expect-dev \
         ffcall \
         file \
+        file-dev \
         g++ \
         gcc \
         gd-dev \
         gettext-dev \
         git \
+        hyperscan-dev \
         jansson-dev \
         jpeg-dev \
         jq-dev \
@@ -41,6 +43,7 @@ RUN set -eux; \
         pcre-dev \
         perl-dev \
         postgresql-dev \
+        python3 \
         readline-dev \
         sqlite-dev \
         valgrind \
@@ -49,8 +52,9 @@ RUN set -eux; \
     ; \
     mkdir -p /usr/src; \
     cd /usr/src; \
-    git clone --recursive https://github.com/RekGRpth/libjwt.git; \
-    git clone --recursive https://github.com/RekGRpth/nginx.git; \
+    git clone https://github.com/RekGRpth/libinjection.git; \
+    git clone https://github.com/RekGRpth/libjwt.git; \
+    git clone https://github.com/RekGRpth/nginx.git; \
     mkdir -p /usr/src/nginx/modules; \
     cd /usr/src/nginx/modules; \
     git clone https://github.com/RekGRpth/echo-nginx-module.git; \
@@ -76,10 +80,13 @@ RUN set -eux; \
     git clone https://github.com/RekGRpth/ngx_http_sign_module.git; \
     git clone https://github.com/RekGRpth/ngx_http_substitutions_filter_module.git; \
     git clone https://github.com/RekGRpth/ngx_http_upstream_session_sticky_module.git; \
+    git clone https://github.com/RekGRpth/ngx_http_waf_module.git; \
     git clone https://github.com/RekGRpth/ngx_http_zip_var_module.git; \
     git clone https://github.com/RekGRpth/ngx_postgres.git; \
     git clone https://github.com/RekGRpth/njs.git; \
     git clone https://github.com/RekGRpth/set-misc-nginx-module.git; \
+    cd /usr/src/libinjection/src; \
+    make -j"$(nproc)" install; \
     cd /usr/src/libjwt; \
     autoreconf -vif; \
     ./configure; \
