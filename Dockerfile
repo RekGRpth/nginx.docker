@@ -80,7 +80,6 @@ RUN set -eux; \
     git clone https://github.com/RekGRpth/ngx_postgres.git; \
     git clone https://github.com/RekGRpth/njs.git; \
     git clone https://github.com/RekGRpth/set-misc-nginx-module.git; \
-    git clone --recursive https://github.com/RekGRpth/naxsi.git; \
     cd /usr/src/libjwt; \
     autoreconf -vif; \
     ./configure; \
@@ -127,7 +126,6 @@ RUN set -eux; \
         --with-threads \
     ; \
     make -j"$(nproc)" install; \
-    cp -f modules/naxsi/naxsi_config/naxsi_core.rules /etc/nginx/naxsi_core.rules; \
     rm /etc/nginx/*.default; \
     mkdir -p /var/cache/nginx; \
     (strip /usr/local/bin/* /usr/local/lib/*.so /usr/local/lib/*/*.so || true); \
