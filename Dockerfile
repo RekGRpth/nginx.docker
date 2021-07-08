@@ -2,6 +2,7 @@ FROM rekgrpth/pdf
 CMD [ "nginx" ]
 COPY NimbusSans-Regular.ttf /usr/local/share/fonts/
 ENV GROUP=nginx \
+    LD_PRELOAD=/usr/lib/preloadable_libiconv.so \
     USER=nginx
 VOLUME "${HOME}"
 RUN set -eux; \
@@ -132,6 +133,7 @@ RUN set -eux; \
     (strip /usr/local/bin/* /usr/local/lib/*.so /usr/local/lib/*/*.so || true); \
     apk add --no-cache --virtual .nginx-rundeps \
         apache2-utils \
+        gnu-libiconv \
         $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/local | tr ',' '\n' | sort -u | while read -r lib; do test ! -e "/usr/local/lib/$lib" && echo "so:$lib"; done) \
     ; \
     apk del --no-cache .build-deps; \
