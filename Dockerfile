@@ -26,6 +26,7 @@ RUN set -eux; \
         gd-dev \
         gettext-dev \
         git \
+        gnu-libiconv-dev \
         jansson-dev \
         jpeg-dev \
         jq-dev \
