@@ -45,6 +45,7 @@ RUN set -eux; \
         postgresql-dev \
         readline-dev \
         sqlite-dev \
+        talloc-dev \
         valgrind \
         yaml-dev \
         zlib-dev \
@@ -70,6 +71,7 @@ RUN set -eux; \
     git clone https://github.com/RekGRpth/ngx_brotli.git; \
     git clone https://github.com/RekGRpth/ngx_http_auth_basic_ldap_module.git; \
     git clone https://github.com/RekGRpth/ngx_http_captcha_module.git; \
+    git clone https://github.com/RekGRpth/ngx_http_handlebars_module.git; \
     git clone https://github.com/RekGRpth/ngx_http_headers_module.git; \
     git clone https://github.com/RekGRpth/ngx_http_htmldoc_module.git; \
     git clone https://github.com/RekGRpth/ngx_http_json_module.git; \
