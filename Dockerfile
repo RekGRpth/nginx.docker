@@ -1,6 +1,5 @@
 FROM rekgrpth/pdf
 CMD [ "nginx" ]
-COPY NimbusSans-Regular.ttf /usr/local/share/fonts/
 ENV GROUP=nginx \
     LD_PRELOAD=/usr/lib/preloadable_libiconv.so \
     USER=nginx
@@ -52,6 +51,12 @@ RUN set -eux; \
     ; \
     mkdir -p /usr/src; \
     cd /usr/src; \
+    git clone https://bitbucket.org/RekGRpth/nginx.git; \
+    cd /usr/src/nginx; \
+    mkdir -p /usr/local/share/fonts; \
+    cp -rf NimbusSans-Regular.ttf /usr/local/share/fonts; \
+    cd /usr/src; \
+    rm -rf /usr/src/nginx; \
     git clone https://github.com/RekGRpth/libjwt.git; \
     git clone https://github.com/RekGRpth/nginx.git; \
     mkdir -p /usr/src/nginx/modules; \
@@ -137,7 +142,7 @@ RUN set -eux; \
         gnu-libiconv \
         $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/local | tr ',' '\n' | sort -u | while read -r lib; do test ! -e "/usr/local/lib/$lib" && echo "so:$lib"; done) \
     ; \
-    (strip /usr/local/bin/* /usr/local/lib/*.so /usr/local/lib/*/*.so || true); \
+    find /usr/local/bin /usr/local/lib -type f -exec strip '{}' \;; \
     apk del --no-cache .build-deps; \
     rm -rf /usr/src /usr/share/doc /usr/share/man /usr/local/share/doc /usr/local/share/man; \
     find / -name "*.a" -delete; \
