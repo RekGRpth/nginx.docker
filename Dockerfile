@@ -132,12 +132,12 @@ RUN set -eux; \
     make -j"$(nproc)" install; \
     rm /etc/nginx/*.default; \
     mkdir -p /var/cache/nginx; \
-    (strip /usr/local/bin/* /usr/local/lib/*.so /usr/local/lib/*/*.so || true); \
     apk add --no-cache --virtual .nginx-rundeps \
         apache2-utils \
         gnu-libiconv \
         $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/local | tr ',' '\n' | sort -u | while read -r lib; do test ! -e "/usr/local/lib/$lib" && echo "so:$lib"; done) \
     ; \
+    (strip /usr/local/bin/* /usr/local/lib/*.so /usr/local/lib/*/*.so || true); \
     apk del --no-cache .build-deps; \
     rm -rf /usr/src /usr/share/doc /usr/share/man /usr/local/share/doc /usr/local/share/man; \
     find / -name "*.a" -delete; \
