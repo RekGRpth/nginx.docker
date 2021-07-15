@@ -49,18 +49,18 @@ RUN set -eux; \
         yaml-dev \
         zlib-dev \
     ; \
-    mkdir -p /usr/src; \
-    cd /usr/src; \
+    mkdir -p "${HOME}"; \
+    cd "${HOME}"; \
     git clone https://bitbucket.org/RekGRpth/nginx.git; \
-    cd /usr/src/nginx; \
+    cd "${HOME}/nginx"; \
     mkdir -p /usr/local/share/fonts; \
     cp -rf NimbusSans-Regular.ttf /usr/local/share/fonts; \
-    cd /usr/src; \
-    rm -rf /usr/src/nginx; \
+    cd "${HOME}"; \
+    rm -rf "${HOME}/nginx"; \
     git clone https://github.com/RekGRpth/libjwt.git; \
     git clone https://github.com/RekGRpth/nginx.git; \
-    mkdir -p /usr/src/nginx/modules; \
-    cd /usr/src/nginx/modules; \
+    mkdir -p "${HOME}/nginx/modules"; \
+    cd "${HOME}/nginx/modules"; \
     git clone https://github.com/RekGRpth/echo-nginx-module.git; \
     git clone https://github.com/RekGRpth/encrypted-session-nginx-module.git; \
     git clone https://github.com/RekGRpth/form-input-nginx-module.git; \
@@ -89,13 +89,13 @@ RUN set -eux; \
     git clone https://github.com/RekGRpth/ngx_postgres.git; \
     git clone https://github.com/RekGRpth/njs.git; \
     git clone https://github.com/RekGRpth/set-misc-nginx-module.git; \
-    cd /usr/src/libjwt; \
+    cd "${HOME}/libjwt"; \
     autoreconf -vif; \
     ./configure; \
     make -j"$(nproc)" install; \
-    cd /usr/src/nginx/modules/njs; \
+    cd "${HOME}/nginx/modules/njs"; \
     ./configure; \
-    cd /usr/src/nginx; \
+    cd "${HOME}/nginx"; \
     export CFLAGS="$CFLAGS -W -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Werror -g -O"; \
     export CPPFLAGS="$CPPFLAGS -W -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Werror -g -O"; \
     auto/configure \
@@ -137,6 +137,7 @@ RUN set -eux; \
     make -j"$(nproc)" install; \
     rm /etc/nginx/*.default; \
     mkdir -p /var/cache/nginx; \
+    cd "${HOME}"; \
     apk add --no-cache --virtual .nginx-rundeps \
         apache2-utils \
         gnu-libiconv \
@@ -144,9 +145,9 @@ RUN set -eux; \
     ; \
     find /usr/local/bin /usr/local/lib -type f -exec strip '{}' \;; \
     apk del --no-cache .build-deps; \
-    rm -rf /usr/src /usr/share/doc /usr/share/man /usr/local/share/doc /usr/local/share/man; \
-    find / -name "*.a" -delete; \
-    find / -name "*.la" -delete; \
+    find / -type f -name "*.a" -delete; \
+    find / -type f -name "*.la" -delete; \
+    rm -rf "${HOME}" /usr/share/doc /usr/share/man /usr/local/share/doc /usr/local/share/man; \
     ln -sf /usr/local/lib/nginx /etc/nginx/modules; \
     ln -sf /dev/stdout /var/log/nginx/access.log; \
     ln -sf /dev/stderr /var/log/nginx/error.log; \
