@@ -54,7 +54,6 @@ RUN set -eux; \
     cp -rf NimbusSans-Regular.ttf /usr/local/share/fonts; \
     cd "${HOME}"; \
     rm -rf "${HOME}/nginx"; \
-    git clone https://github.com/RekGRpth/libjwt.git; \
     git clone https://github.com/RekGRpth/nginx.git; \
     mkdir -p "${HOME}/nginx/modules"; \
     cd "${HOME}/nginx/modules"; \
@@ -85,10 +84,6 @@ RUN set -eux; \
     git clone https://github.com/RekGRpth/ngx_postgres.git; \
     git clone https://github.com/RekGRpth/njs.git; \
     git clone https://github.com/RekGRpth/set-misc-nginx-module.git; \
-    cd "${HOME}/libjwt"; \
-    autoreconf -vif; \
-    ./configure; \
-    make -j"$(nproc)" install; \
     cd "${HOME}/nginx/modules/njs"; \
     ./configure; \
     cd "${HOME}/nginx"; \
