@@ -33,7 +33,6 @@ RUN set -eux; \
         json-c-dev \
         libc-dev \
         libtool \
-        libunwind-dev \
         linux-headers \
         make \
         musl-dev \
@@ -64,7 +63,6 @@ RUN set -eux; \
     git clone https://github.com/RekGRpth/encrypted-session-nginx-module.git; \
     git clone https://github.com/RekGRpth/form-input-nginx-module.git; \
     git clone https://github.com/RekGRpth/iconv-nginx-module.git; \
-    git clone https://github.com/RekGRpth/nginx-backtrace-ng.git; \
     git clone https://github.com/RekGRpth/nginx_csrf_prevent.git; \
     git clone https://github.com/RekGRpth/nginx-eval-module.git; \
     git clone https://github.com/RekGRpth/nginx-http-auth-digest.git; \
