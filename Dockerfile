@@ -1,7 +1,6 @@
 FROM rekgrpth/pdf
 CMD [ "nginx" ]
 ENV GROUP=nginx \
-    LD_PRELOAD=/usr/lib/preloadable_libiconv.so \
     USER=nginx
 VOLUME "${HOME}"
 RUN set -eux; \
@@ -137,7 +136,6 @@ RUN set -eux; \
     cd "${HOME}"; \
     apk add --no-cache --virtual .nginx-rundeps \
         apache2-utils \
-        gnu-libiconv \
         $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/local | tr ',' '\n' | sort -u | while read -r lib; do test ! -e "/usr/local/lib/$lib" && echo "so:$lib"; done) \
     ; \
     find /usr/local/bin /usr/local/lib -type f -exec strip '{}' \;; \
