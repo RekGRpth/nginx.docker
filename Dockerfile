@@ -1,4 +1,5 @@
 FROM rekgrpth/pdf
+ADD NimbusSans-Regular.ttf /usr/local/share/fonts/
 CMD [ "nginx" ]
 ENV GROUP=nginx \
     USER=nginx
@@ -46,17 +47,10 @@ RUN set -eux; \
         yaml-dev \
         zlib-dev \
     ; \
-    mkdir -p "${HOME}"; \
-    cd "${HOME}"; \
-    git clone https://bitbucket.org/RekGRpth/nginx.git; \
-    cd "${HOME}/nginx"; \
-    mkdir -p /usr/local/share/fonts; \
-    cp -rf NimbusSans-Regular.ttf /usr/local/share/fonts; \
-    cd "${HOME}"; \
-    rm -rf "${HOME}/nginx"; \
+    cd "${HOME}/src"; \
     git clone https://github.com/RekGRpth/nginx.git; \
-    mkdir -p "${HOME}/nginx/modules"; \
-    cd "${HOME}/nginx/modules"; \
+    mkdir -p "${HOME}/src/nginx/modules"; \
+    cd "${HOME}/src/nginx/modules"; \
     git clone https://github.com/RekGRpth/echo-nginx-module.git; \
     git clone https://github.com/RekGRpth/encrypted-session-nginx-module.git; \
     git clone https://github.com/RekGRpth/form-input-nginx-module.git; \
@@ -84,9 +78,9 @@ RUN set -eux; \
     git clone https://github.com/RekGRpth/ngx_postgres.git; \
     git clone https://github.com/RekGRpth/njs.git; \
     git clone https://github.com/RekGRpth/set-misc-nginx-module.git; \
-    cd "${HOME}/nginx/modules/njs"; \
+    cd "${HOME}/src/nginx/modules/njs"; \
     ./configure; \
-    cd "${HOME}/nginx"; \
+    cd "${HOME}/src/nginx"; \
     export CFLAGS="${CFLAGS:-} -W -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Werror -g -O"; \
     export CPPFLAGS="${CPPFLAGS:-} -W -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Werror -g -O"; \
     auto/configure \
