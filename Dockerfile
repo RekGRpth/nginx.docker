@@ -47,6 +47,7 @@ RUN set -eux; \
         yaml-dev \
         zlib-dev \
     ; \
+    mkdir -p "${HOME}/src"; \
     cd "${HOME}/src"; \
     git clone https://github.com/RekGRpth/nginx.git; \
     mkdir -p "${HOME}/src/nginx/modules"; \
