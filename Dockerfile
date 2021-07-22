@@ -62,6 +62,7 @@ RUN set -eux; \
     git clone https://github.com/RekGRpth/nginx-jwt-module.git; \
     git clone https://github.com/RekGRpth/nginx-push-stream-module.git; \
     git clone https://github.com/RekGRpth/nginx-upload-module.git; \
+    git clone https://github.com/RekGRpth/nginx-upstream-fair.git; \
     git clone https://github.com/RekGRpth/nginx-uuid4-module.git; \
     git clone https://github.com/RekGRpth/ngx_brotli.git; \
     git clone https://github.com/RekGRpth/ngx_http_auth_basic_ldap_module.git; \
