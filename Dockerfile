@@ -82,8 +82,6 @@ RUN set -eux; \
     cd "${HOME}/src/nginx/modules/njs"; \
     ./configure; \
     cd "${HOME}/src/nginx"; \
-    export CFLAGS="${CFLAGS:-} -W -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Werror -g -O"; \
-    export CPPFLAGS="${CPPFLAGS:-} -W -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Werror -g -O"; \
     auto/configure \
         --add-dynamic-module="$(find modules -type f -name "config" | grep -v "\.git" | grep -v "\/t\/" | while read -r NAME; do echo -n "`dirname "$NAME"` "; done)" \
         --conf-path=/etc/nginx/nginx.conf \
@@ -101,6 +99,8 @@ RUN set -eux; \
         --prefix=/etc/nginx \
         --sbin-path=/usr/local/bin/nginx \
         --user="${USER}" \
+        --with-cc-opt="-W -Wall -Wextra -Wno-unused-parameter -Wwrite-strings -Wmissing-prototypes -Werror -Wno-discarded-qualifiers -g -O" \
+        --with-compat \
         --with-file-aio \
         --with-http_addition_module \
         --with-http_auth_request_module \
