@@ -8,6 +8,8 @@ RUN set -eux; \
     mkdir -p "${HOME}"; \
     addgroup -S "${GROUP}"; \
     adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" "${USER}"; \
+    apk update --no-cache; \
+    apk upgrade --no-cache; \
     apk add --no-cache --virtual .build-deps \
         autoconf \
         automake \
