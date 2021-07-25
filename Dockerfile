@@ -60,7 +60,7 @@ RUN set -eux; \
     git clone https://github.com/RekGRpth/iconv-nginx-module.git; \
     git clone https://github.com/RekGRpth/nginx_csrf_prevent.git; \
     git clone https://github.com/RekGRpth/nginx-eval-module.git; \
-    git clone https://github.com/RekGRpth/nginx-http-auth-digest.git; \
+#    git clone https://github.com/RekGRpth/nginx-http-auth-digest.git; \
     git clone https://github.com/RekGRpth/nginx-jwt-module.git; \
     git clone https://github.com/RekGRpth/nginx-push-stream-module.git; \
     git clone https://github.com/RekGRpth/nginx-upload-module.git; \
