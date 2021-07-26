@@ -46,6 +46,7 @@ RUN set -eux; \
         readline-dev \
         sqlite-dev \
         talloc-dev \
+        util-linux-dev \
         yaml-dev \
         zlib-dev \
     ; \
