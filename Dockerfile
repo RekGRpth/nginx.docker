@@ -1,4 +1,4 @@
-FROM rekgrpth/pdf
+FROM ghcr.io/rekgrpth/pdf.docker
 ADD NimbusSans-Regular.ttf /usr/local/share/fonts/
 CMD [ "nginx" ]
 ENV GROUP=nginx \
