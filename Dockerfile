@@ -3,7 +3,6 @@ ADD NimbusSans-Regular.ttf /usr/local/share/fonts/
 CMD [ "nginx" ]
 ENV GROUP=nginx \
     USER=nginx
-VOLUME "${HOME}"
 RUN set -eux; \
     mkdir -p "${HOME}"; \
     addgroup -S "${GROUP}"; \
