@@ -1,8 +1,6 @@
-#!/bin/sh -ex
+#!/bin/sh -eux
 
-#docker build --tag rekgrpth/nginx .
-#docker push rekgrpth/nginx
-docker pull rekgrpth/nginx
+docker pull ghcr.io/rekgrpth/ngin.docker
 docker volume create nginx
 docker network create --attachable --opt com.docker.network.bridge.name=docker docker || echo $?
 mkdir -p /var/lib/docker/volumes/nginx/_data/log
@@ -34,4 +32,4 @@ docker run \
     $(docker volume ls --format "{{.Name}}" | while read VOLUME; do
         echo "--mount type=volume,source=$VOLUME,destination=/etc/nginx/$VOLUME,readonly"
     done) \
-    rekgrpth/nginx
+    ghcr.io/rekgrpth/ngin.docker
