@@ -127,7 +127,7 @@ RUN set -eux; \
     make -j"$(nproc)" install; \
     rm /etc/nginx/*.default; \
     mkdir -p /var/cache/nginx; \
-    cd "${HOME}"; \
+    cd /; \
     apk add --no-cache --virtual .nginx-rundeps \
         apache2-utils \
         $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/local | tr ',' '\n' | sort -u | while read -r lib; do test ! -e "/usr/local/lib/$lib" && echo "so:$lib"; done) \
