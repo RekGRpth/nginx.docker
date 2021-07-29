@@ -135,8 +135,8 @@ RUN set -eux; \
     find /usr/local/bin -type f -exec strip '{}' \;; \
     find /usr/local/lib -type f -name "*.so" -exec strip '{}' \;; \
     apk del --no-cache .build-deps; \
-    find / -type f -name "*.a" -delete; \
-    find / -type f -name "*.la" -delete; \
+    find /usr -type f -name "*.a" -delete; \
+    find /usr -type f -name "*.la" -delete; \
     rm -rf "${HOME}" /usr/share/doc /usr/share/man /usr/local/share/doc /usr/local/share/man; \
     ln -sf /usr/local/lib/nginx /etc/nginx/modules; \
     ln -sf /dev/stdout /var/log/nginx/access.log; \
