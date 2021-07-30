@@ -1,9 +1,7 @@
-#!/bin/sh -ex
+#!/bin/sh -eux
 
-#docker build --tag rekgrpth/nginx .
-#docker push rekgrpth/nginx
-docker pull rekgrpth/nginx
-docker volume create nginx || echo $?
+docker pull ghcr.io/rekgrpth/nginx.docker
+docker volume create nginx
 docker network create --attachable --driver overlay docker || echo $?
 mkdir -p /var/lib/docker/volumes/nginx/_data/log
 touch /var/lib/docker/volumes/nginx/_data/http.conf
@@ -32,4 +30,4 @@ docker service create \
     $(docker volume ls --format "{{.Name}}" | while read VOLUME; do
         echo "--mount type=volume,source=$VOLUME,destination=/etc/nginx/$VOLUME,readonly"
     done) \
-    rekgrpth/nginx
+    ghcr.io/rekgrpth/nginx.docker
