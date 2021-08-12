@@ -28,4 +28,11 @@ jobs:
     steps:
       - uses: rekgrpth/strip-docker-image-shell-action@v1
         with:
-          args: -p nginx
+          args: |
+            -f /etc/group
+            -f /etc/passwd
+            -f /var/cache/nginx
+            -f /var/log/nginx
+            -f /var/run
+            -p nginx
+            -v
