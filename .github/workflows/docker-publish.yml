@@ -29,10 +29,12 @@ jobs:
       - uses: rekgrpth/strip-docker-image-shell-action@v1
         with:
           args: |
-            -f /etc/group
-            -f /etc/passwd
-            -f /var/cache/nginx
-            -f /var/log/nginx
-            -f /var/run
-            -p nginx
+            -f /etc/group \
+            -f /etc/nginx \
+            -f /etc/passwd \
+            -f /usr/local/bin/nginx \
+            -f /usr/local/lib \
+            -f /var/cache/nginx \
+            -f /var/log/nginx \
+            -f /var/run \
             -v
