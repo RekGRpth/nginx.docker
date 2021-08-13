@@ -36,6 +36,8 @@ jobs:
             -f /usr/lib/engines-1.1 \
             -f /usr/local/bin/nginx \
             -f /usr/local/lib \
+            -f /usr/local/share \
+            -f /usr/share/ca-certificates \
             -f /var/cache/nginx \
             -f /var/log/nginx \
             -f /var/run \
