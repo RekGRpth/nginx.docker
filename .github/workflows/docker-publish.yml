@@ -32,6 +32,8 @@ jobs:
             -f /etc/group \
             -f /etc/nginx \
             -f /etc/passwd \
+            -f /etc/ssl \
+            -f /usr/lib/engines-1.1 \
             -f /usr/local/bin/nginx \
             -f /usr/local/lib \
             -f /var/cache/nginx \
