@@ -49,6 +49,7 @@ RUN set -eux; \
         yaml-dev \
         zlib-dev \
     ; \
+    ln -fs /usr/include/gnu-libiconv/iconv.h /usr/include/iconv.h; \
     mkdir -p "${HOME}/src"; \
     cd "${HOME}/src"; \
     git clone https://github.com/RekGRpth/nginx.git; \
