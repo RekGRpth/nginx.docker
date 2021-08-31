@@ -44,7 +44,6 @@ RUN set -eux; \
         openldap-dev \
         pcre-dev \
         perl-dev \
-        perl-test-file \
         perl-test-nginx \
         perl-utils \
         postgresql \
@@ -57,6 +56,9 @@ RUN set -eux; \
         valgrind \
         yaml-dev \
         zlib-dev \
+    ; \
+    apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing --virtual .edge-deps \
+        perl-test-file \
     ; \
     install -d -m 1775 -o postgres -g postgres /run/postgresql /var/log/postgresql; \
     su-exec postgres pg_ctl initdb --pgdata=/var/lib/postgresql/data; \
