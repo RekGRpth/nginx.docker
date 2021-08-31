@@ -131,6 +131,7 @@ RUN set -eux; \
         --with-http_ssl_module \
         --with-http_sub_module \
         --with-http_v2_module \
+        --without-http_upstream_dynamic_resolve_module \
         --with-pcre \
         --with-pcre-jit \
         --with-stream=dynamic \
