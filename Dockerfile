@@ -44,6 +44,7 @@ RUN set -eux; \
         openldap-dev \
         pcre-dev \
         perl-dev \
+        perl-test-nginx \
         perl-utils \
         postgresql \
         postgresql-dev \
@@ -59,7 +60,6 @@ RUN set -eux; \
     install -d -m 1775 -o postgres -g postgres /run/postgresql /var/log/postgresql; \
     su-exec postgres pg_ctl initdb --pgdata=/var/lib/postgresql/data; \
     su-exec postgres pg_ctl start --pgdata=/var/lib/postgresql/data; \
-    cpan -Ti Test::Nginx::Socket Test::File; \
     ln -fs /usr/include/gnu-libiconv/iconv.h /usr/include/iconv.h; \
     mkdir -p "${HOME}/src"; \
     cd "${HOME}/src"; \
