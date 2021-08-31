@@ -72,3 +72,17 @@ jobs:
       - env:
           INPUTS_TAG: debian
         uses: rekgrpth/docker-login-build-push-shell-action@v1
+  debug:
+    concurrency:
+      cancel-in-progress: true
+      group: ${{ github.ref }}/debug
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          INPUTS_BRANCH: debug
+        uses: rekgrpth/git-clone-shell-action@v1
+      - env:
+          INPUTS_TAG: debug
+        uses: rekgrpth/docker-login-build-push-shell-action@v1
