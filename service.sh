@@ -1,6 +1,6 @@
 #!/bin/sh -eux
 
-docker pull ghcr.io/rekgrpth/nginx.docker
+docker pull ghcr.io/rekgrpth/nginx.docker:debug
 docker volume create nginx
 docker network create --attachable --driver overlay docker || echo $?
 mkdir -p /var/lib/docker/volumes/nginx/_data/log
@@ -30,4 +30,4 @@ docker service create \
     $(docker volume ls --format "{{.Name}}" | while read VOLUME; do
         echo "--mount type=volume,source=$VOLUME,destination=/etc/nginx/$VOLUME,readonly"
     done) \
-    ghcr.io/rekgrpth/nginx.docker
+    ghcr.io/rekgrpth/nginx.docker:debug
