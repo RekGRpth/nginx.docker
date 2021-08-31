@@ -1,62 +1,98 @@
-FROM alpine
-
-MAINTAINER RekGRpth
-
-ADD entrypoint.sh /
-
+FROM ghcr.io/rekgrpth/pdf.docker
+ADD NimbusSans-Regular.ttf /usr/local/share/fonts/
+CMD [ "nginx" ]
 ENV GROUP=nginx \
-    HOME=/data/nginx \
-    LANG=ru_RU.UTF-8 \
-    TZ=Asia/Yekaterinburg \
     USER=nginx
-
-RUN mkdir -p "${HOME}" \
-    && addgroup -S "${GROUP}" \
-    && adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" "${USER}" \
-    && apk add --no-cache --virtual .build-deps \
-        curl-dev \
+RUN set -eux; \
+    mkdir -p "${HOME}"; \
+    addgroup -S "${GROUP}"; \
+    adduser -D -S -h "${HOME}" -s /sbin/nologin -G "${GROUP}" "${USER}"; \
+    apk update --no-cache; \
+    apk upgrade --no-cache; \
+    apk add --no-cache --virtual .build-deps \
+        autoconf \
+        automake \
+        bison \
+        brotli-dev \
+        check-dev \
+        cjson-dev \
+        clang \
+        curl \
+        expat-dev \
+        expect \
+        expect-dev \
+        ffcall \
+        file \
+        g++ \
         gcc \
+        gdb \
+        gd-dev \
+        gettext-dev \
         git \
+        gnu-libiconv-dev \
+        jansson-dev \
+        jpeg-dev \
+        jq-dev \
+        json-c-dev \
+        libbsd-dev \
         libc-dev \
+        libtool \
         linux-headers \
         make \
+        musl-dev \
+        openjpeg-dev \
+        openldap-dev \
         pcre-dev \
+        perl-dev \
+        perl-utils \
         postgresql-dev \
+        readline-dev \
+        sqlite-dev \
+        talloc-dev \
+        util-linux-dev \
+        valgrind \
+        yaml-dev \
         zlib-dev \
-    && mkdir -p /usr/src \
-    && git clone --progress --recursive https://github.com/RekGRpth/array-var-nginx-module.git /usr/src/array \
-    && git clone --progress --recursive https://github.com/RekGRpth/echo-nginx-module.git /usr/src/echo \
-    && git clone --progress --recursive https://github.com/RekGRpth/encrypted-session-nginx-module.git /usr/src/session \
-    && git clone --progress --recursive https://github.com/RekGRpth/form-input-nginx-module.git /usr/src/form \
-    && git clone --progress --recursive https://github.com/RekGRpth/headers-more-nginx-module.git /usr/src/headers \
-    && git clone --progress --recursive https://github.com/RekGRpth/iconv-nginx-module.git /usr/src/iconv \
-    && git clone --progress --recursive https://github.com/RekGRpth/nchan.git /usr/src/nchan \
-    && git clone --progress --recursive https://github.com/RekGRpth/nginx-eval-module.git /usr/src/eval \
-    && git clone --progress --recursive https://github.com/RekGRpth/NginxExecute.git /usr/src/exec \
-    && git clone --progress --recursive https://github.com/RekGRpth/nginx.git /usr/src/nginx \
-    && git clone --progress --recursive https://github.com/RekGRpth/nginx-json-var-module.git /usr/src/var \
-    && git clone --progress --recursive https://github.com/RekGRpth/ngx_devel_kit.git /usr/src/0devel \
-    && git clone --progress --recursive https://github.com/RekGRpth/ngx_postgres.git /usr/src/postgres \
-    && git clone --progress --recursive https://github.com/RekGRpth/rds-csv-nginx-module.git /usr/src/csv \
-    && git clone --progress --recursive https://github.com/RekGRpth/rds-json-nginx-module.git /usr/src/json \
-    && git clone --progress --recursive https://github.com/RekGRpth/set-misc-nginx-module.git /usr/src/misc \
-    && cd /usr/src/nginx \
-    && auto/configure \
-        --add-dynamic-module=/usr/src/0devel \
-        --add-dynamic-module=/usr/src/array \
-        --add-dynamic-module=/usr/src/csv \
-        --add-dynamic-module=/usr/src/echo \
-        --add-dynamic-module=/usr/src/eval \
-        --add-dynamic-module=/usr/src/exec \
-        --add-dynamic-module=/usr/src/form \
-        --add-dynamic-module=/usr/src/headers \
-        --add-dynamic-module=/usr/src/iconv \
-        --add-dynamic-module=/usr/src/json \
-        --add-dynamic-module=/usr/src/misc \
-        --add-dynamic-module=/usr/src/nchan \
-        --add-dynamic-module=/usr/src/postgres \
-        --add-dynamic-module=/usr/src/session \
-        --add-dynamic-module=/usr/src/var \
+    ; \
+    cpan -Ti Test::Nginx::Socket Test::File; \
+    ln -fs /usr/include/gnu-libiconv/iconv.h /usr/include/iconv.h; \
+    mkdir -p "${HOME}/src"; \
+    cd "${HOME}/src"; \
+    git clone https://github.com/RekGRpth/nginx.git; \
+    mkdir -p "${HOME}/src/nginx/modules"; \
+    cd "${HOME}/src/nginx/modules"; \
+    git clone https://github.com/RekGRpth/echo-nginx-module.git; \
+    git clone https://github.com/RekGRpth/encrypted-session-nginx-module.git; \
+    git clone https://github.com/RekGRpth/form-input-nginx-module.git; \
+    git clone https://github.com/RekGRpth/iconv-nginx-module.git; \
+    git clone https://github.com/RekGRpth/nginx_csrf_prevent.git; \
+    git clone https://github.com/RekGRpth/nginx-eval-module.git; \
+    git clone https://github.com/RekGRpth/nginx-jwt-module.git; \
+    git clone https://github.com/RekGRpth/nginx-push-stream-module.git; \
+    git clone https://github.com/RekGRpth/nginx-upload-module.git; \
+    git clone https://github.com/RekGRpth/nginx-upstream-fair.git; \
+    git clone https://github.com/RekGRpth/nginx-uuid4-module.git; \
+    git clone https://github.com/RekGRpth/ngx_brotli.git; \
+    git clone https://github.com/RekGRpth/ngx_http_auth_basic_ldap_module.git; \
+    git clone https://github.com/RekGRpth/ngx_http_captcha_module.git; \
+    git clone https://github.com/RekGRpth/ngx_http_handlebars_module.git; \
+    git clone https://github.com/RekGRpth/ngx_http_headers_module.git; \
+    git clone https://github.com/RekGRpth/ngx_http_htmldoc_module.git; \
+    git clone https://github.com/RekGRpth/ngx_http_json_module.git; \
+    git clone https://github.com/RekGRpth/ngx_http_mustach_module.git; \
+    git clone https://github.com/RekGRpth/ngx_http_response_body_module.git; \
+    git clone https://github.com/RekGRpth/ngx_http_sign_module.git; \
+    git clone https://github.com/RekGRpth/ngx_http_substitutions_filter_module.git; \
+    git clone https://github.com/RekGRpth/ngx_http_upstream_session_sticky_module.git; \
+    git clone https://github.com/RekGRpth/ngx_http_zip_var_module.git; \
+    git clone https://github.com/RekGRpth/ngx_postgres.git; \
+    git clone https://github.com/RekGRpth/njs.git; \
+    git clone https://github.com/RekGRpth/set-misc-nginx-module.git; \
+    cd "${HOME}/src/nginx/modules/njs"; \
+    ./configure; \
+    cd "${HOME}/src/nginx"; \
+    auto/configure \
+        --add-dynamic-module="$(find modules -type f -name "config" | grep -v "\.git" | grep -v "\/t\/" | while read -r NAME; do echo -n "`dirname "$NAME"` "; done)" \
         --conf-path=/etc/nginx/nginx.conf \
         --error-log-path=/var/log/nginx/error.log \
         --group="${GROUP}" \
@@ -66,57 +102,50 @@ RUN mkdir -p "${HOME}" \
         --http-proxy-temp-path=/var/cache/nginx/proxy_temp \
         --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
         --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
-        --lock-path=/var/run/nginx.lock \
-        --modules-path=/usr/lib/nginx/modules \
-        --pid-path=/var/run/nginx.pid \
+        --lock-path=/run/nginx/nginx.lock \
+        --modules-path=/usr/local/lib/nginx \
+        --pid-path=/run/nginx/nginx.pid \
         --prefix=/etc/nginx \
-        --sbin-path=/usr/sbin/nginx \
+        --sbin-path=/usr/local/bin/nginx \
         --user="${USER}" \
+        --with-cc-opt="-W -Wall -Wextra -Wno-unused-parameter -Wwrite-strings -Wmissing-prototypes -Werror -Wno-discarded-qualifiers -g -O" \
         --with-compat \
         --with-debug \
         --with-file-aio \
+        --with-http_addition_module \
+        --with-http_auth_request_module \
+        --with-http_gunzip_module \
         --with-http_gzip_static_module \
+        --with-http_image_filter_module=dynamic \
+        --with-http_realip_module \
+        --with-http_secure_link_module \
         --with-http_ssl_module \
+        --with-http_sub_module \
         --with-http_v2_module \
-        --with-stream \
+        --with-pcre \
+        --with-pcre-jit \
+        --with-stream=dynamic \
+        --with-stream_realip_module \
         --with-stream_ssl_module \
+        --with-stream_ssl_preread_module \
         --with-threads \
-    && make -j$(nproc) \
-    && make install \
-    && rm -rf /etc/nginx/html/ \
-    && mkdir /etc/nginx/conf.d/ \
-    && mkdir -p /usr/share/nginx/html/ \
-    && mkdir -p /var/cache/nginx/ \
-    && install -m644 docs/html/index.html /usr/share/nginx/html/ \
-    && install -m644 docs/html/50x.html /usr/share/nginx/html/ \
-    && ln -s ../../usr/lib/nginx/modules /etc/nginx/modules \
-    && strip /usr/sbin/nginx* \
-    && strip /usr/lib/nginx/modules/*.so \
-    && rm -rf /usr/src \
-    && apk add --no-cache --virtual .gettext gettext \
-    && mv /usr/bin/envsubst /tmp/ \
-    && runDeps="$( \
-        scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /usr/lib/nginx/modules/*.so /tmp/envsubst \
-            | tr ',' '\n' \
-            | sort -u \
-            | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
-    )" \
-    && apk add --no-cache --virtual .nginx-rundeps $runDeps \
-    && apk del .build-deps \
-    && apk del .gettext \
-    && mv /tmp/envsubst /usr/local/bin/ \
-    && apk add --no-cache shadow tzdata \
-    && ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stderr /var/log/nginx/error.log \
-    && chmod +x /entrypoint.sh \
-    && rm -f /etc/nginx/conf.d/*.conf
-
-COPY nginx.conf /etc/nginx/nginx.conf
-
-VOLUME  ${HOME}
-
-WORKDIR ${HOME}
-
-ENTRYPOINT ["/entrypoint.sh"]
-
-CMD [ "nginx" ]
+    ; \
+    make -j"$(nproc)" install; \
+    rm /etc/nginx/*.default; \
+    mkdir -p /var/cache/nginx; \
+    cd /; \
+    apk add --no-cache --virtual .nginx-rundeps \
+        apache2-utils \
+        $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/local | tr ',' '\n' | sort -u | while read -r lib; do test ! -e "/usr/local/lib/$lib" && echo "so:$lib"; done) \
+    ; \
+    find /usr/local/bin -type f -exec strip '{}' \;; \
+    find /usr/local/lib -type f -name "*.so" -exec strip '{}' \;; \
+    apk del --no-cache .build-deps; \
+    find /usr -type f -name "*.a" -delete; \
+    find /usr -type f -name "*.la" -delete; \
+    rm -rf "${HOME}" /usr/share/doc /usr/share/man /usr/local/share/doc /usr/local/share/man; \
+    ln -sf /usr/local/lib/nginx /etc/nginx/modules; \
+    ln -sf /dev/stdout /var/log/nginx/access.log; \
+    ln -sf /dev/stderr /var/log/nginx/error.log; \
+    mkdir -p /run/nginx/; \
+    echo done
