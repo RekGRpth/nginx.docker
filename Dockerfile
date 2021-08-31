@@ -154,7 +154,7 @@ RUN set -eux; \
     find "${HOME}/src/nginx/modules" -type d -name "t" | grep -v "\.git" | sort | while read -r NAME; do \
         DIR="$(dirname "${NAME}")"; \
         cd "${DIR}"; \
-        prove t; \
+        prove; \
     done; \
     find /usr/local/bin -type f -exec strip '{}' \;; \
     find /usr/local/lib -type f -name "*.so" -exec strip '{}' \;; \
