@@ -138,6 +138,10 @@ RUN set -eux; \
         apache2-utils \
         $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/local | tr ',' '\n' | sort -u | while read -r lib; do test ! -e "/usr/local/lib/$lib" && echo "so:$lib"; done) \
     ; \
+    ln -sf /usr/local/lib/nginx /etc/nginx/modules; \
+    ln -sf /dev/stdout /var/log/nginx/access.log; \
+    ln -sf /dev/stderr /var/log/nginx/error.log; \
+    mkdir -p /run/nginx/; \
     find "${HOME}/src/nginx/modules" -type d -name "t" | grep -v "\.git" | while read -r NAME; do \
         DIR="$(dirname "${NAME}")"; \
         cd "${DIR}"; \
@@ -149,8 +153,4 @@ RUN set -eux; \
     find /usr -type f -name "*.a" -delete; \
     find /usr -type f -name "*.la" -delete; \
     rm -rf "${HOME}" /usr/share/doc /usr/share/man /usr/local/share/doc /usr/local/share/man; \
-    ln -sf /usr/local/lib/nginx /etc/nginx/modules; \
-    ln -sf /dev/stdout /var/log/nginx/access.log; \
-    ln -sf /dev/stderr /var/log/nginx/error.log; \
-    mkdir -p /run/nginx/; \
     echo done
