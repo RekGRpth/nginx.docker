@@ -45,15 +45,20 @@ RUN set -eux; \
         pcre-dev \
         perl-dev \
         perl-utils \
+        postgresql \
         postgresql-dev \
         readline-dev \
         sqlite-dev \
+        su-exec \
         talloc-dev \
         util-linux-dev \
         valgrind \
         yaml-dev \
         zlib-dev \
     ; \
+    install -d -m 1775 -o postgres -g postgres /run/postgresql /var/log/postgresql; \
+    su-exec postgres pg_ctl initdb --pgdata=/var/lib/postgresql/data; \
+    su-exec postgres pg_ctl start --pgdata=/var/lib/postgresql/data; \
     cpan -Ti Test::Nginx::Socket Test::File; \
     ln -fs /usr/include/gnu-libiconv/iconv.h /usr/include/iconv.h; \
     mkdir -p "${HOME}/src"; \
@@ -142,7 +147,7 @@ RUN set -eux; \
     ln -sf /dev/stdout /var/log/nginx/access.log; \
     ln -sf /dev/stderr /var/log/nginx/error.log; \
     mkdir -p /run/nginx/; \
-    find "${HOME}/src/nginx/modules" -type d -name "t" | grep -v "\.git" | grep -v "ngx_postgres" | grep -v "nginx-eval-module" | grep -v "ngx_http_substitutions_filter_module" | sort | while read -r NAME; do \
+    find "${HOME}/src/nginx/modules" -type d -name "t" | grep -v "\.git" | grep -v "nginx-eval-module" | grep -v "ngx_http_substitutions_filter_module" | sort | while read -r NAME; do \
         DIR="$(dirname "${NAME}")"; \
         cd "${DIR}"; \
         prove t; \
