@@ -44,6 +44,7 @@ RUN set -eux; \
         openldap-dev \
         pcre-dev \
         perl-dev \
+        perl-test-file \
         perl-test-nginx \
         perl-utils \
         postgresql \
