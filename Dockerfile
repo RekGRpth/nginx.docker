@@ -142,7 +142,7 @@ RUN set -eux; \
     ln -sf /dev/stdout /var/log/nginx/access.log; \
     ln -sf /dev/stderr /var/log/nginx/error.log; \
     mkdir -p /run/nginx/; \
-    find "${HOME}/src/nginx/modules" -type d -name "t" | grep -v "\.git" | while read -r NAME; do \
+    find "${HOME}/src/nginx/modules" -type d -name "t" | grep -v "\.git" | grep -v "ngx_postgres" | sort | while read -r NAME; do \
         DIR="$(dirname "${NAME}")"; \
         cd "${DIR}"; \
         prove t; \
