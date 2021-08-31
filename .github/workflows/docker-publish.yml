@@ -2,10 +2,10 @@ name: Docker
 on:
   push:
     branches:
-      - debug
+      - debug-without-http_upstream_dynamic_resolve_module
   repository_dispatch:
     types:
-      - debug
+      - debug-without-http_upstream_dynamic_resolve_module
       - latest
   workflow_dispatch:
 jobs:
