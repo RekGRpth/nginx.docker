@@ -34,6 +34,7 @@ RUN set -eux; \
         jpeg-dev \
         jq-dev \
         json-c-dev \
+        krb5-dev \
         libbsd-dev \
         libc-dev \
         libtool \
@@ -101,6 +102,7 @@ RUN set -eux; \
     git clone https://github.com/RekGRpth/ngx_postgres.git; \
     git clone https://github.com/RekGRpth/njs.git; \
     git clone https://github.com/RekGRpth/set-misc-nginx-module.git; \
+    git clone https://github.com/RekGRpth/spnego-http-auth-nginx-module.git; \
     cd "${HOME}/src/nginx/modules/njs"; \
     ./configure; \
     cd "${HOME}/src/nginx"; \
