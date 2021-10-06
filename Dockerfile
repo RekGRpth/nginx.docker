@@ -72,6 +72,7 @@ RUN set -eux; \
     mkdir -p "${HOME}/src"; \
     cd "${HOME}/src"; \
     git clone https://github.com/RekGRpth/nginx.git; \
+    git clone https://github.com/RekGRpth/nginx-tests.git; \
     mkdir -p "${HOME}/src/nginx/modules"; \
     cd "${HOME}/src/nginx/modules"; \
     git clone https://github.com/RekGRpth/echo-nginx-module.git; \
@@ -169,6 +170,9 @@ RUN set -eux; \
     ln -sf /dev/stdout /var/log/nginx/access.log; \
     ln -sf /dev/stderr /var/log/nginx/error.log; \
     mkdir -p /run/nginx/; \
+    cd "${HOME}/src/nginx-tests"; \
+    prove; \
+    cd "${HOME}"; \
     find "${HOME}/src/nginx/modules" -type d -name "t" | grep -v "\.git" | sort | while read -r NAME; do \
         DIR="$(dirname "${NAME}")"; \
         cd "${DIR}"; \
