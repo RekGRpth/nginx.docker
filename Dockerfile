@@ -172,7 +172,7 @@ RUN set -eux; \
     ln -sf /dev/stderr /var/log/nginx/error.log; \
     mkdir -p /run/nginx/; \
     cd "${HOME}/src/nginx-tests"; \
-    prove .; \
+#    prove .; \
     cd "${HOME}"; \
     find "${HOME}/src/nginx/modules" -type d -name "t" | grep -v "\.git" | sort | while read -r NAME; do \
         DIR="$(dirname "${NAME}")"; \
