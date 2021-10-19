@@ -57,6 +57,7 @@ RUN set -eux; \
     ln -fs /usr/include/gnu-libiconv/iconv.h /usr/include/iconv.h; \
     mkdir -p "${HOME}/src"; \
     cd "${HOME}/src"; \
+    git clone https://github.com/RekGRpth/libjwt.git; \
     git clone https://github.com/RekGRpth/nginx.git; \
     mkdir -p "${HOME}/src/nginx/modules"; \
     cd "${HOME}/src/nginx/modules"; \
@@ -89,6 +90,10 @@ RUN set -eux; \
     git clone https://github.com/RekGRpth/njs.git; \
     git clone https://github.com/RekGRpth/set-misc-nginx-module.git; \
     git clone https://github.com/RekGRpth/spnego-http-auth-nginx-module.git; \
+    cd "${HOME}/src/libjwt"; \
+    autoreconf -vif; \
+    ./configure; \
+    make -j"$(nproc)" install; \
     cd "${HOME}/src/nginx/modules/njs"; \
     ./configure; \
     cd "${HOME}/src/nginx"; \
