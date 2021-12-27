@@ -102,15 +102,15 @@ RUN set -eux; \
     git clone https://github.com/RekGRpth/ngx_http_upstream_session_sticky_module.git; \
     git clone https://github.com/RekGRpth/ngx_http_zip_var_module.git; \
     git clone https://github.com/RekGRpth/ngx_postgres.git; \
-    git clone https://github.com/RekGRpth/njs.git; \
+#    git clone https://github.com/RekGRpth/njs.git; \
     git clone https://github.com/RekGRpth/set-misc-nginx-module.git; \
     git clone https://github.com/RekGRpth/spnego-http-auth-nginx-module.git; \
     cd "${HOME}/src/libjwt"; \
     autoreconf -vif; \
     ./configure; \
     make -j"$(nproc)" install; \
-    cd "${HOME}/src/nginx/modules/njs"; \
-    ./configure; \
+#    cd "${HOME}/src/nginx/modules/njs"; \
+#    ./configure; \
     cd "${HOME}/src/nginx"; \
     auto/configure \
         --add-dynamic-module="$(find modules -type f -name "config" | grep -v "\.git" | grep -v "\/t\/" | while read -r NAME; do echo -n "`dirname "$NAME"` "; done)" \
