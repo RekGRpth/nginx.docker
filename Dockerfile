@@ -44,6 +44,7 @@ RUN set -eux; \
         musl-dev \
         openjpeg-dev \
         openldap-dev \
+        pcre2-dev \
         pcre-dev \
         perl-dev \
         postgresql-dev \
