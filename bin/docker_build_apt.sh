@@ -1,0 +1,50 @@
+#!/bin/sh -eux
+
+apt-get update
+apt-get full-upgrade -y --no-install-recommends
+apt-get install -y --no-install-recommends \
+    apt-utils \
+    autoconf \
+    automake \
+    bison \
+    clang \
+    expect \
+    expect-dev \
+    file \
+    g++ \
+    gcc \
+    git \
+    libbrotli-dev \
+    libc-dev \
+    libcjson-dev \
+    libexpat1-dev \
+    libffcall1-dev \
+    libgd-dev \
+    libgeoip-dev \
+    libiconv-hook-dev \
+    libjansson-dev \
+    libjpeg-dev \
+    libjq-dev \
+    libjson-c-dev \
+    libkrb5-dev \
+    libldap2-dev \
+    libopenjp2-7-dev \
+    libpam0g-dev \
+    libpcre2-dev \
+    libpcre3-dev \
+    libperl-dev \
+    libpq-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    libssl-dev \
+    libsubunit-dev \
+    libtalloc-dev \
+    libtool \
+    libxml2-dev \
+    libxslt1-dev \
+    libyaml-dev \
+    make \
+    musl-dev \
+    postgresql-server-dev-all \
+    zlib1g-dev \
+;
