@@ -3,6 +3,7 @@
 #docker_build_apk.sh
 apk add --no-cache --virtual .build-deps \
     curl \
+    git \
     libbsd-dev \
     perl-lwp-protocol-https \
     perl-test-nginx \
