@@ -10,6 +10,7 @@ apt-get install -y --no-install-recommends \
     libc-dev \
     libperl-dev \
     make \
+    man-db \
     perl \
     postgresql \
     valgrind \
