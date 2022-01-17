@@ -20,12 +20,11 @@ cpan -Ti \
     Test::Nginx::Socket \
 ;
 PG_VERSION="$(pg_lsclusters --no-header | cut -f1 -d ' ')"
-#ln -fs /dev/stdout "/var/log/postgresql/postgresql-$PG_VERSION-main.log"
-#ln -fs /dev/stderr "/var/log/postgresql/postgresql-$PG_VERSION-main.log"
 PGDATA="/var/lib/postgresql/$PG_VERSION/main"
-cat >>"$PGDATA/pg_hba.conf" <<EOF
-host all all samenet trust
-host replication all samenet trust
+cat >"$PGDATA/pg_hba.conf" <<EOF
+local   all             all                                     trust
+host    all             all             127.0.0.1/32            trust
+host    all             all             ::1/128                 trust
 EOF
 cat >>"$PGDATA/postgresql.auto.conf" <<EOF
 log_destination = 'stderr'
