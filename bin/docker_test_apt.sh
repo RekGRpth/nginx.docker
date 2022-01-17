@@ -24,6 +24,9 @@ cat >"/etc/postgresql/$PG_VERSION/main/pg_hba.conf" <<EOF
 local   all             all                                     trust
 host    all             all             127.0.0.1/32            trust
 host    all             all             ::1/128                 trust
+local   replication     all                                     trust
+host    replication     all             127.0.0.1/32            trust
+host    replication     all             ::1/128                 trust
 EOF
 cat >>"/var/lib/postgresql/$PG_VERSION/main/postgresql.auto.conf" <<EOF
 log_destination = 'stderr'
