@@ -48,3 +48,4 @@ apk add --no-cache --virtual .build-deps \
     yaml-dev \
     zlib-dev \
 ;
+ln -fs /usr/include/gnu-libiconv/iconv.h /usr/include/iconv.h
