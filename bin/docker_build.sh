@@ -22,7 +22,7 @@ auto/configure \
     --user="$USER" \
     --with-cc-opt="-W -Wall -Wextra -Wno-unused-parameter -Wwrite-strings -Wmissing-prototypes -Werror -Wno-discarded-qualifiers -g -O2" \
     --with-compat \
-    "$(test "$DOCKER_BUILD" = "test" ] && echo "--with-debug")" \
+    "$(test "$DOCKER_BUILD" = "test" && echo "--with-debug")" \
     --with-file-aio \
     --with-http_addition_module \
     --with-http_auth_request_module \
