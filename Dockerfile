@@ -29,8 +29,4 @@ RUN set -eux; \
     find /usr -type f -name "*.la" -delete; \
     mkdir -p "$HOME"; \
     chown -R "$USER":"$GROUP" "$HOME"; \
-    ln -sf /usr/local/lib/nginx /etc/nginx/modules; \
-    ln -sf /dev/stdout /var/log/nginx/access.log; \
-    ln -sf /dev/stderr /var/log/nginx/error.log; \
-    mkdir -p /run/nginx/; \
     echo done

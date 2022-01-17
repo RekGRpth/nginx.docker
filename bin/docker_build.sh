@@ -22,6 +22,7 @@ auto/configure \
     --user="$USER" \
     --with-cc-opt="-W -Wall -Wextra -Wno-unused-parameter -Wwrite-strings -Wmissing-prototypes -Werror -Wno-discarded-qualifiers -g -O2" \
     --with-compat \
+    "$(test "$DOCKER_BUILD" = "test" ] && echo "--with-debug")" \
     --with-file-aio \
     --with-http_addition_module \
     --with-http_auth_request_module \
@@ -55,4 +56,7 @@ auto/configure \
 ;
 make -j"$(nproc)" install
 rm /etc/nginx/*.default
-mkdir -p /var/cache/nginx
+ln -sf /usr/local/lib/nginx /etc/nginx/modules
+ln -sf /dev/stdout /var/log/nginx/access.log
+ln -sf /dev/stderr /var/log/nginx/error.log
+mkdir -p /run/nginx
