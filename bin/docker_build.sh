@@ -56,7 +56,7 @@ auto/configure \
 ;
 make -j"$(nproc)" install
 rm /etc/nginx/*.default
-ln -sf /usr/local/lib/nginx /etc/nginx/modules
-ln -sf /dev/stdout /var/log/nginx/access.log
-ln -sf /dev/stderr /var/log/nginx/error.log
+ln -fs /usr/local/lib/nginx /etc/nginx/modules
+ln -fs /dev/stdout /var/log/nginx/access.log
+ln -fs /dev/stderr /var/log/nginx/error.log
 mkdir -p /run/nginx
