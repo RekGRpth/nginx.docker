@@ -37,6 +37,9 @@ jobs:
       - uses: rekgrpth/docker-login-build-push-shell-action@v1
     timeout-minutes: 20
   edge:
+    concurrency:
+      cancel-in-progress: true
+      group: ${{ github.ref }}/edge
     env:
       DOCKER_FROM: lib.docker:edge
       GITHUB_TOKEN: ${{ github.token }}
@@ -63,6 +66,9 @@ jobs:
       - uses: rekgrpth/docker-login-build-push-shell-action@v1
     timeout-minutes: 20
   debian:
+    concurrency:
+      cancel-in-progress: true
+      group: ${{ github.ref }}/debian
     env:
       DOCKER_FROM: lib.docker:debian
       DOCKER_TYPE: apt
@@ -75,6 +81,9 @@ jobs:
       - uses: rekgrpth/github-publish-action-shell-action@v1
     timeout-minutes: 20
   ubuntu:
+    concurrency:
+      cancel-in-progress: true
+      group: ${{ github.ref }}/ubuntu
     env:
       DOCKER_FROM: lib.docker:ubuntu
       DOCKER_TYPE: apt
@@ -87,6 +96,9 @@ jobs:
       - uses: rekgrpth/github-publish-action-shell-action@v1
     timeout-minutes: 20
   strip:
+    concurrency:
+      cancel-in-progress: true
+      group: ${{ github.ref }}/strip
     needs: latest
     env:
       GITHUB_TOKEN: ${{ github.token }}
