@@ -11,7 +11,7 @@ jobs:
   latest:
     concurrency:
       cancel-in-progress: true
-      group: ${{ github.ref }}
+      group: ${{ github.ref }}/latest
     env:
       GITHUB_TOKEN: ${{ github.token }}
     name: ${{ github.event.client_payload.repository }} ${{ github.event_name }} ${{ github.event.branch }}
@@ -20,6 +20,7 @@ jobs:
       - uses: rekgrpth/git-clone-shell-action@v1
       - uses: rekgrpth/docker-login-build-push-shell-action@v1
       - uses: rekgrpth/github-publish-action-shell-action@v1
+    timeout-minutes: 20
   strip:
     needs: latest
     env:
@@ -42,73 +43,3 @@ jobs:
             -f /var/log/nginx \
             -f /var/run \
             -v
-  ubuntu:
-    concurrency:
-      cancel-in-progress: true
-      group: ${{ github.ref }}/ubuntu
-    env:
-      GITHUB_TOKEN: ${{ github.token }}
-    runs-on: ubuntu-latest
-    steps:
-      - env:
-          INPUTS_BRANCH: ubuntu
-        uses: rekgrpth/git-clone-shell-action@v1
-      - env:
-          INPUTS_TAG: ubuntu
-        uses: rekgrpth/docker-login-build-push-shell-action@v1
-  debian:
-    concurrency:
-      cancel-in-progress: true
-      group: ${{ github.ref }}/debian
-    env:
-      GITHUB_TOKEN: ${{ github.token }}
-    runs-on: ubuntu-latest
-    steps:
-      - env:
-          INPUTS_BRANCH: debian
-        uses: rekgrpth/git-clone-shell-action@v1
-      - env:
-          INPUTS_TAG: debian
-        uses: rekgrpth/docker-login-build-push-shell-action@v1
-  edge:
-    concurrency:
-      cancel-in-progress: true
-      group: ${{ github.ref }}/edge
-    env:
-      GITHUB_TOKEN: ${{ github.token }}
-    runs-on: ubuntu-latest
-    steps:
-      - env:
-          INPUTS_BRANCH: edge
-        uses: rekgrpth/git-clone-shell-action@v1
-      - env:
-          INPUTS_TAG: edge
-        uses: rekgrpth/docker-login-build-push-shell-action@v1
-  debug:
-    concurrency:
-      cancel-in-progress: true
-      group: ${{ github.ref }}/debug
-    env:
-      GITHUB_TOKEN: ${{ github.token }}
-    runs-on: ubuntu-latest
-    steps:
-      - env:
-          INPUTS_BRANCH: debug
-        uses: rekgrpth/git-clone-shell-action@v1
-      - env:
-          INPUTS_TAG: debug
-        uses: rekgrpth/docker-login-build-push-shell-action@v1
-  debug-without-http_upstream_dynamic_resolve_module:
-    concurrency:
-      cancel-in-progress: true
-      group: ${{ github.ref }}/debug-without-http_upstream_dynamic_resolve_module
-    env:
-      GITHUB_TOKEN: ${{ github.token }}
-    runs-on: ubuntu-latest
-    steps:
-      - env:
-          INPUTS_BRANCH: debug-without-http_upstream_dynamic_resolve_module
-        uses: rekgrpth/git-clone-shell-action@v1
-      - env:
-          INPUTS_TAG: debug-without-http_upstream_dynamic_resolve_module
-        uses: rekgrpth/docker-login-build-push-shell-action@v1

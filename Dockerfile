@@ -12,7 +12,6 @@ ENV GROUP=nginx \
     USER=nginx
 RUN set -eux; \
     export DOCKER_BUILD="$DOCKER_BUILD"; \
-    export DOCKER_POSTGRES_BRANCH="$DOCKER_POSTGRES_BRANCH"; \
     export DOCKER_TYPE="$DOCKER_TYPE"; \
     if [ $DOCKER_TYPE = "apt" ]; then \
         export DEBIAN_FRONTEND=noninteractive; \
