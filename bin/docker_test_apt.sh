@@ -7,6 +7,8 @@ apt-get install -y --no-install-recommends \
     gcc \
     git \
     gosu \
+    libc-dev \
+    libperl-dev \
     make \
     perl \
     postgresql \
