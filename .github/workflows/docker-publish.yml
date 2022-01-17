@@ -80,6 +80,21 @@ jobs:
       - uses: rekgrpth/docker-login-build-push-shell-action@v1
       - uses: rekgrpth/github-publish-action-shell-action@v1
     timeout-minutes: 20
+  test-debian:
+    concurrency:
+      cancel-in-progress: true
+      group: ${{ github.ref }}/test-debian
+    env:
+      DOCKER_BUILD: test
+      DOCKER_FROM: nginx.docker:debian
+      GITHUB_TOKEN: ${{ github.token }}
+      INPUTS_TAG: test-debian
+    needs: debian
+    runs-on: ubuntu-latest
+    steps:
+      - uses: rekgrpth/git-clone-shell-action@v1
+      - uses: rekgrpth/docker-login-build-push-shell-action@v1
+    timeout-minutes: 20
   ubuntu:
     concurrency:
       cancel-in-progress: true
@@ -94,6 +109,21 @@ jobs:
       - uses: rekgrpth/git-clone-shell-action@v1
       - uses: rekgrpth/docker-login-build-push-shell-action@v1
       - uses: rekgrpth/github-publish-action-shell-action@v1
+    timeout-minutes: 20
+  test-ubuntu:
+    concurrency:
+      cancel-in-progress: true
+      group: ${{ github.ref }}/test-ubuntu
+    env:
+      DOCKER_BUILD: test
+      DOCKER_FROM: nginx.docker:ubuntu
+      GITHUB_TOKEN: ${{ github.token }}
+      INPUTS_TAG: test-ubuntu
+    needs: ubuntu
+    runs-on: ubuntu-latest
+    steps:
+      - uses: rekgrpth/git-clone-shell-action@v1
+      - uses: rekgrpth/docker-login-build-push-shell-action@v1
     timeout-minutes: 20
   strip:
     concurrency:
