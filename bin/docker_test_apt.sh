@@ -15,6 +15,7 @@ apt-get install -y --no-install-recommends \
     valgrind \
 ;
 cpan -Ti \
+    Test::File \
     Test::Nginx::Socket \
 ;
 service postgresql start
