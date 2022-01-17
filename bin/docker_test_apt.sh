@@ -10,11 +10,11 @@ apt-get install -y --no-install-recommends \
     libc-dev \
     libperl-dev \
     make \
-    man-db \
     perl \
     postgresql \
     valgrind \
 ;
+rm -rf /usr/local/man
 cpan -Ti \
     Test::File \
     Test::Nginx::Socket \
