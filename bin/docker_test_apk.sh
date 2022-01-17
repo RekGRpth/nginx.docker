@@ -1,6 +1,5 @@
 #!/bin/sh -eux
 
-#docker_build_apk.sh
 apk add --no-cache --virtual .build-deps \
     curl \
     git \
