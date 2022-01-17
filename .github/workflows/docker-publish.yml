@@ -87,6 +87,7 @@ jobs:
     env:
       DOCKER_BUILD: test
       DOCKER_FROM: nginx.docker:debian
+      DOCKER_TYPE: apt
       GITHUB_TOKEN: ${{ github.token }}
       INPUTS_TAG: test-debian
     needs: debian
@@ -117,6 +118,7 @@ jobs:
     env:
       DOCKER_BUILD: test
       DOCKER_FROM: nginx.docker:ubuntu
+      DOCKER_TYPE: apt
       GITHUB_TOKEN: ${{ github.token }}
       INPUTS_TAG: test-ubuntu
     needs: ubuntu

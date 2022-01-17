@@ -6,8 +6,12 @@ apt-get install -y --no-install-recommends \
     curl \
     git \
     gosu \
+    make \
     perl \
     postgresql \
     valgrind \
+;
+cpan -Ti \
+    Test::Nginx::Socket \
 ;
 service postgresql start
