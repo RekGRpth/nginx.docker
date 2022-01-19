@@ -6,7 +6,6 @@ apt-get install -y --no-install-recommends \
     curl \
     gcc \
     git \
-    gosu \
     libc-dev \
     libperl-dev \
     make \

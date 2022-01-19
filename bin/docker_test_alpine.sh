@@ -8,7 +8,6 @@ apk add --no-cache --virtual .build-deps \
     perl-test-nginx \
     perl-utils \
     postgresql \
-    su-exec \
     valgrind \
 ;
 apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing --virtual .edge-deps \
