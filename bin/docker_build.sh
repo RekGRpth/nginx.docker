@@ -1,6 +1,5 @@
 #!/bin/sh -eux
 
-cd "$HOME/src/libjwt" && autoreconf -vif &&./configure && make -j"$(nproc)" install
 #cd "$HOME/src/nginx/modules/njs" && ./configure
 cd "$HOME/src/nginx"
 auto/configure \

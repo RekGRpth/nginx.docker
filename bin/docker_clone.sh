@@ -2,7 +2,6 @@
 
 mkdir -p "$HOME/src"
 cd "$HOME/src"
-git clone -b master https://github.com/RekGRpth/libjwt.git
 git clone -b master https://github.com/RekGRpth/nginx.git
 mkdir -p "$HOME/src/nginx/modules"
 cd "$HOME/src/nginx/modules"
