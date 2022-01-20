@@ -7,12 +7,12 @@ auto/configure \
     --conf-path=/etc/nginx/nginx.conf \
     --error-log-path=/var/log/nginx/error.log \
     --group="$GROUP" \
-    --http-client-body-temp-path=/var/cache/nginx/client_temp \
-    --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \
+    --http-client-body-temp-path=/var/tmp/nginx/client_body \
+    --http-fastcgi-temp-path=/var/tmp/nginx/fastcgi \
     --http-log-path=/var/log/nginx/access.log \
-    --http-proxy-temp-path=/var/cache/nginx/proxy_temp \
-    --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
-    --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
+    --http-proxy-temp-path=/var/tmp/nginx/proxy \
+    --http-scgi-temp-path=/var/tmp/nginx/scgi \
+    --http-uwsgi-temp-path=/var/tmp/nginx/uwsgi \
     --lock-path=/run/nginx/nginx.lock \
     --modules-path=/usr/local/lib/nginx \
     --pid-path=/run/nginx/nginx.pid \
