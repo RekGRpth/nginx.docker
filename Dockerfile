@@ -75,7 +75,7 @@ RUN set -eux; \
             postgresql \
             valgrind \
         ; \
-        apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing --virtual .edge-deps \
+        apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing --virtual .edge \
             perl-test-file \
         ; \
     fi; \
@@ -89,6 +89,7 @@ RUN set -eux; \
     find /usr/local/bin -type f -exec strip '{}' \;; \
     find /usr/local/lib -type f -name "*.so" -exec strip '{}' \;; \
     apk del --no-cache .build; \
+    apk del --no-cache .edge; \
     rm -rf "$HOME" /usr/share/doc /usr/share/man /usr/local/share/doc /usr/local/share/man; \
     find /usr -type f -name "*.la" -delete; \
     mkdir -p "$HOME"; \
