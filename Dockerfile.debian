@@ -1,0 +1,117 @@
+ARG DOCKER_FROM=lib.docker:latest
+FROM "ghcr.io/rekgrpth/$DOCKER_FROM"
+ADD bin /usr/local/bin
+ADD NimbusSans-Regular.ttf /usr/local/share/fonts/
+ARG DOCKER_BUILD=build
+CMD [ "nginx" ]
+ENV HOME=/var/cache/nginx
+STOPSIGNAL SIGQUIT
+WORKDIR "$HOME"
+ENV GROUP=nginx \
+    USER=nginx
+RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; \
+    export DOCKER_BUILD="$DOCKER_BUILD"; \
+    chmod +x /usr/local/bin/*.sh; \
+    apt-get update; \
+    apt-get full-upgrade -y --no-install-recommends; \
+    export savedAptMark="$(apt-mark showmanual)"; \
+    if [ "$DOCKER_BUILD" = "build" ]; then \
+        addgroup --system --gid 101 "$GROUP"; \
+        adduser --system --uid 101 --disabled-password --home "$HOME" --shell /sbin/nologin --ingroup "$GROUP" "$USER"; \
+        apt-get install -y --no-install-recommends \
+            apt-utils \
+            autoconf \
+            automake \
+            bison \
+            clang \
+            expect \
+            expect-dev \
+            file \
+            g++ \
+            gcc \
+            git \
+            libbrotli-dev \
+            libc-dev \
+            libcjson-dev \
+            libexpat1-dev \
+            libffcall1-dev \
+            libgd-dev \
+            libgeoip-dev \
+            libiconv-hook-dev \
+            libjansson-dev \
+            libjpeg-dev \
+            libjq-dev \
+            libjson-c-dev \
+            libkrb5-dev \
+            libldap2-dev \
+            libopenjp2-7-dev \
+            libpam0g-dev \
+            libpcre2-dev \
+            libpcre3-dev \
+            libperl-dev \
+            libpq-dev \
+            libreadline-dev \
+            libsqlite3-dev \
+            libssl-dev \
+            libsubunit-dev \
+            libtalloc-dev \
+            libtool \
+            libxml2-dev \
+            libxslt1-dev \
+            libyaml-dev \
+            make \
+            musl-dev \
+            postgresql-server-dev-all \
+            zlib1g-dev \
+        ; \
+    else \
+        apt-get install -y --no-install-recommends \
+            curl \
+            gcc \
+            git \
+            libc-dev \
+            libperl-dev \
+            make \
+            perl \
+            postgresql \
+            valgrind \
+        ; \
+        rm -rf /usr/local/man; \
+        cpan -Ti \
+            Test::File \
+            Test::Nginx::Socket \
+        ; \
+#        PG_VERSION="$(pg_lsclusters --no-header | cut -f1 -d ' ')"; \
+#        cat >"/etc/postgresql/$PG_VERSION/main/pg_hba.conf" <<EOF
+#        local   all             postgres                                trust
+#        local   all             all                                     trust
+#        host    all             all             127.0.0.1/32            trust
+#        host    all             all             ::1/128                 trust
+#        local   replication     all                                     trust
+#        host    replication     all             127.0.0.1/32            trust
+#        host    replication     all             ::1/128                 trust
+#        EOF
+#        cat >>"/var/lib/postgresql/$PG_VERSION/main/postgresql.auto.conf" <<EOF
+#        log_destination = 'stderr'
+#        unix_socket_directories = '/run/postgresql,/tmp'
+#        EOF
+        service postgresql start; \
+    fi; \
+    docker_clone.sh; \
+    "docker_$DOCKER_BUILD.sh"; \
+    cd /; \
+    apt-mark auto '.*' > /dev/null; \
+    apt-mark manual $savedAptMark; \
+    find /usr/local -type f -executable -exec ldd '{}' ';' | grep -v 'not found' | awk '/=>/ { print $(NF-1) }' | sort -u | xargs -r dpkg-query --search | cut -d: -f1 | sort -u | xargs -r apt-mark manual; \
+    find /usr/local -type f -executable -exec ldd '{}' ';' | grep -v 'not found' | awk '/=>/ { print $(NF-1) }' | sort -u | xargs -r -i echo "/usr{}" | xargs -r dpkg-query --search | cut -d: -f1 | sort -u | xargs -r apt-mark manual; \
+    apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
+    apt-get install -y --no-install-recommends \
+        apache2-utils \
+    ; \
+    rm -rf /var/lib/apt/lists/* /var/cache/ldconfig/aux-cache /var/cache/ldconfig; \
+    rm -rf "$HOME" /usr/share/doc /usr/share/man /usr/local/share/doc /usr/local/share/man; \
+    find /usr -type f -name "*.la" -delete; \
+    mkdir -p "$HOME"; \
+    chown -R "$USER":"$GROUP" "$HOME"; \
+    echo done
