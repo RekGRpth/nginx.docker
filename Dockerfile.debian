@@ -82,21 +82,9 @@ RUN set -eux; \
             Test::File \
             Test::Nginx::Socket \
         ; \
-#        PG_VERSION="$(pg_lsclusters --no-header | cut -f1 -d ' ')"; \
-#        cat >"/etc/postgresql/$PG_VERSION/main/pg_hba.conf" <<EOF
-#        local   all             postgres                                trust
-#        local   all             all                                     trust
-#        host    all             all             127.0.0.1/32            trust
-#        host    all             all             ::1/128                 trust
-#        local   replication     all                                     trust
-#        host    replication     all             127.0.0.1/32            trust
-#        host    replication     all             ::1/128                 trust
-#        EOF
-#        cat >>"/var/lib/postgresql/$PG_VERSION/main/postgresql.auto.conf" <<EOF
-#        log_destination = 'stderr'
-#        unix_socket_directories = '/run/postgresql,/tmp'
-#        EOF
-        service postgresql start; \
+        install -d -m 1775 -o postgres -g postgres /run/postgresql /var/log/postgresql; \
+        gosu postgres pg_ctl initdb --auth=trust --data-checksums --pgdata=/var/lib/postgresql/data; \
+        gosu postgres pg_ctl -w start --pgdata=/var/lib/postgresql/data; \
     fi; \
     docker_clone.sh; \
     "docker_$DOCKER_BUILD.sh"; \

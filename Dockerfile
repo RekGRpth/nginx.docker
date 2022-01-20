@@ -79,7 +79,7 @@ RUN set -eux; \
             perl-test-file \
         ; \
         install -d -m 1775 -o postgres -g postgres /run/postgresql /var/log/postgresql; \
-        gosu postgres pg_ctl initdb --pgdata=/var/lib/postgresql/data; \
+        gosu postgres pg_ctl initdb --auth=trust --data-checksums --pgdata=/var/lib/postgresql/data; \
         gosu postgres pg_ctl -w start --pgdata=/var/lib/postgresql/data; \
     fi; \
     docker_clone.sh; \
