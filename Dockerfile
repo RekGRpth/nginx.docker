@@ -96,4 +96,5 @@ RUN set -eux; \
     find /usr -type f -name "*.la" -delete; \
     mkdir -p "$HOME"; \
     chown -R "$USER":"$GROUP" "$HOME"; \
+    install -d -m 0700 -o "$USER" -g "$GROUP" /var/tmp/nginx; \
     echo done
