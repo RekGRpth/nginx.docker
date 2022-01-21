@@ -8,13 +8,14 @@ on:
       - latest
   workflow_dispatch:
 env:
+  DOCKER_FROM: lib.docker:${{ github.job }}
   GITHUB_TOKEN: ${{ github.token }}
+  INPUTS_TAG: ${{ github.job }}
 concurrency:
   cancel-in-progress: true
   group: ${{ github.repository }}/${{ github.job }}
 jobs:
   latest:
-    name: ${{ github.job }} ${{ github.event.client_payload.repository }} ${{ github.event_name }} ${{ github.event.branch }}
     runs-on: ubuntu-latest
     steps:
       - uses: rekgrpth/git-clone-shell-action@v1
@@ -25,7 +26,6 @@ jobs:
     env:
       DOCKER_BUILD: test
       DOCKER_FROM: nginx.docker:latest
-      INPUTS_TAG: test-latest
     needs: latest
     runs-on: ubuntu-latest
     steps:
@@ -33,9 +33,6 @@ jobs:
       - uses: rekgrpth/docker-login-build-push-shell-action@v1
     timeout-minutes: 20
   edge:
-    env:
-      DOCKER_FROM: lib.docker:edge
-      INPUTS_TAG: edge
     runs-on: ubuntu-latest
     steps:
       - uses: rekgrpth/git-clone-shell-action@v1
@@ -46,7 +43,6 @@ jobs:
     env:
       DOCKER_BUILD: test
       DOCKER_FROM: nginx.docker:edge
-      INPUTS_TAG: test-edge
     needs: edge
     runs-on: ubuntu-latest
     steps:
@@ -55,9 +51,7 @@ jobs:
     timeout-minutes: 20
   debian:
     env:
-      DOCKER_FROM: lib.docker:debian
       INPUTS_DOCKERFILE: Dockerfile.debian
-      INPUTS_TAG: debian
     runs-on: ubuntu-latest
     steps:
       - uses: rekgrpth/git-clone-shell-action@v1
@@ -69,7 +63,6 @@ jobs:
       DOCKER_BUILD: test
       DOCKER_FROM: nginx.docker:debian
       INPUTS_DOCKERFILE: Dockerfile.debian
-      INPUTS_TAG: test-debian
     needs: debian
     runs-on: ubuntu-latest
     steps:
@@ -78,9 +71,7 @@ jobs:
     timeout-minutes: 20
   ubuntu:
     env:
-      DOCKER_FROM: lib.docker:ubuntu
       INPUTS_DOCKERFILE: Dockerfile.debian
-      INPUTS_TAG: ubuntu
     runs-on: ubuntu-latest
     steps:
       - uses: rekgrpth/git-clone-shell-action@v1
@@ -92,7 +83,6 @@ jobs:
       DOCKER_BUILD: test
       DOCKER_FROM: nginx.docker:ubuntu
       INPUTS_DOCKERFILE: Dockerfile.debian
-      INPUTS_TAG: test-ubuntu
     needs: ubuntu
     runs-on: ubuntu-latest
     steps:
