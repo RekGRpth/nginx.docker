@@ -7,14 +7,14 @@ on:
     types:
       - latest
   workflow_dispatch:
+env:
+  GITHUB_TOKEN: ${{ github.token }}
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.repository }}/${{ github.job }}
 jobs:
   latest:
-    concurrency:
-      cancel-in-progress: true
-      group: ${{ github.ref }}/latest
-    env:
-      GITHUB_TOKEN: ${{ github.token }}
-    name: ${{ github.event.client_payload.repository }} ${{ github.event_name }} ${{ github.event.branch }}
+    name: ${{ github.job }} ${{ github.event.client_payload.repository }} ${{ github.event_name }} ${{ github.event.branch }}
     runs-on: ubuntu-latest
     steps:
       - uses: rekgrpth/git-clone-shell-action@v1
@@ -22,13 +22,9 @@ jobs:
       - uses: rekgrpth/github-publish-action-shell-action@v1
     timeout-minutes: 20
   test-latest:
-    concurrency:
-      cancel-in-progress: true
-      group: ${{ github.ref }}/test-latest
     env:
       DOCKER_BUILD: test
       DOCKER_FROM: nginx.docker:latest
-      GITHUB_TOKEN: ${{ github.token }}
       INPUTS_TAG: test-latest
     needs: latest
     runs-on: ubuntu-latest
@@ -37,12 +33,8 @@ jobs:
       - uses: rekgrpth/docker-login-build-push-shell-action@v1
     timeout-minutes: 20
   edge:
-    concurrency:
-      cancel-in-progress: true
-      group: ${{ github.ref }}/edge
     env:
       DOCKER_FROM: lib.docker:edge
-      GITHUB_TOKEN: ${{ github.token }}
       INPUTS_TAG: edge
     runs-on: ubuntu-latest
     steps:
@@ -51,13 +43,9 @@ jobs:
       - uses: rekgrpth/github-publish-action-shell-action@v1
     timeout-minutes: 20
   test-edge:
-    concurrency:
-      cancel-in-progress: true
-      group: ${{ github.ref }}/test-edge
     env:
       DOCKER_BUILD: test
       DOCKER_FROM: nginx.docker:edge
-      GITHUB_TOKEN: ${{ github.token }}
       INPUTS_TAG: test-edge
     needs: edge
     runs-on: ubuntu-latest
@@ -66,12 +54,8 @@ jobs:
       - uses: rekgrpth/docker-login-build-push-shell-action@v1
     timeout-minutes: 20
   debian:
-    concurrency:
-      cancel-in-progress: true
-      group: ${{ github.ref }}/debian
     env:
       DOCKER_FROM: lib.docker:debian
-      GITHUB_TOKEN: ${{ github.token }}
       INPUTS_DOCKERFILE: Dockerfile.debian
       INPUTS_TAG: debian
     runs-on: ubuntu-latest
@@ -81,13 +65,9 @@ jobs:
       - uses: rekgrpth/github-publish-action-shell-action@v1
     timeout-minutes: 20
   test-debian:
-    concurrency:
-      cancel-in-progress: true
-      group: ${{ github.ref }}/test-debian
     env:
       DOCKER_BUILD: test
       DOCKER_FROM: nginx.docker:debian
-      GITHUB_TOKEN: ${{ github.token }}
       INPUTS_DOCKERFILE: Dockerfile.debian
       INPUTS_TAG: test-debian
     needs: debian
@@ -97,12 +77,8 @@ jobs:
       - uses: rekgrpth/docker-login-build-push-shell-action@v1
     timeout-minutes: 20
   ubuntu:
-    concurrency:
-      cancel-in-progress: true
-      group: ${{ github.ref }}/ubuntu
     env:
       DOCKER_FROM: lib.docker:ubuntu
-      GITHUB_TOKEN: ${{ github.token }}
       INPUTS_DOCKERFILE: Dockerfile.debian
       INPUTS_TAG: ubuntu
     runs-on: ubuntu-latest
@@ -112,13 +88,9 @@ jobs:
       - uses: rekgrpth/github-publish-action-shell-action@v1
     timeout-minutes: 20
   test-ubuntu:
-    concurrency:
-      cancel-in-progress: true
-      group: ${{ github.ref }}/test-ubuntu
     env:
       DOCKER_BUILD: test
       DOCKER_FROM: nginx.docker:ubuntu
-      GITHUB_TOKEN: ${{ github.token }}
       INPUTS_DOCKERFILE: Dockerfile.debian
       INPUTS_TAG: test-ubuntu
     needs: ubuntu
@@ -128,12 +100,7 @@ jobs:
       - uses: rekgrpth/docker-login-build-push-shell-action@v1
     timeout-minutes: 20
   strip:
-    concurrency:
-      cancel-in-progress: true
-      group: ${{ github.ref }}/strip
     needs: latest
-    env:
-      GITHUB_TOKEN: ${{ github.token }}
     runs-on: ubuntu-latest
     steps:
       - uses: rekgrpth/strip-docker-image-shell-action@v1
