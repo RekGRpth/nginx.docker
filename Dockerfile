@@ -39,7 +39,6 @@ RUN set -eux; \
             gnu-libiconv-dev \
             jansson-dev \
             jpeg-dev \
-            jq-dev \
             json-c-dev \
             krb5-dev \
             libc-dev \

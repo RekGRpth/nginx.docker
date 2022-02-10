@@ -41,7 +41,6 @@ RUN set -eux; \
             libiconv-hook-dev \
             libjansson-dev \
             libjpeg-dev \
-            libjq-dev \
             libjson-c-dev \
             libkrb5-dev \
             libldap2-dev \
