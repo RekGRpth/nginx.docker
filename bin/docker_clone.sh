@@ -8,6 +8,7 @@ cd "$HOME/src/nginx/modules"
 git clone -b master https://github.com/RekGRpth/echo-nginx-module.git
 git clone -b master https://github.com/RekGRpth/encrypted-session-nginx-module.git
 git clone -b master https://github.com/RekGRpth/form-input-nginx-module.git
+git clone -b master https://github.com/RekGRpth/headers-more-nginx-module.git
 git clone -b master https://github.com/RekGRpth/iconv-nginx-module.git
 git clone -b master https://github.com/RekGRpth/nginx_csrf_prevent.git
 git clone -b master https://github.com/RekGRpth/nginx-jwt-module.git
