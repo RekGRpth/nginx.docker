@@ -5,6 +5,7 @@ cd "$HOME/src"
 git clone -b master https://github.com/RekGRpth/nginx.git
 mkdir -p "$HOME/src/nginx/modules"
 cd "$HOME/src/nginx/modules"
+git clone -b main https://github.com/RekGRpth/ngx_http_json_var_module.git
 git clone -b master https://github.com/RekGRpth/echo-nginx-module.git
 git clone -b master https://github.com/RekGRpth/encrypted-session-nginx-module.git
 git clone -b master https://github.com/RekGRpth/form-input-nginx-module.git
