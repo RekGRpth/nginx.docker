@@ -3,7 +3,7 @@
 #cd "$HOME/src/nginx/modules/njs" && ./configure
 cd "$HOME/src/nginx"
 auto/configure \
-    --add-dynamic-module="$(find modules -type f -name "config" | grep -v "\.git" | grep -v "\/t\/" | while read -r NAME; do echo -n "`dirname "$NAME"` "; done)" \
+    --add-dynamic-module="modules/ngx_devel_kit $(find modules -type f -name "config" | grep -v -e ngx_devel_kit -e "\.git" -e "\/t\/" | while read -r NAME; do echo -n "`dirname "$NAME"` "; done)" \
     --conf-path=/etc/nginx/nginx.conf \
     --error-log-path=/var/log/nginx/error.log \
     --group="$GROUP" \
@@ -55,6 +55,6 @@ auto/configure \
 make -j"$(nproc)" install
 rm /etc/nginx/*.default
 ln -fs /usr/local/lib/nginx /etc/nginx/modules
-ln -fs /dev/stdout /var/log/nginx/access.log
-ln -fs /dev/stderr /var/log/nginx/error.log
+ln -fs /dev/stdout /var/log/nginx/std.log
+ln -fs /dev/stderr /var/log/nginx/std.err
 mkdir -p /run/nginx
