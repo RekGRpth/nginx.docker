@@ -32,6 +32,7 @@ git clone -b master https://github.com/RekGRpth/ngx_http_remote_passwd.git
 git clone -b master https://github.com/RekGRpth/ngx_http_response_body_module.git
 git clone -b master https://github.com/RekGRpth/ngx_http_sign_module.git
 git clone -b master https://github.com/RekGRpth/ngx_http_substitutions_filter_module.git
+git clone -b master https://github.com/RekGRpth/ngx_http_time_var_module.git
 git clone -b master https://github.com/RekGRpth/ngx_http_upstream_session_sticky_module.git
 git clone -b master https://github.com/RekGRpth/ngx_http_zip_var_module.git
 git clone -b master https://github.com/RekGRpth/ngx_postgres.git
