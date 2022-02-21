@@ -3,7 +3,7 @@
 docker pull "ghcr.io/rekgrpth/nginx.docker:${INPUTS_BRANCH:-latest}"
 docker network create --attachable --opt com.docker.network.bridge.name=docker docker || echo $?
 docker volume create nginx
-NGINX="$(docker volume inspect --format '{{ .Mountpoint }}' nginx)"
+NGINX="$(docker volume inspect --format "{{ .Mountpoint }}" nginx)"
 mkdir -p "$NGINX/log"
 touch "$NGINX/http.conf"
 touch "$NGINX/nginx.conf"
