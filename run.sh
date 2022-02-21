@@ -3,10 +3,11 @@
 docker pull "ghcr.io/rekgrpth/nginx.docker:${INPUTS_BRANCH:-latest}"
 docker network create --attachable --opt com.docker.network.bridge.name=docker docker || echo $?
 docker volume create nginx
-mkdir -p /var/lib/docker/volumes/nginx/_data/log
-touch /var/lib/docker/volumes/nginx/_data/http.conf
-touch /var/lib/docker/volumes/nginx/_data/nginx.conf
-touch /var/lib/docker/volumes/nginx/_data/module.conf
+NGINX="$(docker volume inspect --format '{{ .Mountpoint }}' nginx)"
+mkdir -p "$NGINX/log"
+touch "$NGINX/http.conf"
+touch "$NGINX/nginx.conf"
+touch "$NGINX/module.conf"
 docker stop nginx || echo $?
 docker rm nginx || echo $?
 docker run \
@@ -21,7 +22,7 @@ docker run \
     --mount type=bind,source=/run/nginx,destination=/run/nginx \
     --mount type=bind,source=/run/postgresql,destination=/run/postgresql \
     --mount type=bind,source=/run/uwsgi,destination=/run/uwsgi \
-    --mount type=bind,source=/var/lib/docker/volumes/nginx/_data/nginx.conf,destination=/etc/nginx/nginx.conf,readonly \
+    --mount type=bind,source="$NGINX/nginx.conf",destination=/etc/nginx/nginx.conf,readonly \
     --mount type=bind,source=/var/log/nginx,destination=/var/log/nginx \
     --mount type=volume,source=nginx,destination=/var/cache/nginx \
     --name nginx \
