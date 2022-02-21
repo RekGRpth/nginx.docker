@@ -5,9 +5,10 @@ docker network create --attachable --opt com.docker.network.bridge.name=docker d
 docker volume create nginx
 NGINX="$(docker volume inspect --format "{{ .Mountpoint }}" nginx)"
 mkdir -p "$NGINX/log"
+touch "$NGINX/error.conf"
 touch "$NGINX/http.conf"
 touch "$NGINX/nginx.conf"
-touch "$NGINX/module.conf"
+touch "$NGINX/modules.conf"
 docker stop nginx || echo $?
 docker rm nginx || echo $?
 docker run \
@@ -18,11 +19,14 @@ docker run \
     --env TZ=Asia/Yekaterinburg \
     --env USER_ID="$(id -u)" \
     --hostname nginx \
+    --mount type=bind,source="$NGINX/error.conf",destination=/etc/nginx/error.conf,readonly \
+    --mount type=bind,source="$NGINX/http.conf",destination=/etc/nginx/http.conf,readonly \
+    --mount type=bind,source="$NGINX/modules.conf",destination=/etc/nginx/modules.conf,readonly \
+    --mount type=bind,source="$NGINX/nginx.conf",destination=/etc/nginx/nginx.conf,readonly \
     --mount type=bind,source=/etc/certs,destination=/etc/certs,readonly \
     --mount type=bind,source=/run/nginx,destination=/run/nginx \
     --mount type=bind,source=/run/postgresql,destination=/run/postgresql \
     --mount type=bind,source=/run/uwsgi,destination=/run/uwsgi \
-    --mount type=bind,source="$NGINX/nginx.conf",destination=/etc/nginx/nginx.conf,readonly \
     --mount type=bind,source=/var/log/nginx,destination=/var/log/nginx \
     --mount type=volume,source=nginx,destination=/var/cache/nginx \
     --name nginx \
@@ -31,7 +35,10 @@ docker run \
     --network name=docker,alias=$(hostname -f),alias=libreoffice."$(hostname -d)",alias=api-$(hostname -f),alias=cas-$(hostname -f)$(docker volume ls --format "{{.Name}}" | while read VOLUME; do
         echo -n ",alias=$VOLUME-$(hostname -f)"
     done) \
-    $(docker volume ls --format "{{.Name}}" | while read VOLUME; do
-        echo "--mount type=volume,source=$VOLUME,destination=/etc/nginx/$VOLUME,readonly"
+    $(docker volume ls --format "{{.Name}}" | while read -r VOLUME; do
+        DATA="$(docker volume inspect --format "{{ .Mountpoint }}" "$VOLUME")"
+        find "$DATA" -type d -name "nginx" -maxdepth 1 -mindepth 1 2>/dev/null | while read -r DIR; do
+            echo "--mount type=bind,source=$DIR,destination=/etc/nginx/$VOLUME,readonly"
+        done
     done) \
     "ghcr.io/rekgrpth/nginx.docker:${INPUTS_BRANCH:-latest}"
