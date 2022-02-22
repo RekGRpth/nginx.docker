@@ -5,7 +5,6 @@ docker network create --attachable --opt com.docker.network.bridge.name=docker d
 docker volume create nginx
 NGINX="$(docker volume inspect --format "{{ .Mountpoint }}" nginx)"
 mkdir -p "$NGINX/log"
-touch "$NGINX/error.conf"
 touch "$NGINX/http.conf"
 touch "$NGINX/nginx.conf"
 touch "$NGINX/modules.conf"
@@ -19,7 +18,6 @@ docker run \
     --env TZ=Asia/Yekaterinburg \
     --env USER_ID="$(id -u)" \
     --hostname nginx \
-    --mount type=bind,source="$NGINX/error.conf",destination=/etc/nginx/error.conf,readonly \
     --mount type=bind,source="$NGINX/http.conf",destination=/etc/nginx/http.conf,readonly \
     --mount type=bind,source="$NGINX/modules.conf",destination=/etc/nginx/modules.conf,readonly \
     --mount type=bind,source="$NGINX/nginx.conf",destination=/etc/nginx/nginx.conf,readonly \
