@@ -156,7 +156,7 @@ RUN set -eux; \
     ; \
     make -j"$(nproc)" install; \
     find /usr/local/lib/nginx -type f -name "*.so" ! -name "ngx_stream_*.so" -printf 'load_module "modules/%f";\n' | sort -u >/etc/nginx/modules.conf; \
-    echo 'load_module "modules/ngx_stream_module.so";\n' >>/etc/nginx/modules.conf; \
+    echo 'load_module "modules/ngx_stream_module.so";' >>/etc/nginx/modules.conf; \
     find /usr/local/lib/nginx -type f -name "ngx_stream_*.so" ! -name "ngx_stream_module.so" -printf 'load_module "modules/%f";\n' | sort -u >>/etc/nginx/modules.conf; \
     rm /etc/nginx/*.default; \
     ln -fs /usr/local/lib/nginx /etc/nginx/modules; \
