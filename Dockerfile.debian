@@ -1,7 +1,6 @@
 FROM ghcr.io/rekgrpth/lib.docker:debian
 ADD bin /usr/local/bin
 ADD NimbusSans-Regular.ttf /usr/local/share/fonts/
-ARG DOCKER_BUILD=build
 CMD [ "nginx" ]
 ENV GROUP=nginx \
     HOME=/var/cache/nginx \
@@ -10,77 +9,57 @@ STOPSIGNAL SIGQUIT
 WORKDIR "$HOME"
 RUN set -eux; \
     export DEBIAN_FRONTEND=noninteractive; \
-    export DOCKER_BUILD="$DOCKER_BUILD"; \
     chmod +x /usr/local/bin/*.sh; \
     apt-get update; \
     apt-get full-upgrade -y --no-install-recommends; \
     export savedAptMark="$(apt-mark showmanual)"; \
-    if [ "$DOCKER_BUILD" = "build" ]; then \
-        addgroup --system --gid 101 "$GROUP"; \
-        adduser --system --uid 101 --disabled-password --home "$HOME" --shell /sbin/nologin --ingroup "$GROUP" "$USER"; \
-        apt-get install -y --no-install-recommends \
-            apt-utils \
-            autoconf \
-            automake \
-            bison \
-            clang \
-            expect \
-            expect-dev \
-            file \
-            g++ \
-            gcc \
-            git \
-            libbrotli-dev \
-            libc-dev \
-            libcjson-dev \
-            libexpat1-dev \
-            libffcall1-dev \
-            libgd-dev \
-            libgeoip-dev \
-            libiconv-hook-dev \
-            libjansson-dev \
-            libjpeg-dev \
-            libjson-c-dev \
-            libkrb5-dev \
-            libldap2-dev \
-            libopenjp2-7-dev \
-            libpam0g-dev \
-            libpcre2-dev \
-            libpcre3-dev \
-            libperl-dev \
-            libpq-dev \
-            libreadline-dev \
-            libsqlite3-dev \
-            libssl-dev \
-            libsubunit-dev \
-            libtalloc-dev \
-            libtool \
-            libxml2-dev \
-            libxslt1-dev \
-            libyaml-dev \
-            make \
-            musl-dev \
-            postgresql-server-dev-all \
-            zlib1g-dev \
-        ; \
-    else \
-        apt-get install -y --no-install-recommends \
-            curl \
-            gcc \
-            git \
-            libc-dev \
-            libperl-dev \
-            make \
-            perl \
-            postgresql \
-            valgrind \
-        ; \
-        rm -rf /usr/local/man; \
-        cpan -Ti \
-            Test::File \
-            Test::Nginx::Socket \
-        ; \
-    fi; \
+    addgroup --system --gid 101 "$GROUP"; \
+    adduser --system --uid 101 --disabled-password --home "$HOME" --shell /sbin/nologin --ingroup "$GROUP" "$USER"; \
+    apt-get install -y --no-install-recommends \
+        apt-utils \
+        autoconf \
+        automake \
+        bison \
+        clang \
+        expect \
+        expect-dev \
+        file \
+        g++ \
+        gcc \
+        git \
+        libbrotli-dev \
+        libc-dev \
+        libcjson-dev \
+        libexpat1-dev \
+        libffcall1-dev \
+        libgd-dev \
+        libgeoip-dev \
+        libiconv-hook-dev \
+        libjansson-dev \
+        libjpeg-dev \
+        libjson-c-dev \
+        libkrb5-dev \
+        libldap2-dev \
+        libopenjp2-7-dev \
+        libpam0g-dev \
+        libpcre2-dev \
+        libpcre3-dev \
+        libperl-dev \
+        libpq-dev \
+        libreadline-dev \
+        libsqlite3-dev \
+        libssl-dev \
+        libsubunit-dev \
+        libtalloc-dev \
+        libtool \
+        libxml2-dev \
+        libxslt1-dev \
+        libyaml-dev \
+        make \
+        musl-dev \
+        postgresql-server-dev-all \
+        zlib1g-dev \
+    ; \
     mkdir -p "$HOME/src"; \
     cd "$HOME/src"; \
     git clone -b master https://github.com/RekGRpth/nginx.git; \
