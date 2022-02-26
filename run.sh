@@ -7,7 +7,6 @@ NGINX="$(docker volume inspect --format "{{ .Mountpoint }}" nginx)"
 mkdir -p "$NGINX/log"
 touch "$NGINX/http.conf"
 touch "$NGINX/nginx.conf"
-touch "$NGINX/modules.conf"
 docker stop nginx || echo $?
 docker rm nginx || echo $?
 docker run \
@@ -19,7 +18,6 @@ docker run \
     --env USER_ID="$(id -u)" \
     --hostname nginx \
     --mount type=bind,source="$NGINX/http.conf",destination=/etc/nginx/http.conf,readonly \
-    --mount type=bind,source="$NGINX/modules.conf",destination=/etc/nginx/modules.conf,readonly \
     --mount type=bind,source="$NGINX/nginx.conf",destination=/etc/nginx/nginx.conf,readonly \
     --mount type=bind,source=/etc/certs,destination=/etc/certs,readonly \
     --mount type=bind,source=/run/nginx,destination=/run/nginx \
