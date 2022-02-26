@@ -1,4 +1,4 @@
-FROM ghcr.io/rekgrpth/lib.docker:debian
+FROM ghcr.io/rekgrpth/lib.docker:latest
 ADD bin /usr/local/bin
 ADD NimbusSans-Regular.ttf /usr/local/share/fonts/
 ARG DOCKER_BUILD=build
@@ -9,76 +9,72 @@ ENV GROUP=nginx \
 STOPSIGNAL SIGQUIT
 WORKDIR "$HOME"
 RUN set -eux; \
-    export DEBIAN_FRONTEND=noninteractive; \
     export DOCKER_BUILD="$DOCKER_BUILD"; \
     chmod +x /usr/local/bin/*.sh; \
-    apt-get update; \
-    apt-get full-upgrade -y --no-install-recommends; \
-    export savedAptMark="$(apt-mark showmanual)"; \
+    apk update --no-cache; \
+    apk upgrade --no-cache; \
     if [ "$DOCKER_BUILD" = "build" ]; then \
-        addgroup --system --gid 101 "$GROUP"; \
-        adduser --system --uid 101 --disabled-password --home "$HOME" --shell /sbin/nologin --ingroup "$GROUP" "$USER"; \
-        apt-get install -y --no-install-recommends \
-            apt-utils \
+        addgroup -g 101 -S "$GROUP"; \
+        adduser -u 101 -S -D -G "$GROUP" -H -h "$HOME" -s /sbin/nologin "$USER"; \
+        apk add --no-cache --virtual .build \
             autoconf \
             automake \
             bison \
+            brotli-dev \
+            check-dev \
+            cjson-dev \
             clang \
+            expat-dev \
             expect \
             expect-dev \
+            ffcall \
             file \
             g++ \
             gcc \
+            gd-dev \
+            geoip-dev \
+            gettext-dev \
             git \
-            libbrotli-dev \
+            gnu-libiconv-dev \
+            jansson-dev \
+            jpeg-dev \
+            json-c-dev \
+            krb5-dev \
             libc-dev \
-            libcjson-dev \
-            libexpat1-dev \
-            libffcall1-dev \
-            libgd-dev \
-            libgeoip-dev \
-            libiconv-hook-dev \
-            libjansson-dev \
-            libjpeg-dev \
-            libjson-c-dev \
-            libkrb5-dev \
-            libldap2-dev \
-            libopenjp2-7-dev \
-            libpam0g-dev \
-            libpcre2-dev \
-            libpcre3-dev \
-            libperl-dev \
-            libpq-dev \
-            libreadline-dev \
-            libsqlite3-dev \
-            libssl-dev \
-            libsubunit-dev \
-            libtalloc-dev \
             libtool \
             libxml2-dev \
-            libxslt1-dev \
-            libyaml-dev \
+            libxslt-dev \
+            linux-headers \
+            linux-pam-dev \
             make \
             musl-dev \
-            postgresql-server-dev-all \
-            zlib1g-dev \
+            openjpeg-dev \
+            openldap-dev \
+            pcre2-dev \
+            pcre-dev \
+            perl-dev \
+            postgresql-dev \
+            readline-dev \
+            sqlite-dev \
+            talloc-dev \
+            util-linux-dev \
+            yaml-dev \
+            zlib-dev \
         ; \
+        ln -fs /usr/include/gnu-libiconv/iconv.h /usr/include/iconv.h; \
     else \
-        apt-get install -y --no-install-recommends \
+        apk add --no-cache --virtual .build \
             curl \
-            gcc \
             git \
-            libc-dev \
-            libperl-dev \
-            make \
-            perl \
+            libbsd-dev \
+            perl-lwp-protocol-https \
+            perl-test-nginx \
+            perl-utils \
             postgresql \
             valgrind \
         ; \
-        rm -rf /usr/local/man; \
-        cpan -Ti \
-            Test::File \
-            Test::Nginx::Socket \
+        apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing --virtual .edge \
+            perl-test-file \
         ; \
     fi; \
     mkdir -p "$HOME/src"; \
@@ -182,15 +178,16 @@ RUN set -eux; \
     ln -fs /dev/stderr /var/log/nginx/std.err; \
     mkdir -p /run/nginx; \
     cd /; \
-    apt-mark auto '.*' > /dev/null; \
-    apt-mark manual $savedAptMark; \
-    find /usr/local -type f -executable -exec ldd '{}' ';' | grep -v 'not found' | awk '/=>/ { print $(NF-1) }' | sort -u | xargs -r dpkg-query --search | cut -d: -f1 | sort -u | xargs -r apt-mark manual; \
-    find /usr/local -type f -executable -exec ldd '{}' ';' | grep -v 'not found' | awk '/=>/ { print $(NF-1) }' | sort -u | xargs -r -i echo "/usr{}" | xargs -r dpkg-query --search | cut -d: -f1 | sort -u | xargs -r apt-mark manual; \
-    apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
-    apt-get install -y --no-install-recommends \
+    apk add --no-cache --virtual .nginx \
         apache2-utils \
+        $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/local | tr ',' '\n' | grep -v "^$" | sort -u | while read -r lib; do test -z "$(find /usr/local/lib -name "$lib")" && echo "so:$lib"; done) \
     ; \
-    rm -rf /var/lib/apt/lists/* /var/cache/ldconfig/aux-cache /var/cache/ldconfig; \
+    find /usr/local/bin -type f -exec strip '{}' \;; \
+    find /usr/local/lib -type f -name "*.so" -exec strip '{}' \;; \
+    apk del --no-cache .build; \
+    if [ "$DOCKER_BUILD" = "test" ]; then \
+        apk del --no-cache .edge; \
+    fi; \
     rm -rf "$HOME" /usr/share/doc /usr/share/man /usr/local/share/doc /usr/local/share/man; \
     find /usr -type f -name "*.la" -delete; \
     mkdir -p "$HOME"; \

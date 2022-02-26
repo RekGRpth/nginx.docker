@@ -8,104 +8,54 @@ on:
       - latest
   workflow_dispatch:
 env:
-  DOCKER_FROM: lib.docker:${{ github.job }}
   GITHUB_TOKEN: ${{ github.token }}
+  INPUTS_DOCKERFILE: Dockerfile.${{ github.job }}
   INPUTS_TAG: ${{ github.job }}
 concurrency:
   cancel-in-progress: true
   group: ${{ github.repository }}/${{ github.job }}
 jobs:
-  latest:
+  alpine:
+    env:
+      INPUTS_TAG: latest
     runs-on: ubuntu-latest
     steps:
       - uses: rekgrpth/git-clone-shell-action@v1
       - uses: rekgrpth/docker-login-build-push-shell-action@v1
       - uses: rekgrpth/github-publish-action-shell-action@v1
-    timeout-minutes: 20
-  test-latest:
-    env:
-      DOCKER_BUILD: test
-      DOCKER_FROM: nginx.docker:latest
-    needs: latest
+    timeout-minutes: 30
+  alpine-test:
+    needs: alpine
     runs-on: ubuntu-latest
     steps:
       - uses: rekgrpth/git-clone-shell-action@v1
       - uses: rekgrpth/docker-login-build-push-shell-action@v1
-    timeout-minutes: 20
-  edge:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: rekgrpth/git-clone-shell-action@v1
-      - uses: rekgrpth/docker-login-build-push-shell-action@v1
-      - uses: rekgrpth/github-publish-action-shell-action@v1
-    timeout-minutes: 20
-  test-edge:
-    env:
-      DOCKER_BUILD: test
-      DOCKER_FROM: nginx.docker:edge
-    needs: edge
-    runs-on: ubuntu-latest
-    steps:
-      - uses: rekgrpth/git-clone-shell-action@v1
-      - uses: rekgrpth/docker-login-build-push-shell-action@v1
-    timeout-minutes: 20
+    timeout-minutes: 30
   debian:
-    env:
-      INPUTS_DOCKERFILE: Dockerfile.debian
     runs-on: ubuntu-latest
     steps:
       - uses: rekgrpth/git-clone-shell-action@v1
       - uses: rekgrpth/docker-login-build-push-shell-action@v1
       - uses: rekgrpth/github-publish-action-shell-action@v1
-    timeout-minutes: 20
-  test-debian:
-    env:
-      DOCKER_BUILD: test
-      DOCKER_FROM: nginx.docker:debian
-      INPUTS_DOCKERFILE: Dockerfile.debian
+    timeout-minutes: 30
+  debian-test:
     needs: debian
     runs-on: ubuntu-latest
     steps:
       - uses: rekgrpth/git-clone-shell-action@v1
       - uses: rekgrpth/docker-login-build-push-shell-action@v1
-    timeout-minutes: 20
+    timeout-minutes: 30
   ubuntu:
-    env:
-      INPUTS_DOCKERFILE: Dockerfile.debian
     runs-on: ubuntu-latest
     steps:
       - uses: rekgrpth/git-clone-shell-action@v1
       - uses: rekgrpth/docker-login-build-push-shell-action@v1
       - uses: rekgrpth/github-publish-action-shell-action@v1
-    timeout-minutes: 20
-  test-ubuntu:
-    env:
-      DOCKER_BUILD: test
-      DOCKER_FROM: nginx.docker:ubuntu
-      INPUTS_DOCKERFILE: Dockerfile.debian
+    timeout-minutes: 30
+  ubuntu-test:
     needs: ubuntu
     runs-on: ubuntu-latest
     steps:
       - uses: rekgrpth/git-clone-shell-action@v1
       - uses: rekgrpth/docker-login-build-push-shell-action@v1
-    timeout-minutes: 20
-  strip:
-    needs: latest
-    runs-on: ubuntu-latest
-    steps:
-      - uses: rekgrpth/strip-docker-image-shell-action@v1
-        with:
-          args: |
-            -f /etc/group \
-            -f /etc/nginx \
-            -f /etc/passwd \
-            -f /etc/ssl \
-            -f /usr/lib/engines-1.1 \
-            -f /usr/local/bin/nginx \
-            -f /usr/local/lib \
-            -f /usr/local/share \
-            -f /usr/share/ca-certificates \
-            -f /var/cache/nginx \
-            -f /var/log/nginx \
-            -f /var/run \
-            -v
+    timeout-minutes: 30
