@@ -102,7 +102,7 @@ RUN set -eux; \
     git clone -b master https://github.com/RekGRpth/ngx_postgres.git; \
 #    git clone -b master https://github.com/RekGRpth/njs.git; \
     git clone -b master https://github.com/RekGRpth/set-misc-nginx-module.git; \
-    git clone -b master https://github.com/RekGRpth/spnego-http-auth-nginx-module.git; \
+#    git clone -b master https://github.com/RekGRpth/spnego-http-auth-nginx-module.git; \
     #cd "$HOME/src/nginx/modules/njs" && ./configure; \
     cd "$HOME/src/nginx"; \
     auto/configure \
