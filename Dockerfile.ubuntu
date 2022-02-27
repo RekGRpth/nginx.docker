@@ -180,3 +180,4 @@ RUN set -eux; \
     chown -R "$USER":"$GROUP" "$HOME"; \
     install -d -m 0700 -o "$USER" -g "$GROUP" /var/tmp/nginx; \
     echo done
+ADD nginx.conf /etc/nginx/
