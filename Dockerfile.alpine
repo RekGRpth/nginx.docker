@@ -75,7 +75,7 @@ RUN set -eux; \
     git clone -b master https://github.com/RekGRpth/headers-more-nginx-module.git; \
     git clone -b master https://github.com/RekGRpth/iconv-nginx-module.git; \
     git clone -b master https://github.com/RekGRpth/nginx_csrf_prevent.git; \
-    git clone -b master https://github.com/RekGRpth/nginx-jwt-module.git; \
+#    git clone -b master https://github.com/RekGRpth/nginx-jwt-module.git; \
     git clone -b master https://github.com/RekGRpth/nginx-push-stream-module.git; \
     git clone -b master https://github.com/RekGRpth/nginx-upload-module.git; \
     git clone -b master https://github.com/RekGRpth/nginx-upstream-fair.git; \
