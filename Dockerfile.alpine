@@ -160,8 +160,6 @@ RUN set -eux; \
     find /usr/local/lib/nginx -type f -name "ngx_stream_*.so" ! -name "ngx_stream_module.so" -printf 'load_module "modules/%f";\n' | sort -u >>/etc/nginx/modules.conf; \
     rm /etc/nginx/*.default; \
     ln -fs /usr/local/lib/nginx /etc/nginx/modules; \
-    ln -fs /dev/stdout /var/log/nginx/std.log; \
-    ln -fs /dev/stderr /var/log/nginx/std.err; \
     mkdir -p /run/nginx; \
     cd /; \
     apk add --no-cache --virtual .nginx \
