@@ -33,7 +33,7 @@ RUN set -eux; \
         libc-dev \
         libcjson-dev \
         libexpat1-dev \
-        libffcall1-dev \
+        libffcall-dev \
         libgd-dev \
         libgeoip-dev \
         libiconv-hook-dev \
