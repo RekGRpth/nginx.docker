@@ -51,14 +51,12 @@ RUN set -eux; \
         libsqlite3-dev \
         libssl-dev \
         libsubunit-dev \
-        libtalloc-dev \
         libtool \
         libxml2-dev \
         libxslt1-dev \
         libyaml-dev \
         make \
         musl-dev \
-        ragel \
         zlib1g-dev \
     ; \
     mkdir -p "$HOME/src"; \
@@ -70,7 +68,6 @@ RUN set -eux; \
     git clone -b main https://github.com/RekGRpth/ngx_http_error_page_inherit_module.git; \
     git clone -b main https://github.com/RekGRpth/ngx_http_include_server_module.git; \
     git clone -b main https://github.com/RekGRpth/ngx_http_json_var_module.git; \
-    git clone -b main https://github.com/RekGRpth/ngx_pg_module.git; \
     git clone -b main https://github.com/RekGRpth/ngx_pq_module.git; \
     git clone -b master https://github.com/RekGRpth/echo-nginx-module.git; \
     git clone -b master https://github.com/RekGRpth/encrypted-session-nginx-module.git; \
@@ -100,7 +97,6 @@ RUN set -eux; \
     git clone -b master https://github.com/RekGRpth/ngx_http_upstream_session_sticky_module.git; \
     git clone -b master https://github.com/RekGRpth/ngx_http_zip_var_module.git; \
     git clone -b master https://github.com/RekGRpth/set-misc-nginx-module.git; \
-    cd "$HOME/src/nginx/modules/ngx_pg_module" && make; \
     cd "$HOME/src/nginx"; \
     auto/configure \
         --add-dynamic-module="modules/ngx_devel_kit $(find modules -type f -name "config" | grep -v -e ngx_devel_kit -e "\.git" -e "\/t\/" | while read -r NAME; do echo -n "`dirname "$NAME"` "; done)" \
