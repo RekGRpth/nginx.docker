@@ -52,6 +52,7 @@ RUN set -eux; \
         pcre2-dev \
         pcre-dev \
         perl-dev \
+        postgresql-dev \
         readline-dev \
         sqlite-dev \
         util-linux-dev \

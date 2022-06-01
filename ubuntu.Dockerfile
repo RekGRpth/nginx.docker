@@ -57,6 +57,7 @@ RUN set -eux; \
         libyaml-dev \
         make \
         musl-dev \
+        postgresql-server-dev-all \
         zlib1g-dev \
     ; \
     mkdir -p "$HOME/src"; \
