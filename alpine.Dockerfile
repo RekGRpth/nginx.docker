@@ -21,7 +21,7 @@ RUN set -eux; \
         brotli-dev \
         check-dev \
         cjson-dev \
-        clang \
+#        clang \
         expat-dev \
         expect \
         expect-dev \
