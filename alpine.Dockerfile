@@ -1,5 +1,8 @@
-FROM ghcr.io/rekgrpth/lib.docker:latest
+FROM alpine:latest
 ADD bin /usr/local/bin
+ENTRYPOINT [ "docker_entrypoint.sh" ]
+ENV HOME=/home
+MAINTAINER RekGRpth
 ADD favicon.ico /etc/nginx/html/
 ADD NimbusSans-Regular.ttf /usr/local/share/fonts/
 CMD [ "nginx" ]
@@ -9,6 +12,7 @@ ENV GROUP=nginx \
 STOPSIGNAL SIGQUIT
 WORKDIR "$HOME"
 RUN set -eux; \
+    ln -fs su-exec /sbin/gosu; \
     chmod +x /usr/local/bin/*.sh; \
     apk update --no-cache; \
     apk upgrade --no-cache; \
@@ -21,12 +25,15 @@ RUN set -eux; \
         brotli-dev \
         check-dev \
         cjson-dev \
-#        clang \
+        clang \
+        cups-dev \
         expat-dev \
         expect \
         expect-dev \
         file \
         findutils \
+        flex \
+        fltk-dev \
         g++ \
         gcc \
         gd-dev \
@@ -39,14 +46,18 @@ RUN set -eux; \
         json-c-dev \
         krb5-dev \
         libc-dev \
+        libgcrypt-dev \
+        libpng-dev \
         libpq-dev \
         libtool \
         libxml2-dev \
         libxslt-dev \
         linux-headers \
         linux-pam-dev \
+        lmdb-dev \
         make \
         musl-dev \
+        mustach-dev \
         openjpeg-dev \
         openldap-dev \
         pcre2-dev \
@@ -54,6 +65,7 @@ RUN set -eux; \
         perl-dev \
         postgresql-dev \
         readline-dev \
+        subunit-dev \
         sqlite-dev \
         util-linux-dev \
         yaml-dev \
@@ -62,6 +74,7 @@ RUN set -eux; \
     ln -fs /usr/include/gnu-libiconv/iconv.h /usr/include/iconv.h; \
     mkdir -p "$HOME/src"; \
     cd "$HOME/src"; \
+    git clone -b master https://github.com/RekGRpth/htmldoc.git; \
     git clone -b master https://github.com/RekGRpth/nginx.git; \
     mkdir -p "$HOME/src/nginx/modules"; \
     cd "$HOME/src/nginx/modules"; \
@@ -99,6 +112,16 @@ RUN set -eux; \
     git clone -b master https://github.com/RekGRpth/ngx_http_zip_var_module.git; \
     git clone -b master https://github.com/RekGRpth/ngx_upstream_jdomain.git; \
     git clone -b master https://github.com/RekGRpth/set-misc-nginx-module.git; \
+    ln -fs libldap.a /usr/lib/libldap_r.a; \
+    ln -fs libldap.so /usr/lib/libldap_r.so; \
+    cd "$HOME/src/htmldoc"; \
+    ./configure --without-gui; \
+    cd "$HOME/src/htmldoc/data"; \
+    make -j"$(nproc)" install; \
+    cd "$HOME/src/htmldoc/fonts"; \
+    make -j"$(nproc)" install; \
+    cd "$HOME/src/htmldoc/htmldoc"; \
+    make -j"$(nproc)" install; \
     cd "$HOME/src/nginx"; \
     auto/configure \
         --add-dynamic-module="modules/ngx_devel_kit $(find modules -type f -name "config" | grep -v -e ngx_devel_kit -e "\.git" -e "\/t\/" | while read -r NAME; do echo -n "`dirname "$NAME"` "; done)" \
@@ -160,6 +183,13 @@ RUN set -eux; \
     cd /; \
     apk add --no-cache --virtual .nginx \
         apache2-utils \
+        busybox-extras \
+        busybox-suid \
+        ca-certificates \
+        musl-locales \
+        shadow \
+        su-exec \
+        tzdata \
         $(scanelf --needed --nobanner --format '%n#p' --recursive /usr/local | tr ',' '\n' | grep -v "^$" | grep -v -e libcrypto | sort -u | while read -r lib; do test -z "$(find /usr/local/lib -name "$lib")" && echo "so:$lib"; done) \
     ; \
     find /usr/local/bin -type f -exec strip '{}' \;; \
