@@ -1,5 +1,8 @@
-FROM ghcr.io/rekgrpth/lib.docker:debian
+FROM debian:latest
 ADD bin /usr/local/bin
+ENTRYPOINT [ "docker_entrypoint.sh" ]
+ENV HOME=/home
+MAINTAINER RekGRpth
 ADD favicon.ico /etc/nginx/html/
 ADD NimbusSans-Regular.ttf /usr/local/share/fonts/
 CMD [ "nginx" ]
@@ -21,18 +24,23 @@ RUN set -eux; \
         autoconf \
         automake \
         bison \
+        check \
         clang \
         expect \
         expect-dev \
         file \
         findutils \
+        flex \
         g++ \
         gcc \
         git \
         libbrotli-dev \
         libc-dev \
         libcjson-dev \
+        libcups2-dev \
         libexpat1-dev \
+        libfltk1.3-dev \
+        libgcrypt20-dev \
         libgd-dev \
         libgeoip-dev \
         libiconv-hook-dev \
@@ -41,11 +49,13 @@ RUN set -eux; \
         libjson-c-dev \
         libkrb5-dev \
         libldap2-dev \
+        liblmdb-dev \
         libopenjp2-7-dev \
         libpam0g-dev \
         libpcre2-dev \
         libpcre3-dev \
         libperl-dev \
+        libpng-dev \
         libpq-dev \
         libreadline-dev \
         libsqlite3-dev \
@@ -57,11 +67,14 @@ RUN set -eux; \
         libyaml-dev \
         make \
         musl-dev \
+        pkg-config \
         postgresql-server-dev-all \
         zlib1g-dev \
     ; \
     mkdir -p "$HOME/src"; \
     cd "$HOME/src"; \
+    git clone -b master https://github.com/RekGRpth/htmldoc.git; \
+    git clone -b master https://github.com/RekGRpth/mustach.git; \
     git clone -b master https://github.com/RekGRpth/nginx.git; \
     mkdir -p "$HOME/src/nginx/modules"; \
     cd "$HOME/src/nginx/modules"; \
@@ -99,6 +112,18 @@ RUN set -eux; \
     git clone -b master https://github.com/RekGRpth/ngx_http_zip_var_module.git; \
     git clone -b master https://github.com/RekGRpth/ngx_upstream_jdomain.git; \
     git clone -b master https://github.com/RekGRpth/set-misc-nginx-module.git; \
+    ln -fs libldap.a /usr/lib/libldap_r.a; \
+    ln -fs libldap.so /usr/lib/libldap_r.so; \
+    cd "$HOME/src/htmldoc"; \
+    ./configure --without-gui; \
+    cd "$HOME/src/htmldoc/data"; \
+    make -j"$(nproc)" install; \
+    cd "$HOME/src/htmldoc/fonts"; \
+    make -j"$(nproc)" install; \
+    cd "$HOME/src/htmldoc/htmldoc"; \
+    make -j"$(nproc)" install; \
+    cd "$HOME/src/mustach"; \
+    make -j"$(nproc)" libs=single install; \
     cd "$HOME/src/nginx"; \
     auto/configure \
         --add-dynamic-module="modules/ngx_devel_kit $(find modules -type f -name "config" | grep -v -e ngx_devel_kit -e "\.git" -e "\/t\/" | while read -r NAME; do echo -n "`dirname "$NAME"` "; done)" \
@@ -163,9 +188,23 @@ RUN set -eux; \
     find /usr/local -type f -executable -exec ldd '{}' ';' | grep -v 'not found' | awk '/=>/ { print $(NF-1) }' | sort -u | xargs -r dpkg-query --search | cut -d: -f1 | sort -u | xargs -r apt-mark manual; \
     find /usr/local -type f -executable -exec ldd '{}' ';' | grep -v 'not found' | awk '/=>/ { print $(NF-1) }' | sort -u | xargs -r -i echo "/usr{}" | xargs -r dpkg-query --search | cut -d: -f1 | sort -u | xargs -r apt-mark manual; \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
+    if [ -f /etc/dpkg/dpkg.cfg.d/docker ]; then \
+        grep -q '/usr/share/locale' /etc/dpkg/dpkg.cfg.d/docker; \
+        sed -ri '/\/usr\/share\/locale/d' /etc/dpkg/dpkg.cfg.d/docker; \
+        ! grep -q '/usr/share/locale' /etc/dpkg/dpkg.cfg.d/docker; \
+    fi; \
     apt-get install -y --no-install-recommends \
+        adduser \
         apache2-utils \
+        ca-certificates \
+        gosu \
+        locales \
+        tzdata \
     ; \
+    localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8; \
+    localedef -i ru_RU -c -f UTF-8 -A /usr/share/locale/locale.alias ru_RU.UTF-8; \
+    locale-gen --lang ru_RU.UTF-8; \
+    dpkg-reconfigure locales; \
     rm -rf /var/lib/apt/lists/* /var/cache/ldconfig/aux-cache /var/cache/ldconfig; \
     rm -rf "$HOME" /usr/share/doc /usr/share/man /usr/local/share/doc /usr/local/share/man; \
     find /usr -type f -name "*.la" -delete; \
