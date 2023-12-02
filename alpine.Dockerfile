@@ -57,7 +57,6 @@ RUN set -eux; \
         lmdb-dev \
         make \
         musl-dev \
-        mustach-dev \
         openjpeg-dev \
         openldap-dev \
         pcre2-dev \
@@ -75,6 +74,7 @@ RUN set -eux; \
     mkdir -p "$HOME/src"; \
     cd "$HOME/src"; \
     git clone -b master https://github.com/RekGRpth/htmldoc.git; \
+    git clone -b master https://github.com/RekGRpth/mustach.git; \
     git clone -b master https://github.com/RekGRpth/nginx.git; \
     mkdir -p "$HOME/src/nginx/modules"; \
     cd "$HOME/src/nginx/modules"; \
@@ -122,6 +122,8 @@ RUN set -eux; \
     make -j"$(nproc)" install; \
     cd "$HOME/src/htmldoc/htmldoc"; \
     make -j"$(nproc)" install; \
+    cd "$HOME/src/mustach"; \
+    make -j"$(nproc)" libs=single install; \
     cd "$HOME/src/nginx"; \
     auto/configure \
         --add-dynamic-module="modules/ngx_devel_kit $(find modules -type f -name "config" | grep -v -e ngx_devel_kit -e "\.git" -e "\/t\/" | while read -r NAME; do echo -n "`dirname "$NAME"` "; done)" \
