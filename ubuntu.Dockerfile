@@ -17,7 +17,7 @@ RUN set -eux; \
     apt-get update; \
     apt-get full-upgrade -y --no-install-recommends; \
     groupadd --system --gid 101 "$GROUP"; \
-    useradd --system --uid 101 --disabled-password --home "$HOME" --shell /sbin/nologin --gid "$GROUP" "$USER"; \
+    useradd --system --uid 101 --home "$HOME" --shell /sbin/nologin --gid "$GROUP" "$USER"; \
     apt-get install -y --no-install-recommends \
         apt-utils \
         autoconf \
