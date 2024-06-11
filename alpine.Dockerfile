@@ -14,10 +14,10 @@ WORKDIR "$HOME"
 RUN set -eux; \
     ln -fs su-exec /sbin/gosu; \
     chmod +x /usr/local/bin/*.sh; \
-    apk update --no-cache; \
-    apk upgrade --no-cache; \
     addgroup -g 101 -S "$GROUP"; \
     adduser -u 101 -S -D -G "$GROUP" -H -h "$HOME" -s /sbin/nologin "$USER"; \
+    apk update --no-cache; \
+    apk upgrade --no-cache; \
     apk add --no-cache --virtual .build \
         autoconf \
         automake \
