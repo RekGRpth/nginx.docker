@@ -142,7 +142,7 @@ RUN set -eux; \
         --prefix=/etc/nginx \
         --sbin-path=/usr/local/bin/nginx \
         --user="$USER" \
-        --with-cc-opt="-Wextra -Wwrite-strings -Wmissing-prototypes -Werror -Wno-discarded-qualifiers" \
+        --with-cc-opt="-fno-omit-frame-pointer -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Wextra -Wwrite-strings -Wmissing-prototypes -Werror -Wno-discarded-qualifiers" \
         --with-compat \
         --with-file-aio \
         --with-http_addition_module \

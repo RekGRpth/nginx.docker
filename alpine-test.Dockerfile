@@ -12,14 +12,63 @@ RUN set -eux; \
     apk update --no-cache; \
     apk upgrade --no-cache; \
     apk add --no-cache --virtual .build \
+        autoconf \
+        automake \
+        bison \
+        brotli-dev \
+        check-dev \
+        cjson-dev \
+        clang \
+        cups-dev \
         curl \
+        expat-dev \
+        expect \
+        expect-dev \
+        file \
+        findutils \
+        flex \
+        fltk-dev \
+        g++ \
+        gcc \
+        gd-dev \
+        geoip-dev \
+        gettext-dev \
         git \
+        gnu-libiconv-dev \
+        jansson-dev \
+        jpeg-dev \
+        json-c-dev \
+        krb5-dev \
         libbsd-dev \
+        libc-dev \
+        libgcrypt-dev \
+        libpng-dev \
+        libpq-dev \
+        libtool \
+        libxml2-dev \
+        libxslt-dev \
+        linux-headers \
+        linux-pam-dev \
+        lmdb-dev \
+        make \
+        musl-dev \
+        openjpeg-dev \
+        openldap-dev \
+        pcre2-dev \
+        pcre-dev \
+        perl-dev \
         perl-lwp-protocol-https \
         perl-test-nginx \
         perl-utils \
         postgresql \
+        postgresql-dev \
+        readline-dev \
+        subunit-dev \
+        sqlite-dev \
+        util-linux-dev \
         valgrind \
+        yaml-dev \
+        zlib-dev \
     ; \
     apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing --virtual .edge \
         perl-test-file \
@@ -61,6 +110,59 @@ RUN set -eux; \
     git clone -b master https://github.com/RekGRpth/ngx_http_time_var_module.git; \
     git clone -b master https://github.com/RekGRpth/ngx_http_zip_var_module.git; \
     git clone -b master https://github.com/RekGRpth/set-misc-nginx-module.git; \
+    cd "$HOME/src/nginx"; \
+    auto/configure \
+        --add-dynamic-module="modules/ngx_devel_kit $(find modules -type f -name "config" | grep -v -e ngx_devel_kit -e "\.git" -e "\/t\/" | while read -r NAME; do echo -n "`dirname "$NAME"` "; done)" \
+        --conf-path=/etc/nginx/nginx.conf \
+        --error-log-path=/var/log/nginx/error.log \
+        --group="$GROUP" \
+        --http-client-body-temp-path=/var/tmp/nginx/client_body_temp \
+        --http-fastcgi-temp-path=/var/tmp/nginx/fastcgi_temp \
+        --http-log-path=/var/log/nginx/access.log \
+        --http-proxy-temp-path=/var/tmp/nginx/proxy_temp \
+        --http-scgi-temp-path=/var/tmp/nginx/scgi_temp \
+        --http-uwsgi-temp-path=/var/tmp/nginx/uwsgi_temp \
+        --lock-path=/run/nginx/nginx.lock \
+        --modules-path=/usr/local/lib/nginx \
+        --pid-path=/run/nginx/nginx.pid \
+        --prefix=/etc/nginx \
+        --sbin-path=/usr/local/bin/nginx \
+        --user="$USER" \
+        --with-cc-opt="-O0 -g3 -fno-omit-frame-pointer -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Wextra -Wwrite-strings -Wmissing-prototypes -Werror -Wno-discarded-qualifiers" \
+        --with-compat \
+        --with-debug \
+        --with-file-aio \
+        --with-http_addition_module \
+        --with-http_auth_request_module \
+        --with-http_dav_module \
+        --with-http_degradation_module \
+        --with-http_flv_module \
+        --with-http_geoip_module=dynamic \
+        --with-http_gunzip_module \
+        --with-http_gzip_static_module \
+        --with-http_image_filter_module=dynamic \
+        --with-http_mp4_module \
+        --with-http_random_index_module \
+        --with-http_realip_module \
+        --with-http_secure_link_module \
+        --with-http_slice_module \
+        --with-http_ssl_module \
+        --with-http_stub_status_module \
+        --with-http_sub_module \
+        --with-http_v2_module \
+        --with-http_xslt_module=dynamic \
+        --with-pcre \
+        --with-pcre-jit \
+        --with-poll_module \
+        --with-select_module \
+        --with-stream=dynamic \
+        --with-stream_geoip_module=dynamic \
+        --with-stream_realip_module \
+        --with-stream_ssl_module \
+        --with-stream_ssl_preread_module \
+        --with-threads \
+    ; \
+    make -j"$(nproc)" install; \
     install -d -m 1775 -o postgres -g postgres /run/postgresql /var/log/postgresql; \
     gosu postgres initdb --auth=trust --encoding=UTF8 --pgdata=/var/lib/postgresql/data; \
     gosu postgres pg_ctl -w start --pgdata=/var/lib/postgresql/data; \
