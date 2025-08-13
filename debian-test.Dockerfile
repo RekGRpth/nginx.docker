@@ -50,7 +50,7 @@ RUN set -eux; \
         libopenjp2-7-dev \
         libpam0g-dev \
         libpcre2-dev \
-        libpcre3-dev \
+        libpcre-dev \
         libperl-dev \
         libpng-dev \
         libpq-dev \
