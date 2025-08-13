@@ -16,8 +16,8 @@ RUN set -eux; \
     chmod +x /usr/local/bin/*.sh; \
     apt-get update; \
     apt-get full-upgrade -y --no-install-recommends; \
-    addgroup --system --gid 101 "$GROUP"; \
-    adduser --system --uid 101 --disabled-password --home "$HOME" --shell /sbin/nologin --ingroup "$GROUP" "$USER"; \
+    groupadd --system --gid 101 "$GROUP"; \
+    useradd --system --uid 101 --home "$HOME" --shell /sbin/nologin --gid "$GROUP" "$USER"; \
     apt-get install -y --no-install-recommends \
         apt-utils \
         autoconf \
@@ -193,7 +193,6 @@ RUN set -eux; \
         ! grep -q '/usr/share/locale' /etc/dpkg/dpkg.cfg.d/docker; \
     fi; \
     apt-get install -y --no-install-recommends \
-        adduser \
         apache2-utils \
         ca-certificates \
         gosu \
