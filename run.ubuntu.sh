@@ -1,6 +1,6 @@
 #!/bin/sh -eux
 
-docker pull "ghcr.io/rekgrpth/nginx.docker:${INPUTS_BRANCH:-latest}"
+docker pull "ghcr.io/rekgrpth/nginx.docker:${INPUTS_BRANCH:-ubuntu-test}"
 docker network create --attachable --opt com.docker.network.bridge.name=docker docker || echo $?
 docker volume create nginx
 NGINX="$(docker volume inspect --format "{{ .Mountpoint }}" nginx)"
@@ -15,6 +15,7 @@ docker run \
     --env TZ=Asia/Yekaterinburg \
     --env USER_ID="$(id -u)" \
     --hostname nginx \
+    --init \
     --mount type=bind,source="$NGINX/nginx.conf",destination=/etc/nginx/nginx.conf,readonly \
     --mount type=bind,source=/etc/certs,destination=/etc/certs,readonly \
     --mount type=bind,source=/run/nginx,destination=/run/nginx \
@@ -26,6 +27,7 @@ docker run \
     --network name=docker,alias=$(hostname -f),alias=libreoffice."$(hostname -d)",alias=api-$(hostname -f),alias=graphql-$(hostname -f),alias=cas-$(hostname -f)$(docker volume ls --format "{{.Name}}" | while read VOLUME; do
         echo -n ",alias=$VOLUME-$(hostname -f)"
     done) \
+    --privileged \
     $(docker volume ls --format "{{.Name}}" | while read -r VOLUME; do
         DATA="$(docker volume inspect --format "{{ .Mountpoint }}" "$VOLUME")"
         find "$DATA" -type d -name "nginx" -maxdepth 1 -mindepth 1 2>/dev/null | while read -r DIR; do
@@ -34,4 +36,4 @@ docker run \
     done) \
     --publish target=443,published=443,mode=host \
     --restart always \
-    "ghcr.io/rekgrpth/nginx.docker:${INPUTS_BRANCH:-latest}"
+    "ghcr.io/rekgrpth/nginx.docker:${INPUTS_BRANCH:-ubuntu-test}"
