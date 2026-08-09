@@ -67,6 +67,8 @@ RUN set -eux; \
         postgresql \
         pkg-config \
         postgresql-server-dev-all \
+        strace \
+        sudo \
         valgrind \
         zlib1g-dev \
     ; \
