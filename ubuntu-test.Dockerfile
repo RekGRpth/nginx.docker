@@ -30,6 +30,7 @@ RUN set -eux; \
         g++ \
         gcc \
         git \
+        lcov \
         libbrotli-dev \
         libc-dev \
         libcjson-dev \
@@ -61,11 +62,12 @@ RUN set -eux; \
         libxslt1-dev \
         libyaml-dev \
         make \
+        meson \
         musl-dev \
-        pkg-config \
         perl \
-        postgresql \
         pkg-config \
+        pkg-config \
+        postgresql \
         postgresql-server-dev-all \
         strace \
         sudo \
