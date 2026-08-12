@@ -187,7 +187,7 @@ RUN set -eux; \
     echo "$USER ALL=(ALL:ALL) NOPASSWD: ALL" >>/etc/sudoers; \
     echo '"\e[A": history-search-backward' >>/etc/inputrc; \
     echo '"\e[B": history-search-forward' >>/etc/inputrc; \
-    chown -R "$USER":"$GROUP" /usr/local; \
+    chown -R "$USER":"$GROUP" /usr/local /etc/nginx; \
     echo done
 
 USER "$USER"
