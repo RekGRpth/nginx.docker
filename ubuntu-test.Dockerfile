@@ -66,7 +66,6 @@ RUN set -eux; \
         musl-dev \
         perl \
         pkg-config \
-        pkg-config \
         postgresql \
         postgresql-server-dev-all \
         strace \
