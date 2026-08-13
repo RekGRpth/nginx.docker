@@ -70,8 +70,9 @@ RUN set -eux; \
         yaml-dev \
         zlib-dev \
     ; \
-    apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing --virtual .edge \
-        perl-test-file \
+    cpan -Ti \
+        Test::File \
+        Test::Nginx::Socket \
     ; \
     mkdir -p "$HOME/src"; \
     cd "$HOME/src"; \
