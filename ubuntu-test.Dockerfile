@@ -29,6 +29,7 @@ RUN set -eux; \
         flex \
         g++ \
         gcc \
+        gdb \
         git \
         lcov \
         libbrotli-dev \
