@@ -54,6 +54,7 @@ RUN set -eux; \
         musl-dev \
         openjpeg-dev \
         openldap-dev \
+        openssl \
         pcre2-dev \
         pcre-dev \
         perl-dev \
