@@ -71,6 +71,7 @@ RUN set -eux; \
         yaml-dev \
         zlib-dev \
     ; \
+    ln -fs /usr/include/gnu-libiconv/iconv.h /usr/include/iconv.h; \
     cpan -Ti \
         Test::File \
         Test::Nginx::Socket \
