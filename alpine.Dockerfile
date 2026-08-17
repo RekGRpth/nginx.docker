@@ -143,7 +143,9 @@ RUN set -eux; \
         --user="$USER" \
         --with-cc-opt="-fno-omit-frame-pointer -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Wextra -Wwrite-strings -Wmissing-prototypes -Werror -Wno-discarded-qualifiers" \
         --with-compat \
+        --with-cpp_test_module \
         --with-file-aio \
+        --with-google_perftools_module \
         --with-http_addition_module \
         --with-http_auth_request_module \
         --with-http_dav_module \
@@ -162,7 +164,10 @@ RUN set -eux; \
         --with-http_stub_status_module \
         --with-http_sub_module \
         --with-http_v2_module \
+        --with-http_v3_module \
         --with-http_xslt_module=dynamic \
+        --with-mail=dynamic \
+        --with-mail_ssl_module \
         --with-pcre \
         --with-pcre-jit \
         --with-poll_module \
