@@ -45,6 +45,7 @@ RUN set -eux; \
         libgcrypt20-dev \
         libgd-dev \
         libgeoip-dev \
+        libgoogle-perftools-dev \
         libiconv-hook-dev \
         libjansson-dev \
         libjpeg-dev \
