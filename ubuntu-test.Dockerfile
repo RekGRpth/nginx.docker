@@ -76,6 +76,7 @@ RUN set -eux; \
     ; \
     rm -rf /usr/local/man; \
     cpan -Ti \
+        HTTP::Daemon \
         Test::File \
         Test::Nginx::Socket \
     ; \

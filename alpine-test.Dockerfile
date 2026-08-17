@@ -73,6 +73,7 @@ RUN set -eux; \
     ; \
     ln -fs /usr/include/gnu-libiconv/iconv.h /usr/include/iconv.h; \
     cpan -Ti \
+        HTTP::Daemon \
         Test::File \
         Test::Nginx::Socket \
     ; \
