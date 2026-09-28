@@ -30,6 +30,7 @@ RUN set -eux; \
         g++ \
         gcc \
         gdb \
+        gh \
         git \
         lcov \
         libbrotli-dev \
@@ -48,6 +49,7 @@ RUN set -eux; \
         libkrb5-dev \
         libldap2-dev \
         liblmdb-dev \
+        libmupdf-dev \
         libopenjp2-7-dev \
         libpam0g-dev \
         libpcre2-dev \
@@ -71,6 +73,7 @@ RUN set -eux; \
         postgresql-server-dev-all \
         strace \
         sudo \
+        valgrind \
         valgrind \
         zlib1g-dev \
     ; \
