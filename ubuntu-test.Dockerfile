@@ -49,7 +49,6 @@ RUN set -eux; \
         libkrb5-dev \
         libldap2-dev \
         liblmdb-dev \
-        libmupdf-dev \
         libopenjp2-7-dev \
         libpam0g-dev \
         libpcre2-dev \
@@ -113,6 +112,7 @@ RUN set -eux; \
     git clone -b master https://github.com/RekGRpth/ngx_http_headers_module.git; \
     git clone -b master https://github.com/RekGRpth/ngx_http_htmldoc_module.git; \
     git clone -b master https://github.com/RekGRpth/ngx_http_json_module.git; \
+    git clone -b master https://github.com/RekGRpth/ngx_http_mupdf_module.git; \
     git clone -b master https://github.com/RekGRpth/ngx_http_mustach_module.git; \
     git clone -b master https://github.com/RekGRpth/ngx_http_remote_passwd.git; \
     git clone -b master https://github.com/RekGRpth/ngx_http_response_body_module.git; \
