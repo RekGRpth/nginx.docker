@@ -195,6 +195,7 @@ RUN set -eux; \
     ln -fs /usr/local/lib/nginx /etc/nginx/modules; \
     mkdir -p /run/nginx; \
     cd /; \
+    ldconfig; \
     apt-mark auto '.*' > /dev/null; \
     find /usr/local -type f -executable -exec ldd '{}' ';' | grep -v 'not found' | awk '/=>/ { print $(NF-1) }' | sort -u | xargs -r dpkg-query --search | cut -d: -f1 | sort -u | xargs -r apt-mark manual; \
     find /usr/local -type f -executable -exec ldd '{}' ';' | grep -v 'not found' | awk '/=>/ { print $(NF-1) }' | sort -u | xargs -r -i echo "/usr{}" | xargs -r dpkg-query --search | cut -d: -f1 | sort -u | xargs -r apt-mark manual; \
