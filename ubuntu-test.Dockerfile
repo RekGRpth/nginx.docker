@@ -34,6 +34,7 @@ RUN set -eux; \
         git \
         lcov \
         libbrotli-dev \
+        libcap2-bin \
         libc-dev \
         libcjson-dev \
         libcups2-dev \
@@ -197,6 +198,10 @@ RUN set -eux; \
     echo "$USER ALL=(ALL:ALL) NOPASSWD: ALL" >>/etc/sudoers; \
     echo '"\e[A": history-search-backward' >>/etc/inputrc; \
     echo '"\e[B": history-search-forward' >>/etc/inputrc; \
+    PERF="$(readlink -f "$(ls -1d /usr/lib/linux-tools/*/perf | sort -V | tail -1)")"; \
+    test -x "$PERF"; \
+    setcap cap_perfmon,cap_sys_ptrace+ep "$PERF"; \
+    ln -sf "$PERF" /usr/local/bin/perf; \
     chown -R "$USER":"$GROUP" /usr/local /etc/nginx; \
     echo done
 
