@@ -63,6 +63,8 @@ RUN set -eux; \
         libxml2-dev \
         libxslt1-dev \
         libyaml-dev \
+        linux-tools-common \
+        linux-tools-generic \
         make \
         meson \
         musl-dev \
