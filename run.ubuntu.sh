@@ -8,6 +8,8 @@ touch "$NGINX/nginx.conf"
 docker stop nginx || echo $?
 docker rm nginx || echo $?
 docker run \
+    --cap-add PERFMON \
+    --cap-add SYS_PTRACE \
     --detach \
     --env ASAN_OPTIONS="detect_odr_violation=0,alloc_dealloc_mismatch=false,halt_on_error=false" \
     --env GROUP_ID="$(id -g)" \
@@ -36,4 +38,5 @@ docker run \
     done) \
     --publish target=443,published=443,mode=host \
     --restart always \
+    --security-opt seccomp=unconfined \
     "ghcr.io/rekgrpth/nginx.docker:${INPUTS_BRANCH:-ubuntu-test}"
