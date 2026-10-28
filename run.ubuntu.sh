@@ -18,6 +18,7 @@ docker run \
     --env USER_ID="$(id -u)" \
     --hostname nginx \
     --init \
+    --ipc=host \
     --mount type=bind,source="$NGINX/nginx.conf",destination=/etc/nginx/nginx.conf,readonly \
     --mount type=bind,source=/etc/certs,destination=/etc/certs,readonly \
     --mount type=bind,source=/run/nginx,destination=/run/nginx \
