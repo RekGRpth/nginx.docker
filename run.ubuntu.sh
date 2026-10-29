@@ -18,7 +18,6 @@ docker run \
     --env USER_ID="$(id -u)" \
     --hostname nginx \
     --init \
-    --ipc=host \
     --mount type=bind,source="$NGINX/nginx.conf",destination=/etc/nginx/nginx.conf,readonly \
     --mount type=bind,source=/etc/certs,destination=/etc/certs,readonly \
     --mount type=bind,source=/run/nginx,destination=/run/nginx \
@@ -40,4 +39,5 @@ docker run \
     --publish target=443,published=443,mode=host \
     --restart always \
     --security-opt seccomp=unconfined \
+    --shm-size=4gb \
     "ghcr.io/rekgrpth/nginx.docker:${INPUTS_BRANCH:-ubuntu-test}"
